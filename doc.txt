@@ -1,0 +1,4 @@
+documentation for this repo
+
+- Directory "PyPMG" is where I'm going to put my scalable code.
+- You can put your files in directory "files". 
