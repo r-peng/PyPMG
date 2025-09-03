@@ -1,0 +1,74 @@
+import numpy as np
+from numpy.linalg import eigh
+
+def hartree_fock_spin_orbital(h1, V, n_electrons, max_iter=50, conv_tol=1e-8):
+    """
+    General Hartree–Fock in spin-orbital basis (no spin symmetry assumed).
+    
+    Args:
+        h1 : (N, N) ndarray
+            One-electron integrals in spin-orbital basis.
+        V : (N, N, N, N) ndarray
+            Two-electron integrals in spin-orbital basis: (pq|rs).
+        n_electrons : int
+            Number of electrons (can be odd).
+        max_iter : int
+            Maximum SCF iterations.
+        conv_tol : float
+            Convergence tolerance for energy.
+    
+    Returns:
+        E_hf : float
+            Hartree–Fock energy.
+        C : (N, N) ndarray
+            Molecular orbital coefficients.
+        eps : (N,) ndarray
+            Orbital energies.
+        D : (N, N) ndarray
+            Final density matrix.
+    """
+    N = h1.shape[0]
+    n_occ = n_electrons
+
+    # Initial guess: diagonalize h1
+    eps, C = eigh(h1)
+    D = np.zeros((N, N))
+
+    E_old = 0.0
+    for iteration in range(max_iter):
+        # Build Fock matrix
+        #   F_pq = h_pq + Σ_rs D_rs [ (pq|rs) - (pr|qs) ]
+        J = np.einsum("rs,pqrs->pq", D, V, optimize=True)
+        K = np.einsum("rs,prqs->pq", D, V, optimize=True)
+        F = h1 + J - K
+
+        # Solve F C = C eps
+        eps, C = eigh(F)
+        C_occ = C[:, :n_occ]
+
+        # Update density matrix
+        D_new = C_occ @ C_occ.T
+
+        # Electronic energy
+        E_elec = np.sum(D_new * (h1 + F))
+
+        # Convergence check
+        if abs(E_elec - E_old) < conv_tol:
+            print(f"Converged in {iteration+1} iterations.")
+            return E_elec, C, eps, D_new
+        D = D_new
+        E_old = E_elec
+
+    raise RuntimeError("SCF did not converge")
+
+# Example usage (toy data)
+if __name__ == "__main__":
+    N = 6
+    n_electrons = 3
+    h1 = np.random.rand(N, N)
+    h1 = (h1 + h1.T) / 2  # make Hermitian
+    V = np.random.rand(N, N, N, N)
+    V = (V + V.transpose(1,0,3,2)) / 2  # symmetrize chemist's notation
+    
+    E, C, eps, D = hartree_fock_spin_orbital(h1, V, n_electrons)
+    print("HF energy:", E)
