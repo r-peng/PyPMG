@@ -1,7 +1,6 @@
 import numpy as np
-from numpy.linalg import eigh
 
-def hartree_fock_spin_orbital(h1, V, n_electrons, max_iter=50, conv_tol=1e-8):
+def hartree_fock_spin_orbital(h1, V, n_electrons, D=None, max_iter=50, conv_tol=1e-8, mix=0.5):
     """
     General Hartree–Fock in spin-orbital basis (no spin symmetry assumed).
     
@@ -12,10 +11,14 @@ def hartree_fock_spin_orbital(h1, V, n_electrons, max_iter=50, conv_tol=1e-8):
             Two-electron integrals in spin-orbital basis: (pq|rs).
         n_electrons : int
             Number of electrons (can be odd).
+        D : (N, N) ndarray
+            Initial guess of density matrix.
         max_iter : int
             Maximum SCF iterations.
         conv_tol : float
             Convergence tolerance for energy.
+        mix : float
+            Damping parameter for update.
     
     Returns:
         E_hf : float
@@ -30,35 +33,35 @@ def hartree_fock_spin_orbital(h1, V, n_electrons, max_iter=50, conv_tol=1e-8):
     N = h1.shape[0]
     n_occ = n_electrons
 
-    # Initial guess: diagonalize h1
-    eps, C = eigh(h1)
-    D = np.zeros((N, N))
+    def _1rdm(C):
+        C_occ = C[:, :n_occ]
+        return np.dot(C_occ,C_occ.T.conj())
+
+    C = None
+    eps = None
+    if D is None:
+        # Initial guess: diagonalize h1
+        eps, C = np.linalg.eigh(h1)
+        D = _1rdm(C) 
 
     E_old = 0.0
     for iteration in range(max_iter):
         # Build Fock matrix
-        #   F_pq = h_pq + Σ_rs D_rs [ (pq|rs) - (pr|qs) ]
-        J = np.einsum("rs,pqrs->pq", D, V, optimize=True)
-        K = np.einsum("rs,prqs->pq", D, V, optimize=True)
+        J = np.einsum("pqrs,sr->pq", V, D, optimize=True)
+        K = np.einsum("prqs,sr->pq", V, D, optimize=True)
         F = h1 + J - K
-
-        # Solve F C = C eps
-        eps, C = eigh(F)
-        C_occ = C[:, :n_occ]
-
-        # Update density matrix
-        D_new = C_occ @ C_occ.T
-
         # Electronic energy
-        E_elec = np.sum(D_new * (h1 + F))
-
+        E_elec = np.trace(np.dot((h1 + F),D))/2
         # Convergence check
         if abs(E_elec - E_old) < conv_tol:
             print(f"Converged in {iteration+1} iterations.")
-            return E_elec, C, eps, D_new
-        D = D_new
-        E_old = E_elec
+            return E_elec, C, eps, D
 
+        E_old = E_elec
+        # Solve F C = C eps
+        eps, Cnew = np.linalg.eigh(F)
+        C = Cnew if C is None else (1-mix) * C + mix * Cnew
+        D = _1rdm(C)
     raise RuntimeError("SCF did not converge")
 
 # Example usage (toy data)
