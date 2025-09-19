@@ -7,18 +7,17 @@ Rmin = 1.01
 nR = 12
 R = Rmin
 for i in range(nR):
-    print(i,R)
     f = h5py.File(f'h4_sto3g_{R:.2f}.h5','r')
     const = f['ecore'][()]
     eri = f['eri_oao'][:] 
     hcore = f['hcore_oao'][:]
     f.close()
-    R += dR
 
     # check symmetry in chemistry notation (b1,k1,b2,k2)
     assert np.linalg.norm(eri-eri.transpose(1,0,2,3))<1e-12
     assert np.linalg.norm(eri-eri.transpose(0,1,3,2))<1e-12
     assert np.linalg.norm(eri-eri.transpose(2,3,0,1))<1e-12
+    print(f'R={R},ecore={const}')
 
     # permuting into spin-orbital, with antisymmetrized eri
     # H = \sum_{pq}h_{pq}a_p^\dagger a_q
@@ -32,10 +31,11 @@ for i in range(nR):
     h[::2,::2] = h[1::2,1::2] = hcore
 
     eri = eri.transpose(0,2,1,3) # permute to physicist notation (b1,b2,k1,k2)
-    v = np.zeros(nso,nso,nso,nso)
+    v = np.zeros((nso,nso,nso,nso))
     v[::2,::2,::2,::2] = eri
     v[1::2,1::2,1::2,1::2] = eri
     v[::2,1::2,::2,1::2] = eri
     v[1::2,::2,1::2,::2] = eri
     v -= v.transpose(0,1,3,2)
 
+    R += dR
