@@ -1,5 +1,5 @@
 import numpy as np
-import h5py
+import h5py,itertools
 
 # geometry taken from J. Chem. Theory Comput. 2019, 15, 311-324
 dR = 0.11
@@ -37,5 +37,11 @@ for i in range(nR):
     v[::2,1::2,::2,1::2] = eri
     v[1::2,::2,1::2,::2] = eri
     v -= v.transpose(0,1,3,2)
+    v *= 1/2
+    print('0,0=',h[0,0])
+    print('7,7=',h[7,7])
+    print('0,1,1,0=',v[0,1,1,0])
+    print('0,1,0,1=',v[0,1,0,1])
+    exit()
 
     R += dR

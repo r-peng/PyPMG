@@ -1,0 +1,29 @@
+MPO site    0 /    4
+MPO site    1 /    4
+MPO site    2 /    4
+Sweep =    0 | Direction =  forward | BondDim =  100 | Noise = 1.00E-04 | DavThrd = 1.00E-04
+ --> Site =    0-   1 .. Mmps =    4 Ndav =   20 E =      -2.139896019239 DW = 0.00E+00 FLOPS = 2.83E+06 Tdav =    0.011 T =    0.014 MEM =  197 MB
+ --> Site =    1-   2 .. Mmps =   16 Ndav =    1 E =      -2.139896019239 DW = 0.00E+00 FLOPS = 3.52E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+ --> Site =    2-   3 .. Mmps =   28 Ndav =    1 E =      -2.139896019239 DW = 2.80E-14 FLOPS = 2.23E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+Time elapsed =      0.020 | E =   -2.139896019239393 | DE = 0.00E+00 | MDW = 2.80E-14 | MEM =  197 MB
+Time sweep =      0.020 | Time davidson =      0.013 | Time decomp =      0.003
+Sweep =    1 | Direction = backward | BondDim =  100 | Noise = 1.00E-05 | DavThrd = 1.00E-05
+ <-- Site =    2-   3 .. Mmps =    4 Ndav =    5 E =      -2.139896029929 DW = 0.00E+00 FLOPS = 6.30E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+ <-- Site =    1-   2 .. Mmps =   15 Ndav =    1 E =      -2.139896029929 DW = 9.36E-15 FLOPS = 3.61E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+ <-- Site =    0-   1 .. Mmps =   16 Ndav =    1 E =      -2.139896029929 DW = 2.13E-15 FLOPS = 2.03E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+Time elapsed =      0.029 | E =   -2.139896029928964 | DE = 1.07E-08 | MDW = 9.36E-15 | MEM =  197 MB
+Time sweep =      0.009 | Time davidson =      0.003 | Time decomp =      0.003
+Sweep =    2 | Direction =  forward | BondDim =  100 | Noise = 1.00E-06 | DavThrd = 1.00E-06
+ --> Site =    0-   1 .. Mmps =    4 Ndav =    5 E =      -2.139896029998 DW = 0.00E+00 FLOPS = 5.92E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+ --> Site =    1-   2 .. Mmps =   13 Ndav =    1 E =      -2.139896029998 DW = 1.65E-14 FLOPS = 3.60E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+ --> Site =    2-   3 .. Mmps =   16 Ndav =    1 E =      -2.139896029998 DW = 5.57E-18 FLOPS = 1.80E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+Time elapsed =      0.038 | E =   -2.139896029998005 | DE = 6.90E-11 | MDW = 1.65E-14 | MEM =  197 MB
+Time sweep =      0.009 | Time davidson =      0.003 | Time decomp =      0.003
+Sweep =    3 | Direction = backward | BondDim =  100 | Noise = 1.00E-06 | DavThrd = 1.00E-06
+ <-- Site =    2-   3 .. Mmps =    4 Ndav =    1 E =      -2.139896029998 DW = 0.00E+00 FLOPS = 1.81E+06 Tdav =    0.001 T =    0.002 MEM =  197 MB
+ <-- Site =    1-   2 .. Mmps =   13 Ndav =    1 E =      -2.139896029998 DW = 3.12E-19 FLOPS = 3.69E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+ <-- Site =    0-   1 .. Mmps =   16 Ndav =    1 E =      -2.139896029998 DW = 5.46E-18 FLOPS = 1.71E+06 Tdav =    0.001 T =    0.003 MEM =  197 MB
+Time elapsed =      0.046 | E =   -2.139896029997976 | DE = 2.93E-14 | MDW = 5.46E-18 | MEM =  197 MB
+Time sweep =      0.008 | Time davidson =      0.002 | Time decomp =      0.003
+Electronic Energy= -2.139896029997976
+Total Energy= 0.4334179641938576

@@ -19,6 +19,7 @@ for i in range(nR):
     mol.build()
     print('ecore=',mol.enuc)
     print()
+    print('nelec=',mol.nelec)
     
     print('running unrestricted Hartree Fock...')
     mf = scf.UHF(mol)
@@ -31,5 +32,6 @@ for i in range(nR):
     e_fci = cisolver.kernel()[0]
     print('FCI total energy=',e_fci)
     print('FCI correlation energy=',e_fci-mf.e_tot)
+    exit()
 
     R += dR
