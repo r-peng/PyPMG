@@ -2,12 +2,8 @@ import numpy as np
 import h5py,itertools
 
 # geometry taken from J. Chem. Theory Comput. 2019, 15, 311-324
-dR = 0.11
-Rmin = 1.01
-nR = 12
-R = Rmin
-for i in range(nR):
-    f = h5py.File(f'h4_sto3g_{R:.2f}.h5','r')
+for R in np.arange(1,2.01,.01):
+    f = h5py.File(f'sto3g/h4_sto3g_{R:.2f}.h5','r')
     const = f['ecore'][()]
     eri = f['eri_oao'][:] 
     hcore = f['hcore_oao'][:]
@@ -17,7 +13,7 @@ for i in range(nR):
     assert np.linalg.norm(eri-eri.transpose(1,0,2,3))<1e-12
     assert np.linalg.norm(eri-eri.transpose(0,1,3,2))<1e-12
     assert np.linalg.norm(eri-eri.transpose(2,3,0,1))<1e-12
-    print(f'R={R},ecore={const}')
+    print(f'R={R:.2f},ecore={const}')
 
     # permuting into spin-orbital 
     # H = \sum_{pq}h_{pq}a_p^\dagger a_q
@@ -36,10 +32,8 @@ for i in range(nR):
     v[1::2,1::2,1::2,1::2] = eri.copy()
     v[::2,1::2,::2,1::2] = eri.copy()
     v[1::2,::2,1::2,::2] = eri.copy()
-    v *= 1/2
+    v /= 2
     #print('0,0=',h[0,0])
     #print('7,7=',h[7,7])
     #print('0,1,1,0=',v[0,1,1,0])
     #print('0,1,0,1=',v[0,1,0,1])
-
-    R += dR
