@@ -19,7 +19,7 @@ for i in range(nR):
     assert np.linalg.norm(eri-eri.transpose(2,3,0,1))<1e-12
     print(f'R={R},ecore={const}')
 
-    # permuting into spin-orbital, with antisymmetrized eri
+    # permuting into spin-orbital 
     # H = \sum_{pq}h_{pq}a_p^\dagger a_q
     #   + \frac{1}{2}\sum_{pqrs}v_{pqrs}a_p^\dagger a_q^\dagger a_s a_r
     #   + const
@@ -32,16 +32,14 @@ for i in range(nR):
 
     eri = eri.transpose(0,2,1,3) # permute to physicist notation (b1,b2,k1,k2)
     v = np.zeros((nso,nso,nso,nso))
-    v[::2,::2,::2,::2] = eri
-    v[1::2,1::2,1::2,1::2] = eri
-    v[::2,1::2,::2,1::2] = eri
-    v[1::2,::2,1::2,::2] = eri
-    v -= v.transpose(0,1,3,2)
+    v[::2,::2,::2,::2] = eri.copy()
+    v[1::2,1::2,1::2,1::2] = eri.copy()
+    v[::2,1::2,::2,1::2] = eri.copy()
+    v[1::2,::2,1::2,::2] = eri.copy()
     v *= 1/2
-    print('0,0=',h[0,0])
-    print('7,7=',h[7,7])
-    print('0,1,1,0=',v[0,1,1,0])
-    print('0,1,0,1=',v[0,1,0,1])
-    exit()
+    #print('0,0=',h[0,0])
+    #print('7,7=',h[7,7])
+    #print('0,1,1,0=',v[0,1,1,0])
+    #print('0,1,0,1=',v[0,1,0,1])
 
     R += dR

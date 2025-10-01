@@ -23,15 +23,16 @@ for i in range(nR):
     
     print('running unrestricted Hartree Fock...')
     mf = scf.UHF(mol)
-    mf.kernel()
+    dm = mf.init_guess_by_minao()
+    #print(dm)
+    mf.kernel(dm0=dm)
     print('Hartree Fock total energy=',mf.e_tot) # electron + nuclear
     print()
     
-    print('running unrestricted FCI...')
-    cisolver = fci.FCI(mf)
-    e_fci = cisolver.kernel()[0]
-    print('FCI total energy=',e_fci)
-    print('FCI correlation energy=',e_fci-mf.e_tot)
-    exit()
+    #print('running unrestricted FCI...')
+    #cisolver = fci.FCI(mf)
+    #e_fci = cisolver.kernel()[0]
+    #print('FCI total energy=',e_fci)
+    #print('FCI correlation energy=',e_fci-mf.e_tot)
 
     R += dR

@@ -23,6 +23,11 @@ v[1::2,1::2,1::2,1::2] = eri.copy()
 v[::2,1::2,::2,1::2] = eri.copy()
 v[1::2,::2,1::2,::2] = eri.copy()
 
+v_asym = v-v.transpose(0,1,3,2)
+assert np.linalg.norm(v_asym+v_asym.transpose(1,0,2,3))<1e-10
+assert np.linalg.norm(v_asym+v_asym.transpose(0,1,3,2))<1e-10
+assert np.linalg.norm(v_asym-v_asym.transpose(1,0,3,2))<1e-10
+
 fcidump = FCIDUMP(pg='c1',n_sites=nao,n_elec=nao,twos=0,ipg=0,orb_sym=[0]*nao)
 hamil = Hamiltonian(fcidump,flat=True)
 cutoff = 1e-9
@@ -35,8 +40,9 @@ def generate_terms(n_sites,c,d):
                 yield coeff*c[i,s]*d[j,s]
     for i,j,k,l in itertools.product(range(n_sites),repeat=4):
         for s1,s2 in itertools.product((0,1),repeat=2):
-            coeff = v[2*i+s1,2*j+s2,2*k+s1,2*l+s2] #/ 2 
-            #coeff = eri[i,j,k,l] / 2
+            coeff = v[2*i+s1,2*j+s2,2*k+s1,2*l+s2] / 2 
+            #coeff = v_asym[2*i+s1,2*j+s2,2*k+s1,2*l+s2] / 4 
+            #coeff = eri[i,j,k,l] #/ 2
             if abs(coeff)>cutoff:
                 yield coeff*c[i,s1]*c[j,s2]*d[l,s2]*d[k,s1]
 
