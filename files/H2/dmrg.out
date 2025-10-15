@@ -1,0 +1,1010 @@
+##################### R=1.00 #############################
+MPO site    0 /    2
+Time elapsed =      0.003 | E =   -1.630327541152619 | DE = 0.00E+00 | MDW = 1.95E-31 | MEM =  195 MB
+Time sweep =      0.003 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.004 | E =   -1.630327541152619 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  195 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.005 | E =   -1.630327541152619 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  195 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.630327541152619
+Total Energy= -1.101150330232619
+##################### R=1.01 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.622966292465594 | DE = 0.00E+00 | MDW = 4.25E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.622966292465595 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.622966292465595 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.6229662924655945
+Total Energy= -1.0990284598715352
+##################### R=1.02 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.615685642588138 | DE = 0.00E+00 | MDW = 4.12E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.615685642588126 | DE = 1.22E-14 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.615685642588125 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.6156856425881254
+Total Energy= -1.0968844554116548
+##################### R=1.03 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.608484900943381 | DE = 0.00E+00 | MDW = 6.61E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.608484900943381 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.608484900943381 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.6084849009433813
+Total Energy= -1.0947206184967793
+##################### R=1.04 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.601363395309425 | DE = 0.00E+00 | MDW = 1.86E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.601363395309425 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.601363395309425 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.6013633953094248
+Total Energy= -1.0925391540401939
+##################### R=1.05 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.594320472627050 | DE = 0.00E+00 | MDW = 1.35E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.594320472627050 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.594320472627050 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5943204726270501
+Total Energy= -1.0903421765127645
+##################### R=1.06 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.587355499546647 | DE = 0.00E+00 | MDW = 4.02E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.587355499546647 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.587355499546647 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5873554995466472
+Total Energy= -1.0881317156598547
+##################### R=1.07 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.580467862729455 | DE = 0.00E+00 | MDW = 3.08E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.580467862729454 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.580467862729454 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5804678627294542
+Total Energy= -1.0859097216827251
+##################### R=1.08 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.573656968920650 | DE = 0.00E+00 | MDW = 5.95E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.573656968920650 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.573656968920650 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5736569689206499
+Total Energy= -1.0836780699206499
+##################### R=1.09 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.566922244812179 | DE = 0.00E+00 | MDW = 3.96E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.566922244812179 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.566922244812179 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5669222448121787
+Total Energy= -1.0814385650690594
+##################### R=1.10 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.560263136714517 | DE = 0.00E+00 | MDW = 7.10E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.560263136714529 | DE = 1.18E-14 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.560263136714529 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5602631367145288
+Total Energy= -1.0791929449690743
+##################### R=1.11 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.553679110056420 | DE = 0.00E+00 | MDW = 1.58E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.553679110056419 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.553679110056420 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.55367911005642
+Total Energy= -1.0769428840023658
+##################### R=1.12 #############################
+MPO site    0 /    2
+Time elapsed =      0.002 | E =   -1.547169648731716 | DE = 0.00E+00 | MDW = 1.31E-31 | MEM =  197 MB
+Time sweep =      0.002 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.547169648731715 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.547169648731715 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5471696487317155
+Total Energy= -1.0746899961245726
+##################### R=1.13 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.540734254312686 | DE = 0.00E+00 | MDW = 1.69E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.540734254312685 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.540734254312685 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5407342543126854
+Total Energy= -1.0724358375693224
+##################### R=1.14 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.534372445148208 | DE = 0.00E+00 | MDW = 5.03E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.534372445148209 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.534372445148209 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5343724451482086
+Total Energy= -1.0701819092534717
+##################### R=1.15 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.528083755365037 | DE = 0.00E+00 | MDW = 7.92E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.528083755365037 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.528083755365037 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5280837553650375
+Total Energy= -1.0679296589128635
+##################### R=1.16 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.521867733789348 | DE = 0.00E+00 | MDW = 1.02E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.521867733789348 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.521867733789348 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5218677337893478
+Total Energy= -1.0656804829962443
+##################### R=1.17 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.515723942805064 | DE = 0.00E+00 | MDW = 2.23E-32 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.515723942805064 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.515723942805064 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5157239428050642
+Total Energy= -1.0634357283435256
+##################### R=1.18 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.509651957164336 | DE = 0.00E+00 | MDW = 8.87E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.509651957164337 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.509651957164337 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5096519571643368
+Total Energy= -1.0611966936728112
+##################### R=1.19 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.503651362764576 | DE = 0.00E+00 | MDW = 7.68E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.503651362764575 | DE = 1.11E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.503651362764575 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.5036513627645747
+Total Energy= -1.0589646308990284
+##################### R=1.20 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.497721755405259 | DE = 0.00E+00 | MDW = 7.26E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.497721755405259 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.497721755405259 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4977217554052589
+Total Energy= -1.056740746305259
+##################### R=1.21 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.491862739536783 | DE = 0.00E+00 | MDW = 2.75E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.491862739536782 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.491862739536782 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.491862739536782
+Total Energy= -1.0545262015863688
+##################### R=1.22 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.486073927012183 | DE = 0.00E+00 | MDW = 5.19E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.486073927012185 | DE = 1.55E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.486073927012185 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4860739270121845
+Total Energy= -1.0523221147826762
+##################### R=1.23 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.480354935851686 | DE = 0.00E+00 | MDW = 8.12E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.480354935851685 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.480354935851685 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4803549358516854
+Total Energy= -1.0501295611199781
+##################### R=1.24 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.474705389028834 | DE = 0.00E+00 | MDW = 1.54E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.474705389028834 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.474705389028834 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4747053890288342
+Total Energy= -1.0479495737707696
+##################### R=1.25 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.469124913285803 | DE = 0.00E+00 | MDW = 1.05E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.469124913285803 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.469124913285803 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4691249132858026
+Total Energy= -1.0457831445498025
+##################### R=1.26 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.463613137984614 | DE = 0.00E+00 | MDW = 6.92E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.463613137984615 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.463613137984615 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4636131379846151
+Total Energy= -1.0436312245560437
+##################### R=1.27 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.458169693999828 | DE = 0.00E+00 | MDW = 8.16E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.458169693999828 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.458169693999828 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4581696939998283
+Total Energy= -1.0414947247714819
+##################### R=1.28 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.452794212657499 | DE = 0.00E+00 | MDW = 3.09E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.452794212657499 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.452794212657499 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.452794212657499
+Total Energy= -1.0393745166262491
+##################### R=1.29 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.447486324724265 | DE = 0.00E+00 | MDW = 2.52E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.447486324724266 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.447486324724266 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4474863247242655
+Total Energy= -1.037271432538219
+##################### R=1.30 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.442245659449638 | DE = 0.00E+00 | MDW = 4.08E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.442245659449640 | DE = 1.33E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.442245659449640 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4422456594496396
+Total Energy= -1.035186266434255
+##################### R=1.31 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.437071843663889 | DE = 0.00E+00 | MDW = 1.73E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.437071843663889 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.437071843663889 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4370718436638894
+Total Energy= -1.0331197742593092
+##################### R=1.32 #############################
+MPO site    0 /    2
+Time elapsed =      0.002 | E =   -1.431964500933232 | DE = 0.00E+00 | MDW = 1.79E-29 | MEM =  197 MB
+Time sweep =      0.002 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.431964500933232 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.004 | E =   -1.431964500933232 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4319645009332322
+Total Energy= -1.0310726744786867
+##################### R=1.33 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.426923250773220 | DE = 0.00E+00 | MDW = 3.16E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.426923250773225 | DE = 4.66E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.426923250773225 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4269232507732248
+Total Energy= -1.029045648577736
+##################### R=1.34 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.421947707921388 | DE = 0.00E+00 | MDW = 2.50E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.421947707921387 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.421947707921387 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4219477079213874
+Total Energy= -1.0270393415631784
+##################### R=1.35 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.417037481668785 | DE = 0.00E+00 | MDW = 2.42E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.417037481668787 | DE = 2.00E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.417037481668787 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4170374816687874
+Total Energy= -1.0250543624687873
+##################### R=1.36 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.412192175250420 | DE = 0.00E+00 | MDW = 5.19E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.412192175250424 | DE = 4.00E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.412192175250424 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4121921752504238
+Total Energy= -1.0230912848680709
+##################### R=1.37 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.407411385293839 | DE = 0.00E+00 | MDW = 1.19E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.407411385293841 | DE = 1.33E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.407411385293841 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4074113852938406
+Total Energy= -1.0211506473960303
+##################### R=1.38 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.402694701325066 | DE = 0.00E+00 | MDW = 2.39E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.402694701325067 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.402694701325067 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.4026947013250668
+Total Energy= -1.0192329542815886
+##################### R=1.39 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.398041705330557 | DE = 0.00E+00 | MDW = 7.31E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.398041705330557 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.398041705330557 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3980417053305567
+Total Energy= -1.0173386758917078
+##################### R=1.40 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.393451971373959 | DE = 0.00E+00 | MDW = 2.50E-32 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.393451971373959 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.393451971373959 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3934519713739593
+Total Energy= -1.015468249288245
+##################### R=1.41 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.388925065266019 | DE = 0.00E+00 | MDW = 3.27E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.388925065266018 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.388925065266018 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.388925065266018
+Total Energy= -1.0136220787979329
+##################### R=1.42 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.384460544286015 | DE = 0.00E+00 | MDW = 5.61E-33 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.384460544286015 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.384460544286015 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3844605442860147
+Total Energy= -1.011800536595874
+##################### R=1.43 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.380057956952993 | DE = 0.00E+00 | MDW = 1.98E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.380057956952995 | DE = 2.00E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.380057956952995 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3800579569529947
+Total Energy= -1.010003963302645
+##################### R=1.44 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.375716842844871 | DE = 0.00E+00 | MDW = 4.04E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.375716842844872 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.375716842844872 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3757168428448718
+Total Energy= -1.008232668594872
+##################### R=1.45 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.371436732463603 | DE = 0.00E+00 | MDW = 2.74E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.371436732463604 | DE = 8.88E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.371436732463604 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3714367324636039
+Total Energy= -1.0064869318291212
+##################### R=1.46 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.367217147144456 | DE = 0.00E+00 | MDW = 3.55E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.367217147144456 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.367217147144456 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.367217147144456
+Total Energy= -1.0047670026787026
+##################### R=1.47 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.363057599007407 | DE = 0.00E+00 | MDW = 1.99E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.363057599007407 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.363057599007407 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3630575990074074
+Total Energy= -1.0030731017829175
+##################### R=1.48 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.358957590948874 | DE = 0.00E+00 | MDW = 8.85E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.358957590948874 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.358957590948874 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3589575909488743
+Total Energy= -1.0014054214083337
+##################### R=1.49 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.354916616671660 | DE = 0.00E+00 | MDW = 3.96E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.354916616671660 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.354916616671660 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3549166166716602
+Total Energy= -0.9997641261213246
+##################### R=1.50 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.350934160751411 | DE = 0.00E+00 | MDW = 9.57E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.350934160751411 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.350934160751411 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3509341607514114
+Total Energy= -0.9981493534714114
+##################### R=1.51 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.347009698737493 | DE = 0.00E+00 | MDW = 7.38E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.347009698737493 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.347009698737493 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3470096987374927
+Total Energy= -0.9965612146845125
+##################### R=1.52 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.343142697286562 | DE = 0.00E+00 | MDW = 3.07E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.343142697286563 | DE = 8.88E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.343142697286563 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3431426972865625
+Total Energy= -0.9949997953655099
+##################### R=1.53 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.339332614327069 | DE = 0.00E+00 | MDW = 1.09E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.339332614327069 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.339332614327069 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.339332614327069
+Total Energy= -0.9934651562094219
+##################### R=1.54 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.335578899252681 | DE = 0.00E+00 | MDW = 1.29E-32 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.335578899252682 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.335578899252682 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3355788992526816
+Total Energy= -0.991957333720214
+##################### R=1.55 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.331880993143077 | DE = 0.00E+00 | MDW = 3.38E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.331880993143078 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.331880993143078 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3318809931430775
+Total Energy= -0.990476340936626
+##################### R=1.56 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.328238329010260 | DE = 0.00E+00 | MDW = 1.46E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.328238329010260 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.328238329010260 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.32823832901026
+Total Energy= -0.989022168164106
+##################### R=1.57 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.324650332068757 | DE = 0.00E+00 | MDW = 3.74E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.324650332068757 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.324650332068757 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.324650332068757
+Total Energy= -0.9875947837120691
+##################### R=1.58 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.321116420028017 | DE = 0.00E+00 | MDW = 9.86E-32 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.321116420028017 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.321116420028017 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3211164200280172
+Total Energy= -0.9861941346356121
+##################### R=1.59 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.317636003405427 | DE = 0.00E+00 | MDW = 2.15E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.317636003405428 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.317636003405428 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3176360034054277
+Total Energy= -0.9848201474808994
+##################### R=1.60 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.314208485858171 | DE = 0.00E+00 | MDW = 1.69E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.314208485858172 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.314208485858172 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.314208485858172
+Total Energy= -0.983472729033172
+##################### R=1.61 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.310833264532591 | DE = 0.00E+00 | MDW = 5.31E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.310833264532591 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.310833264532591 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3108332645325909
+Total Energy= -0.9821517670667523
+##################### R=1.62 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.307509730429298 | DE = 0.00E+00 | MDW = 1.59E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.307509730429298 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.307509730429298 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.307509730429298
+Total Energy= -0.9808571310959646
+##################### R=1.63 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.304237268782626 | DE = 0.00E+00 | MDW = 1.00E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.304237268782626 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.304237268782626 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.3042372687826256
+Total Energy= -0.9795886731261838
+##################### R=1.64 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.301015259452844 | DE = 0.00E+00 | MDW = 1.06E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.301015259452844 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.301015259452844 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.301015259452844
+Total Energy= -0.9783462284040634
+##################### R=1.65 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.297843077329723 | DE = 0.00E+00 | MDW = 1.00E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.297843077329724 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.297843077329724 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2978430773297238
+Total Energy= -0.9771296161660874
+##################### R=1.66 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.294720092745902 | DE = 0.00E+00 | MDW = 1.52E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.294720092745902 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.294720092745902 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.294720092745902
+Total Energy= -0.9759386403844561
+##################### R=1.67 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.291645671898716 | DE = 0.00E+00 | MDW = 1.03E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.291645671898716 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.291645671898716 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.291645671898716
+Total Energy= -0.9747730905094943
+##################### R=1.68 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.288619177279026 | DE = 0.00E+00 | MDW = 5.86E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.288619177279026 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.288619177279026 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.288619177279026
+Total Energy= -0.9736327422075974
+##################### R=1.69 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.285639968105673 | DE = 0.00E+00 | MDW = 1.09E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.285639968105672 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.285639968105672 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2856399681056725
+Total Energy= -0.9725173580938382
+##################### R=1.70 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.282707400764224 | DE = 0.00E+00 | MDW = 7.37E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.282707400764224 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.282707400764224 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2827074007642243
+Total Energy= -0.9714266884583419
+##################### R=1.71 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.279820829248662 | DE = 0.00E+00 | MDW = 2.29E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.279820829248661 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.279820829248661 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2798208292486615
+Total Energy= -0.9703604719855036
+##################### R=1.72 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.276979605604734 | DE = 0.00E+00 | MDW = 3.20E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.276979605604734 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.276979605604734 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.276979605604734
+Total Energy= -0.969318436465199
+##################### R=1.73 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.274183080373717 | DE = 0.00E+00 | MDW = 6.27E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.274183080373717 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.274183080373717 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2741830803737173
+Total Energy= -0.9683002994951045
+##################### R=1.74 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.271430603035380 | DE = 0.00E+00 | MDW = 2.61E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.271430603035380 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.271430603035380 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.27143060303538
+Total Energy= -0.9673057691733109
+##################### R=1.75 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.268721522448881 | DE = 0.00E+00 | MDW = 1.25E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.268721522448881 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.268721522448881 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2687215224488808
+Total Energy= -0.9663345447803093
+##################### R=1.76 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.266055187290610 | DE = 0.00E+00 | MDW = 7.58E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.266055187290611 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.266055187290611 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2660551872906107
+Total Energy= -0.9653863174497017
+##################### R=1.77 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.263430946487707 | DE = 0.00E+00 | MDW = 1.36E-28 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.263430946487707 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.263430946487707 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2634309464877072
+Total Energy= -0.9644607708266901
+##################### R=1.78 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.260848149646354 | DE = 0.00E+00 | MDW = 1.54E-32 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.260848149646354 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.260848149646354 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2608481496463544
+Total Energy= -0.96355758171377
+##################### R=1.79 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.258306147473691 | DE = 0.00E+00 | MDW = 7.50E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.258306147473691 | DE = 8.88E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.258306147473691 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2583061474736914
+Total Energy= -0.9626764207027416
+##################### R=1.80 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.255804292192579 | DE = 0.00E+00 | MDW = 4.01E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.255804292192579 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.255804292192579 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2558042921925792
+Total Energy= -0.9618169527925792
+##################### R=1.81 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.253341937948121 | DE = 0.00E+00 | MDW = 3.03E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.253341937948121 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.253341937948121 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2533419379481212
+Total Energy= -0.9609788379923201
+##################### R=1.82 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.250918441205219 | DE = 0.00E+00 | MDW = 2.27E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.250918441205218 | DE = 1.11E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.250918441205219 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2509184412052186
+Total Energy= -0.9601617319085152
+##################### R=1.83 #############################
+MPO site    0 /    2
+Time elapsed =      0.002 | E =   -1.248533161136370 | DE = 0.00E+00 | MDW = 1.05E-28 | MEM =  197 MB
+Time sweep =      0.002 | Time davidson =      0.000 | Time decomp =      0.001
+Time elapsed =      0.003 | E =   -1.248533161136371 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.004 | E =   -1.248533161136371 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2485331611363706
+Total Energy= -0.9593652863166984
+##################### R=1.84 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.246185459998907 | DE = 0.00E+00 | MDW = 3.20E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.246185459998907 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.246185459998907 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2461854599989066
+Total Energy= -0.9585891497162979
+##################### R=1.85 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.243874703501012 | DE = 0.00E+00 | MDW = 1.14E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.243874703501011 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.243874703501011 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2438747035010114
+Total Energy= -0.957832967868579
+##################### R=1.86 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.241600261156052 | DE = 0.00E+00 | MDW = 1.19E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.241600261156053 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.241600261156053 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2416002611560526
+Total Energy= -0.9570963843173429
+##################### R=1.87 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.239361506624426 | DE = 0.00E+00 | MDW = 4.26E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.239361506624426 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.239361506624426 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2393615066244263
+Total Energy= -0.956379040891806
+##################### R=1.88 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.237157818042609 | DE = 0.00E+00 | MDW = 1.38E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.237157818042609 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.237157818042609 | DE = 4.44E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.237157818042609
+Total Energy= -0.9556805781915452
+##################### R=1.89 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.234988578338919 | DE = 0.00E+00 | MDW = 7.16E-31 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.234988578338919 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.234988578338919 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2349885783389187
+Total Energy= -0.9550006360532044
+##################### R=1.90 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.232853175535571 | DE = 0.00E+00 | MDW = 1.74E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.232853175535571 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.232853175535571 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2328531755355705
+Total Energy= -0.9543388539987283
+##################### R=1.91 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.230751003036863 | DE = 0.00E+00 | MDW = 1.93E-28 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.230751003036863 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.230751003036863 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2307510030368634
+Total Energy= -0.9536948716651356
+##################### R=1.92 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.228681459903038 | DE = 0.00E+00 | MDW = 1.54E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.228681459903040 | DE = 1.55E-15 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.228681459903040 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.22868145990304
+Total Energy= -0.95306832921554
+##################### R=1.93 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.226643951109749 | DE = 0.00E+00 | MDW = 4.40E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.226643951109749 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.226643951109749 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2266439511097489
+Total Energy= -0.9524588677315105
+##################### R=1.94 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.224637887792924 | DE = 0.00E+00 | MDW = 3.29E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.224637887792924 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.224637887792924 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.224637887792924
+Total Energy= -0.9518661295867384
+##################### R=1.95 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.222662687479010 | DE = 0.00E+00 | MDW = 2.76E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.222662687479011 | DE = 8.88E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.222662687479011 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2226626874790112
+Total Energy= -0.9512897588020881
+##################### R=1.96 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.220717774300471 | DE = 0.00E+00 | MDW = 4.08E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.220717774300471 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.220717774300471 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2207177743004713
+Total Energy= -0.9507294013821039
+##################### R=1.97 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.218802579196592 | DE = 0.00E+00 | MDW = 4.31E-30 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.218802579196592 | DE = 6.66E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.218802579196592 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2188025791965922
+Total Energy= -0.9501847056331404
+##################### R=1.98 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.216916540099664 | DE = 0.00E+00 | MDW = 3.26E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.216916540099664 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.216916540099664 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2169165400996644
+Total Energy= -0.9496553224633008
+##################### R=1.99 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.215059102106604 | DE = 0.00E+00 | MDW = 6.70E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.215059102106604 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.215059102106604 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2150591021066035
+Total Energy= -0.9491409056643925
+##################### R=2.00 #############################
+MPO site    0 /    2
+Time elapsed =      0.001 | E =   -1.213229717636185 | DE = 0.00E+00 | MDW = 1.49E-29 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.002 | E =   -1.213229717636185 | DE = 2.22E-16 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Time elapsed =      0.003 | E =   -1.213229717636185 | DE = 0.00E+00 | MDW = 0.00E+00 | MEM =  197 MB
+Time sweep =      0.001 | Time davidson =      0.000 | Time decomp =      0.000
+Electronic Energy= -1.2132297176361848
+Total Energy= -0.9486411121761849
