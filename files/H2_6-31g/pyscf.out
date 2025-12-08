@@ -1,0 +1,1313 @@
+
+######################## R=1.00 ###########################
+building molecule...
+ecore= 0.52917721092
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.09480796286051  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.094807962860512
+
+running unrestricted FCI...
+FCI total energy= -1.1267783526183108
+FCI correlation energy= -0.031970389757798756
+
+######################## R=1.01 ###########################
+building molecule...
+ecore= 0.5239378325940595
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.09296605720484  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.092966057204844
+
+running unrestricted FCI...
+FCI total energy= -1.125271143708864
+FCI correlation energy= -0.032305086504019975
+
+######################## R=1.02 ###########################
+building molecule...
+ecore= 0.5188011871764706
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.09110442847427  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0911044284742677
+
+running unrestricted FCI...
+FCI total energy= -1.1237499200844852
+FCI correlation energy= -0.03264549161021746
+
+######################## R=1.03 ###########################
+building molecule...
+ecore= 0.513764282446602
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.0892247717835  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.089224771783496
+
+running unrestricted FCI...
+FCI total energy= -1.1222164644889816
+FCI correlation energy= -0.03299169270548563
+
+######################## R=1.04 ###########################
+building molecule...
+ecore= 0.5088242412692309
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.08732868488193  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0873286848819301
+
+running unrestricted FCI...
+FCI total energy= -1.1206724595662974
+FCI correlation energy= -0.03334377468436722
+
+######################## R=1.05 ###########################
+building molecule...
+ecore= 0.5039782961142857
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.08541767382507  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0854176738250665
+
+running unrestricted FCI...
+FCI total energy= -1.1191194935737863
+FCI correlation energy= -0.033701819748719775
+
+######################## R=1.06 ###########################
+building molecule...
+ecore= 0.4992237838867925
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.08349315830376  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0834931583037613
+
+running unrestricted FCI...
+FCI total energy= -1.1175590657544334
+FCI correlation energy= -0.03406590745067217
+
+######################## R=1.07 ###########################
+building molecule...
+ecore= 0.49455814104672896
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.08155647665147  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -1.0815564766514671
+
+running unrestricted FCI...
+FCI total energy= -1.115992591387412
+FCI correlation energy= -0.03443611473594488
+
+######################## R=1.08 ###########################
+building molecule...
+ecore= 0.4899788990000001
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.07960889054902  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0796088905490218
+
+running unrestricted FCI...
+FCI total energy= -1.1144214065359963
+FCI correlation energy= -0.034812515986974546
+
+######################## R=1.09 ###########################
+building molecule...
+ecore= 0.4854836797431193
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.07765158944533  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0776515894453298
+
+running unrestricted FCI...
+FCI total energy= -1.1128467725105864
+FCI correlation energy= -0.0351951830652566
+
+######################## R=1.10 ###########################
+building molecule...
+ecore= 0.4810701917454545
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.07568569471132  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0756856947113156
+
+running unrestricted FCI...
+FCI total energy= -1.111269880063708
+FCI correlation energy= -0.03558418535239238
+
+######################## R=1.11 ###########################
+building molecule...
+ecore= 0.4767362260540541
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.07371226354365  <S^2> = -8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -1.0737122635436531
+
+running unrestricted FCI...
+FCI total energy= -1.1096918533330236
+FCI correlation energy= -0.035979589789370436
+
+######################## R=1.12 ###########################
+building molecule...
+ecore= 0.4724796526071428
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.07173229263388  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0717322926338786
+
+running unrestricted FCI...
+FCI total energy= -1.1081137535475705
+FCI correlation energy= -0.036381460913691877
+
+######################## R=1.13 ###########################
+building molecule...
+ecore= 0.46829841674336287
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.06974672161769  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0697467216176897
+
+running unrestricted FCI...
+FCI total energy= -1.1065365825116138
+FCI correlation energy= -0.03678986089392411
+
+######################## R=1.14 ###########################
+building molecule...
+ecore= 0.4641905358947368
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.06775643631831  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -1.0677564363183092
+
+running unrestricted FCI...
+FCI total energy= -1.1049612858797175
+FCI correlation energy= -0.03720484956140835
+
+######################## R=1.15 ###########################
+building molecule...
+ecore= 0.4601540964521739
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.06576227179713  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0657622717971296
+
+running unrestricted FCI...
+FCI total energy= -1.10338875623595
+FCI correlation energy= -0.03762648443882033
+
+######################## R=1.16 ###########################
+building molecule...
+ecore= 0.4561872507931034
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.06376501522399  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.063765015223991
+
+running unrestricted FCI...
+FCI total energy= -1.1018198359893767
+FCI correlation energy= -0.03805482076538569
+
+######################## R=1.17 ###########################
+building molecule...
+ecore= 0.4522882144615385
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.06176540857875  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.061765408578748
+
+running unrestricted FCI...
+FCI total energy= -1.1002553200972973
+FCI correlation energy= -0.0384899115185493
+
+######################## R=1.18 ###########################
+building molecule...
+ecore= 0.4484552634915254
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.05976415119505  <S^2> = 6.6613381e-16  2S+1 = 1
+Hartree Fock total energy= -1.0597641511950457
+
+running unrestricted FCI...
+FCI total energy= -1.0986959586270175
+FCI correlation energy= -0.03893180743197178
+
+######################## R=1.19 ###########################
+building molecule...
+ecore= 0.44468673186554614
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.05776190215652  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0577619021565174
+
+running unrestricted FCI...
+FCI total energy= -1.0971424591662822
+FCI correlation energy= -0.03938055700976473
+
+######################## R=1.20 ###########################
+building molecule...
+ecore= 0.4409810091
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.05575928255497  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0557592825549689
+
+running unrestricted FCI...
+FCI total energy= -1.095595489091855
+FCI correlation energy= -0.03983620653688602
+
+######################## R=1.21 ###########################
+building molecule...
+ecore= 0.43733653795041316
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.05375687761947  <S^2> = -8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -1.0537568776194712
+
+running unrestricted FCI...
+FCI total energy= -1.094055677705155
+FCI correlation energy= -0.04029880008568387
+
+######################## R=1.22 ###########################
+building molecule...
+ecore= 0.4337518122295082
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.05175523872462  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.051755238724624
+
+running unrestricted FCI...
+FCI total energy= -1.0925236182432307
+FCI correlation energy= -0.04076837951860668
+
+######################## R=1.23 ###########################
+building molecule...
+ecore= 0.43022537473170724
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.04975488528573  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.04975488528573
+
+running unrestricted FCI...
+FCI total energy= -1.0909998697728234
+FCI correlation energy= -0.04124498448709346
+
+######################## R=1.24 ###########################
+building molecule...
+ecore= 0.4267558152580645
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.047756306548  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -1.0477563065480036
+
+running unrestricted FCI...
+FCI total energy= -1.0894849589747344
+FCI correlation energy= -0.04172865242673085
+
+######################## R=1.25 ###########################
+building molecule...
+ecore= 0.42334176873599993
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.04575996327646  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0457599632764616
+
+running unrestricted FCI...
+FCI total energy= -1.0879793818252061
+FCI correlation energy= -0.04221941854874456
+
+######################## R=1.26 ###########################
+building molecule...
+ecore= 0.41998191342857133
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.0437662893526  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0437662893526043
+
+running unrestricted FCI...
+FCI total energy= -1.0864836051805578
+FCI correlation energy= -0.04271731582795346
+
+######################## R=1.27 ###########################
+building molecule...
+ecore= 0.4166749692283464
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.04177569328357  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -1.04177569328357
+
+running unrestricted FCI...
+FCI total energy= -1.0849980682708749
+FCI correlation energy= -0.04322237498730486
+
+######################## R=1.28 ###########################
+building molecule...
+ecore= 0.41341969603124995
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.03978855962899  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -1.039788559628994
+
+running unrestricted FCI...
+FCI total energy= -1.0835231841081299
+FCI correlation energy= -0.0437346244791359
+
+######################## R=1.29 ###########################
+building molecule...
+ecore= 0.41021489218604645
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.0378052503505  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0378052503505018
+
+running unrestricted FCI...
+FCI total energy= -1.082059340813816
+FCI correlation energy= -0.04425409046331419
+
+######################## R=1.30 ###########################
+building molecule...
+ecore= 0.4070593930153845
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.0358261060881  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0358261060880964
+
+running unrestricted FCI...
+FCI total energy= -1.0806069028705558
+FCI correlation energy= -0.04478079678245939
+
+######################## R=1.31 ###########################
+building molecule...
+ecore= 0.4039520694045801
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.03385144736781  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0338514473678093
+
+running unrestricted FCI...
+FCI total energy= -1.0791662123022034
+FCI correlation energy= -0.045314764934394125
+
+######################## R=1.32 ###########################
+building molecule...
+ecore= 0.4008918264545454
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.03188157574423  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.03188157574423
+
+running unrestricted FCI...
+FCI total energy= -1.0777375897862567
+FCI correlation energy= -0.04585601404202677
+
+######################## R=1.33 ###########################
+building molecule...
+ecore= 0.3978776021954887
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.02991677488161  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0299167748816105
+
+running unrestricted FCI...
+FCI total energy= -1.0763213357025194
+FCI correlation energy= -0.046404560820908936
+
+######################## R=1.34 ###########################
+building molecule...
+ecore= 0.3949083663582089
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.02795731157677  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.027957311576766
+
+running unrestricted FCI...
+FCI total energy= -1.0749177311213853
+FCI correlation energy= -0.04696041954461938
+
+######################## R=1.35 ###########################
+building molecule...
+ecore= 0.3919831191999999
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.02600343672673  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0260034367267312
+
+running unrestricted FCI...
+FCI total energy= -1.073527038734962
+FCI correlation energy= -0.0475236020082308
+
+######################## R=1.36 ###########################
+building molecule...
+ecore= 0.3891008903823529
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.02405538624413  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0240553862441255
+
+running unrestricted FCI...
+FCI total energy= -1.0721495037341986
+FCI correlation energy= -0.048094117490073085
+
+######################## R=1.37 ###########################
+building molecule...
+ecore= 0.3862607378978101
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.02211338192281  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.022113381922813
+
+running unrestricted FCI...
+FCI total energy= -1.070785354634837
+FCI correlation energy= -0.04867197271202395
+
+######################## R=1.38 ###########################
+building molecule...
+ecore= 0.3834617470434782
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.02017763225631  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.02017763225631
+
+running unrestricted FCI...
+FCI total energy= -1.069434804054869
+FCI correlation energy= -0.04925717179855882
+
+######################## R=1.39 ###########################
+building molecule...
+ecore= 0.3807030294388488
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.01824833321127  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0182483332112708
+
+running unrestricted FCI...
+FCI total energy= -1.0680980494460743
+FCI correlation energy= -0.0498497162348035
+
+######################## R=1.40 ###########################
+building molecule...
+ecore= 0.37798372208571424
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.01632566895822  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0163256689582214
+
+running unrestricted FCI...
+FCI total energy= -1.066775273782045
+FCI correlation energy= -0.05044960482382366
+
+######################## R=1.41 ###########################
+building molecule...
+ecore= 0.375302986468085
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.01440981256159  <S^2> = -8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -1.0144098125615872
+
+running unrestricted FCI...
+FCI total energy= -1.0654666462050004
+FCI correlation energy= -0.05105683364341318
+
+######################## R=1.42 ###########################
+building molecule...
+ecore= 0.3726600076901408
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.01250092663095  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0125009266309537
+
+running unrestricted FCI...
+FCI total energy= -1.06417232263356
+FCI correlation energy= -0.051671396002606285
+
+######################## R=1.43 ###########################
+building molecule...
+ecore= 0.3700539936503496
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.01059916393539  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0105991639353913
+
+running unrestricted FCI...
+FCI total energy= -1.0628924463335936
+FCI correlation energy= -0.0522932823982023
+
+######################## R=1.44 ###########################
+building molecule...
+ecore= 0.3674841742499999
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.0087046679826  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0087046679825975
+
+running unrestricted FCI...
+FCI total energy= -1.0616271484541129
+FCI correlation energy= -0.052922480471515376
+
+######################## R=1.45 ###########################
+building molecule...
+ecore= 0.3649498006344827
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.0068175735645  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.0068175735645035
+
+running unrestricted FCI...
+FCI total energy= -1.0603765485301537
+FCI correlation energy= -0.05355897496565021
+
+######################## R=1.46 ###########################
+building molecule...
+ecore= 0.36245014446575335
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.00493800727095  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0049380072709482
+
+running unrestricted FCI...
+FCI total energy= -1.0591407549544518
+FCI correlation energy= -0.05420274768350364
+
+######################## R=1.47 ###########################
+building molecule...
+ecore= 0.3599844972244897
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.00306608797294  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -1.0030660879729365
+
+running unrestricted FCI...
+FCI total energy= -1.0579198654197774
+FCI correlation energy= -0.054853777446840946
+
+######################## R=1.48 ###########################
+building molecule...
+ecore= 0.3575521695405405
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.00120192727694  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -1.0012019272769352
+
+running unrestricted FCI...
+FCI total energy= -1.0567139673335433
+FCI correlation energy= -0.055512040056608036
+
+######################## R=1.49 ###########################
+building molecule...
+ecore= 0.3551524905503355
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.999345629951613  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -0.9993456299516134
+
+running unrestricted FCI...
+FCI total energy= -1.0555231382064258
+FCI correlation energy= -0.05617750825481249
+
+######################## R=1.50 ###########################
+building molecule...
+ecore= 0.3527848072799999
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.997497294328356  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9974972943283564
+
+running unrestricted FCI...
+FCI total energy= -1.054347446016548
+FCI correlation energy= -0.05685015168819163
+
+######################## R=1.51 ###########################
+building molecule...
+ecore= 0.35044848405298007
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.995657012676903  <S^2> = 6.6613381e-16  2S+1 = 1
+Hartree Fock total energy= -0.9956570126769027
+
+running unrestricted FCI...
+FCI total energy= -1.0531869495508572
+FCI correlation energy= -0.05752993687395458
+
+######################## R=1.52 ###########################
+building molecule...
+ecore= 0.34814290192105257
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.993824871557288  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -0.9938248715572883
+
+running unrestricted FCI...
+FCI total energy= -1.0520416987251133
+FCI correlation energy= -0.05821682716782506
+
+######################## R=1.53 ###########################
+building molecule...
+ecore= 0.34586745811764696
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.992000952149344  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9920009521493444
+
+running unrestricted FCI...
+FCI total energy= -1.050911734884004
+FCI correlation energy= -0.05891078273465966
+
+######################## R=1.54 ###########################
+building molecule...
+ecore= 0.3436215655324675
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.990185330560907  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9901853305609067
+
+running unrestricted FCI...
+FCI total energy= -1.0497970910827683
+FCI correlation energy= -0.05961176052186157
+
+######################## R=1.55 ###########################
+building molecule...
+ecore= 0.3414046522064515
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.988378078115858  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -0.9883780781158584
+
+running unrestricted FCI...
+FCI total energy= -1.0486977923517347
+FCI correlation energy= -0.06031971423587623
+
+######################## R=1.56 ###########################
+building molecule...
+ecore= 0.3392161608461538
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.986579261623084  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9865792616230836
+
+running unrestricted FCI...
+FCI total energy= -1.0476138559450257
+FCI correlation energy= -0.061034594321942026
+
+######################## R=1.57 ###########################
+building molecule...
+ecore= 0.33705554835668783
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.984788943627383  <S^2> = 8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9847889436273835
+
+running unrestricted FCI...
+FCI total energy= -1.0465452915747608
+FCI correlation energy= -0.06175634794737739
+
+######################## R=1.58 ###########################
+building molecule...
+ecore= 0.334922285392405
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.98300718264336  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9830071826433604
+
+running unrestricted FCI...
+FCI total energy= -1.0454921016319543
+FCI correlation energy= -0.062484918988593874
+
+######################## R=1.59 ###########################
+building molecule...
+ecore= 0.3328158559245282
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.981234033373235  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9812340333732354
+
+running unrestricted FCI...
+FCI total energy= -1.0444542813952775
+FCI correlation energy= -0.06322024802204207
+
+######################## R=1.60 ###########################
+building molecule...
+ecore= 0.33073575682499995
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.979469546909539  <S^2> = 8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9794695469095387
+
+running unrestricted FCI...
+FCI total energy= -1.0434318192288399
+FCI correlation energy= -0.06396227231930118
+
+######################## R=1.61 ###########################
+building molecule...
+ecore= 0.3286814974658384
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.977713770923564  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9777137709235645
+
+running unrestricted FCI...
+FCI total energy= -1.0424246967700435
+FCI correlation energy= -0.06471092584647897
+
+######################## R=1.62 ###########################
+building molecule...
+ecore= 0.32665259933333324
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.975966749840556  <S^2> = 8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9759667498405559
+
+running unrestricted FCI...
+FCI total energy= -1.0414328891086613
+FCI correlation energy= -0.0654661392681054
+
+######################## R=1.63 ###########################
+building molecule...
+ecore= 0.32464859565644166
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.97422852500223  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9742285250022301
+
+running unrestricted FCI...
+FCI total energy= -1.0404563649578873
+FCI correlation energy= -0.06622783995565718
+
+######################## R=1.64 ###########################
+building molecule...
+ecore= 0.32266903104878036
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.972499134817606  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9724991348176064
+
+running unrestricted FCI...
+FCI total energy= -1.0394950868184814
+FCI correlation energy= -0.06699595200087494
+
+######################## R=1.65 ###########################
+building molecule...
+ecore= 0.3207134611636363
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.970778614902918  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.970778614902918
+
+running unrestricted FCI...
+FCI total energy= -1.0385490111368934
+FCI correlation energy= -0.0677703962339754
+
+######################## R=1.66 ###########################
+building molecule...
+ecore= 0.31878145236144567
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.969066998211222  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9690669982112219
+
+running unrestricted FCI...
+FCI total energy= -1.0376180884580946
+FCI correlation energy= -0.06855109024687267
+
+######################## R=1.67 ###########################
+building molecule...
+ecore= 0.3168725813892215
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.967364315152509  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9673643151525086
+
+running unrestricted FCI...
+FCI total energy= -1.0367022635739822
+FCI correlation energy= -0.06933794842147356
+
+######################## R=1.68 ###########################
+building molecule...
+ecore= 0.3149864350714285
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.965670593704909  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9656705937049088
+
+running unrestricted FCI...
+FCI total energy= -1.0358014756680698
+FCI correlation energy= -0.07013088196316097
+
+######################## R=1.69 ###########################
+building molecule...
+ecore= 0.3131226100118343
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.96398585951767  <S^2> = -8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.96398585951767
+
+running unrestricted FCI...
+FCI total energy= -1.0349156584571124
+FCI correlation energy= -0.0709297989394424
+
+######################## R=1.70 ###########################
+building molecule...
+ecore= 0.3112807123058823
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.962310136006497  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9623101360064974
+
+running unrestricted FCI...
+FCI total energy= -1.0340447403303372
+FCI correlation energy= -0.07173460432383982
+
+######################## R=1.71 ###########################
+building molecule...
+ecore= 0.3094603572631578
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.960643444441833  <S^2> = 8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9606434444418328
+
+running unrestricted FCI...
+FCI total energy= -1.03318864448684
+FCI correlation energy= -0.07254520004500709
+
+######################## R=1.72 ###########################
+building molecule...
+ecore= 0.3076611691395348
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.958985804030618  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9589858040306178
+
+running unrestricted FCI...
+FCI total energy= -1.0323472890716694
+FCI correlation energy= -0.07336148504105156
+
+######################## R=1.73 ###########################
+building molecule...
+ecore= 0.3058827808786126
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.957337231992045  <S^2> = -8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9573372319920446
+
+running unrestricted FCI...
+FCI total energy= -1.0315205873110729
+FCI correlation energy= -0.07418335531902831
+
+######################## R=1.74 ###########################
+building molecule...
+ecore= 0.3041248338620689
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.955697743627809  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9556977436278086
+
+running unrestricted FCI...
+FCI total energy= -1.030708447647347
+FCI correlation energy= -0.07501070401953835
+
+######################## R=1.75 ###########################
+building molecule...
+ecore= 0.3023869776685713
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.954067352387303  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -0.9540673523873031
+
+running unrestricted FCI...
+FCI total energy= -1.029910773873662
+FCI correlation energy= -0.07584342148635881
+
+######################## R=1.76 ###########################
+building molecule...
+ecore= 0.300668869840909
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.952446069928193  <S^2> = -1.7763568e-15  2S+1 = 1
+Hartree Fock total energy= -0.9524460699281934
+
+running unrestricted FCI...
+FCI total energy= -1.0291274652691664
+FCI correlation energy= -0.07668139534097307
+
+######################## R=1.77 ###########################
+building molecule...
+ecore= 0.29897017566101686
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.950833906172784  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -0.9508339061727844
+
+running unrestricted FCI...
+FCI total energy= -1.0283584167347093
+FCI correlation energy= -0.07752451056192489
+
+######################## R=1.78 ###########################
+building molecule...
+ecore= 0.2972905679325842
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.949230869360568  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9492308693605676
+
+running unrestricted FCI...
+FCI total energy= -1.0276035189293706
+FCI correlation energy= -0.07837264956880308
+
+######################## R=1.79 ###########################
+building molecule...
+ecore= 0.2956297267709496
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.947636966097293  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9476369660972934
+
+running unrestricted FCI...
+FCI total energy= -1.0268626584080036
+FCI correlation energy= -0.0792256923107102
+
+######################## R=1.80 ###########################
+building molecule...
+ecore= 0.2939873393999999
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.946052201400919  <S^2> = -1.3322676e-15  2S+1 = 1
+Hartree Fock total energy= -0.9460522014009192
+
+running unrestricted FCI...
+FCI total energy= -1.0261357177599641
+FCI correlation energy= -0.08008351635904498
+
+######################## R=1.81 ###########################
+building molecule...
+ecore= 0.292363099955801
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.944476578744735  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9444765787447348
+
+running unrestricted FCI...
+FCI total energy= -1.0254225757490976
+FCI correlation energy= -0.08094599700436278
+
+######################## R=1.82 ###########################
+building molecule...
+ecore= 0.2907567092967032
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.942910100097971  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9429101000979709
+
+running unrestricted FCI...
+FCI total energy= -1.0247231074551149
+FCI correlation energy= -0.08181300735714392
+
+######################## R=1.83 ###########################
+building molecule...
+ecore= 0.28916787481967204
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.941352765964143  <S^2> = -8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9413527659641432
+
+running unrestricted FCI...
+FCI total energy= -1.0240371844163263
+FCI correlation energy= -0.0826844184521831
+
+######################## R=1.84 ###########################
+building molecule...
+ecore= 0.28759631028260857
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.939804575417405  <S^2> = 2.220446e-16  2S+1 = 1
+Hartree Fock total energy= -0.9398045754174053
+
+running unrestricted FCI...
+FCI total energy= -1.0233646747737986
+FCI correlation energy= -0.0835600993563933
+
+######################## R=1.85 ###########################
+building molecule...
+ecore= 0.28604173563243235
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.938265526137121  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9382655261371211
+
+running unrestricted FCI...
+FCI total energy= -1.0227054434168588
+FCI correlation energy= -0.08443991727973765
+
+######################## R=1.86 ###########################
+building molecule...
+ecore= 0.2845038768387096
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.93673561444088  <S^2> = 8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9367356144408805
+
+running unrestricted FCI...
+FCI total energy= -1.022059352129913
+FCI correlation energy= -0.08532373768903256
+
+######################## R=1.87 ###########################
+building molecule...
+ecore= 0.2829824657326202
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.935214835316185  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9352148353161852
+
+running unrestricted FCI...
+FCI total energy= -1.0214262597404846
+FCI correlation energy= -0.08621142442429941
+
+######################## R=1.88 ###########################
+building molecule...
+ecore= 0.28147723985106377
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.933703182450868  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9337031824508683
+
+running unrestricted FCI...
+FCI total energy= -1.0208060222683475
+FCI correlation energy= -0.08710283981747924
+
+######################## R=1.89 ###########################
+building molecule...
+ecore= 0.27998794228571416
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.93220064826255  <S^2> = 1.7763568e-15  2S+1 = 1
+Hartree Fock total energy= -0.9322006482625498
+
+running unrestricted FCI...
+FCI total energy= -1.0201984930755756
+FCI correlation energy= -0.08799784481302586
+
+######################## R=1.90 ###########################
+building molecule...
+ecore= 0.278514321536842
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.93070722392727  <S^2> = -4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.93070722392727
+
+running unrestricted FCI...
+FCI total energy= -1.0196035230175462
+FCI correlation energy= -0.08889629909027619
+
+######################## R=1.91 ###########################
+building molecule...
+ecore= 0.27705613137172763
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.929222899407302  <S^2> = -8.8817842e-16  2S+1 = 1
+Hartree Fock total energy= -0.9292228994073017
+
+running unrestricted FCI...
+FCI total energy= -1.01902096059445
+FCI correlation energy= -0.08979806118714828
+
+######################## R=1.92 ###########################
+building molecule...
+ecore= 0.27561313068749993
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.92774766347837  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9277476634783698
+
+running unrestricted FCI...
+FCI total energy= -1.0184506521032493
+FCI correlation energy= -0.09070298862487947
+
+######################## R=1.93 ###########################
+building molecule...
+ecore= 0.2741850833782382
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.926281503756392  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9262815037563923
+
+running unrestricted FCI...
+FCI total energy= -1.0178924417899753
+FCI correlation energy= -0.091610938033583
+
+######################## R=1.94 ###########################
+building molecule...
+ecore= 0.2727717582061855
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.924824406723765  <S^2> = 6.6613381e-16  2S+1 = 1
+Hartree Fock total energy= -0.9248244067237654
+
+running unrestricted FCI...
+FCI total energy= -1.0173461720019323
+FCI correlation energy= -0.09252176527816691
+
+######################## R=1.95 ###########################
+building molecule...
+ecore= 0.271372928676923
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.923376357755347  <S^2> = 4.4408921e-16  2S+1 = 1
+Hartree Fock total energy= -0.9233763577553474
+
+running unrestricted FCI...
+FCI total energy= -1.0168116833397765
+FCI correlation energy= -0.09343532558442902
+
+######################## R=1.96 ###########################
+building molecule...
+ecore= 0.26998837291836725
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.921937341144177  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9219373411441774
+
+running unrestricted FCI...
+FCI total energy= -1.0162888148091218
+FCI correlation energy= -0.09435147366494445
+
+######################## R=1.97 ###########################
+building molecule...
+ecore= 0.2686178735634517
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.920507340127005  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.920507340127005
+
+running unrestricted FCI...
+FCI total energy= -1.0157774039715057
+FCI correlation energy= -0.09527006384450076
+
+######################## R=1.98 ###########################
+building molecule...
+ecore= 0.2672612176363635
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.919086336909681  <S^2> = 6.6613381e-16  2S+1 = 1
+Hartree Fock total energy= -0.9190863369096809
+
+running unrestricted FCI...
+FCI total energy= -1.0152772870944045
+FCI correlation energy= -0.09619095018472357
+
+######################## R=1.99 ###########################
+building molecule...
+ecore= 0.265918196442211
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.91767431269246  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9176743126924602
+
+running unrestricted FCI...
+FCI total energy= -1.0147882993001378
+FCI correlation energy= -0.09711398660767756
+
+######################## R=2.00 ###########################
+building molecule...
+ecore= 0.2645886054599999
+
+nelec= (1, 1)
+running unrestricted Hartree Fock...
+converged SCF energy = -0.916271247695245  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -0.9162712476952446
+
+running unrestricted FCI...
+FCI total energy= -1.014310274713352
+FCI correlation energy= -0.0980390270181073

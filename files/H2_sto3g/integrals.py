@@ -32,6 +32,8 @@ for r in r_list:
 
     # oao integrals for the molecule
     S = mol.intor('int1e_ovlp')
+    print(S)
+    continue
     T = mol.intor('int1e_kin')
     V = mol.intor('int1e_nuc')
     hcore = T + V
