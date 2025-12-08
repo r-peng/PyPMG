@@ -3,7 +3,7 @@ import h5py,itertools
 np.set_printoptions(precision=6,suppress=True)
 
 for R in np.arange(1,2.01,.01):
-    f = h5py.File(f'sto3g/h2_sto3g_{R:.2f}.h5','r')
+    f = h5py.File(f'6-31g/h2_{R:.2f}.h5','r')
     const = f['ecore'][()]
     eri = f['eri_oao'][:] 
     hcore = f['hcore_oao'][:]
@@ -13,16 +13,16 @@ for R in np.arange(1,2.01,.01):
     assert np.linalg.norm(eri-eri.transpose(1,0,2,3))<1e-12
     assert np.linalg.norm(eri-eri.transpose(0,1,3,2))<1e-12
     assert np.linalg.norm(eri-eri.transpose(2,3,0,1))<1e-12
-    print(f'R={R:.2f},ecore={const}')
-    print('hcore:')
-    for i,j in itertools.product(range(2),repeat=2):
-        if np.fabs(hcore[i,j])>1e-10:
-            print(i,j,hcore[i,j])
-    print('eri:')
-    for i,j,k,l in itertools.product(range(2),repeat=4):
-        if np.fabs(eri[i,j,k,l])>1e-10:
-            print(i,j,k,l,eri[i,j,k,l])
-    continue
+    print(f'R={R:.2f},ecore={const},nsite={hcore.shape[0]}')
+    #print('hcore:')
+    #for i,j in itertools.product(range(2),repeat=2):
+    #    if np.fabs(hcore[i,j])>1e-10:
+    #        print(i,j,hcore[i,j])
+    #print('eri:')
+    #for i,j,k,l in itertools.product(range(2),repeat=4):
+    #    if np.fabs(eri[i,j,k,l])>1e-10:
+    #        print(i,j,k,l,eri[i,j,k,l])
+    #continue
 
     # permuting into spin-orbital 
     # H = \sum_{pq}h_{pq}a_p^\dagger a_q
