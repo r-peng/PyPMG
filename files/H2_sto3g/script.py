@@ -22,6 +22,7 @@ for R in np.arange(1,2.01,.01):
     for i,j,k,l in itertools.product(range(2),repeat=4):
         if np.fabs(eri[i,j,k,l])>1e-10:
             print(i,j,k,l,eri[i,j,k,l])
+    exit()
     continue
 
     # permuting into spin-orbital 
