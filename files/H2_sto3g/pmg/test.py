@@ -9,7 +9,7 @@ mo[:,0] /= np.linalg.norm(mo[:,0])
 mo[:,1] -= np.dot(mo[:,0],mo[:,1])*mo[:,0]
 mo[:,1] /= np.linalg.norm(mo[:,1])
 print('orth=',np.linalg.norm(np.eye(2)-np.dot(mo.T,mo)))
-h = 0.785398
+h = np.pi/4
 psi = H2State(h,np.ones(6))
 psi.right = mo
 
@@ -19,8 +19,15 @@ const = f['ecore'][()]
 eri = f['eri_oao'][:] 
 hcore = f['hcore_oao'][:]
 f.close()
-
 nao = hcore.shape[0]
+#for i,j in itertools.product(range(nao),repeat=2):
+#    if abs(hcore[i,j])>1e-6:
+#        print(i,j,hcore[i,j])
+for i,j,k,l in itertools.product(range(nao),repeat=4):
+    if abs(eri[i,j,k,l])>1e-6:
+        print(i,j,k,l,eri[i,j,k,l])
+#exit()
+
 nso = nao * 2
 h = np.zeros((nso,nso))
 h[::2,::2] = h[1::2,1::2] = hcore
@@ -38,9 +45,11 @@ v = v_asym/4
 #for i,j,k,l in itertools.product(range(nso),repeat=4):
 #    if abs(v[i,j,k,l])>1e-6:
 #        print(i,j,k,l,v[i,j,k,l])
+#exit()
 
 ham = Ham(h,v)
-basis = (1,1,0,0),(1,0,1,0),(0,1,1,0),(1,0,0,1),(0,1,0,1),(0,0,1,1)
+#basis = (1,1,0,0),(1,0,1,0),(0,1,1,0),(1,0,0,1),(0,1,0,1),(0,0,1,1)
+basis = (1,1,0,0),(0,1,1,0),(1,0,0,1),(0,0,1,1)
 basis_map = {b:i for i,b in enumerate(basis) }
 H = np.zeros((len(basis),)*2)
 for i,x in enumerate(basis):
@@ -49,6 +58,10 @@ for i,x in enumerate(basis):
         j = basis_map[y]
         H[j,i] += coeff
 print(H)
+w,v = np.linalg.eigh(H)
+print(w)
+print(v)
+exit()
 
 vmc = VMC(psi,ham)
 E = 0

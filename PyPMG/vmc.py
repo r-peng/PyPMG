@@ -158,8 +158,8 @@ class SGD: # stochastic sampling
             configs.append(config)
             send += 1
             COMM.send(send,dest=rank)
-
         print('\tsample time=',time.time()-t0)
+        #print(configs)
         return configs
     def _sample_stochastic(self,sample_size,compute_v,compute_h):
         self.f = None
@@ -169,7 +169,7 @@ class SGD: # stochastic sampling
                 break 
             cf,_ = self.sampler.sample()
             cx,ex,vx,hx = compute_local_energy(cf,self.psi,self.ham,compute_v=compute_v,compute_h=compute_h)
-            if cx is None or np.fabs(ex.real)/self.nsite > self.discard:
+            if cx is None or np.fabs(ex.real) > self.discard:
                 print(f'RANK={RANK},cx={cx},ex={ex}')
                 ex = np.zeros(1)[0]
                 err = 0.
@@ -252,8 +252,10 @@ class SGD: # stochastic sampling
             if fi is not None:
                 f.append(fi)
         e = np.concatenate(e)
+        #print('all_e=',e)
         if fi is not None:
             f = np.concatenate(f)
+            #print('all_f=',f)
             self.E = np.dot(f,e)
             self.Eerr,self.n = 0,1
         else:
@@ -494,3 +496,60 @@ class MHSampler:
             return self.cf,self.px
         self.cf,self.px = y,py
         return self.cf,self.px
+class VMC:
+    def __init__(self,psi,ham):
+        self.psi = psi
+        self.ham = ham
+        self.thresh = 1e-10
+    def eloc(self,x,derivative=True):
+        if derivative:
+            psi_x,vx = self.psi.amplitude_and_derivative(x)
+        else:
+            psi_x = self.psi.amplitude(x)
+            vx = 0
+        if np.absolute(psi_x)<self.thresh:
+            return psi_x,0,None
+        terms = self.ham.eloc_terms(x)
+        eloc = 0
+        for (y,coeff) in terms.items():
+            eloc += self.psi.amplitude(y)*coeff
+        return psi_x,eloc/psi_x,vx/psi_x
+    def sample_exact(self):
+        E = []
+        v = []
+        p = []
+        for x in itertools.product((0,1),repeat=self.psi.nsite):
+            psi_x,ex,vx = self.eloc(x) 
+            px = psi_x**2
+            if px<self.thresh:
+                continue
+            E.append(ex)
+            v.append(vx)
+            p.append(px)
+        self.p = np.array(p)
+        self.E = np.array(E)
+        self.v = np.array(v)
+
+        nsq = self.p.sum()
+        self.p /= nsq
+        self.energy = np.dot(self.E,self.p)
+    def SR(self,cond=1e-3):
+        vmean = np.dot(self.p,self.v)
+        g = np.dot(self.E*self.p,self.v)-self.energy*vmean 
+        S = np.einsum('i,ij,ik->jk',self.p,self.v,self.v)
+        S -= np.outer(vmean,vmean)
+        S += np.eye(len(vmean))*cond
+        return np.dot(np.linalg.inv(S),g)
+    def run(self,nsteps,stepsize,thresh=1e-6):
+        e_old = 0
+        for i in range(nsteps):
+            self.sample_exact()
+            print(f'step={i},energy={self.energy}')
+            if e_old-self.energy<0:
+                raise ValueError
+            if e_old-self.energy<thresh:
+                return
+            e_old = self.energy
+            dx = self.SR()
+            xnew = self.psi.get_x()-stepsize*dx
+            self.psi.update(xnew)

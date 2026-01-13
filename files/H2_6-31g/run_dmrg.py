@@ -1,8 +1,8 @@
 import numpy as np
 import pickle,h5py,itertools
-from pyblock3.algebra.mpe import MPE
-from pyblock3.hamiltonian import Hamiltonian 
-from pyblock3.fcidump import FCIDUMP
+#from pyblock3.algebra.mpe import MPE
+#from pyblock3.hamiltonian import Hamiltonian 
+#from pyblock3.fcidump import FCIDUMP
 
 for R in np.arange(1,2.01,.01):
     print(f'##################### R={R:.2f} #############################')
@@ -13,6 +13,8 @@ for R in np.arange(1,2.01,.01):
     f.close()
     
     nao = hcore.shape[0]
+    print(nao)
+    exit()
     #nso = nao * 2
     #h = np.zeros((nso,nso))
     #h[::2,::2] = h[1::2,1::2] = hcore

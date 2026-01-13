@@ -44,6 +44,8 @@ for r in r_list:
 
     hcore_oao = X.T.conj() @ hcore @ X
     n_oao = X.shape[1]
+    print(n_oao)
+    exit()
     eri_packed = ao2mo.kernel(mol, X)
     eri_oao = ao2mo.restore(1, eri_packed, n_oao)
 
