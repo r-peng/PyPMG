@@ -8,6 +8,17 @@ COMM = MPI.COMM_WORLD
 SIZE = COMM.Get_size()
 RANK = COMM.Get_rank()
 np.set_printoptions(suppress=True,precision=10,linewidth=10000)
+#U = np.array(
+#[[ 0.69499906  ,  0.1302933938, -0.3932004122,  0.587701773 ],
+# [ 0.0322848543, -0.1723098066, -0.8182746962, -0.5474427278],
+# [-0.6950040678, -0.1302662046, -0.3931827951,  0.5877136645],
+# [ 0.1813927798, -0.9676588645,  0.1456957344,  0.0974973558]]
+#)
+#print('tan1=',U[2,0]/U[0,0],U[2,1]/U[0,1],-U[0,2]/U[2,2],-U[0,3]/U[2,3])
+#print('tan2=',U[3,0]/U[1,0],U[3,1]/U[1,1],-U[1,2]/U[3,2],-U[1,3]/U[3,3])
+#print('tan3=',-U[0,1]/U[0,0],U[1,0]/U[1,1],-U[0,3]/U[0,2],U[1,2]/U[1,3])
+#exit()
+
 R = 1
 f = h5py.File(f'../sto3g/h2_sto3g_{R:.2f}.h5','r')
 const = f['ecore'][()]
@@ -25,7 +36,7 @@ if RANK==0:
     print('H eigvals=',w)
 
 check_mo = False
-x = np.load('../pmg/psi_init.npy')
+x = np.load('../pmg/psi_init.npy')[:4]
 h,kvec = x[0],x[1:]
 h = np.pi/4
 if RANK==0:

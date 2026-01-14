@@ -43,6 +43,7 @@ def new_configs(x,nexs=2,symmetry='u11'):
     vir = np.argwhere(np.array(x)<0.5).flatten()
     new_cfs = []
     for nex in range(1,nexs+1):
+    #for nex in [2]:
         occ_ = list(itertools.combinations(occ,nex))
         vir_ = list(itertools.combinations(vir,nex))
         for oix,vix in itertools.product(occ_,vir_): 

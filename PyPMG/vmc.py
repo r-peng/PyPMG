@@ -119,6 +119,8 @@ class SGD: # stochastic sampling
             self.free_quantities()
             COMM.Bcast(x,root=0) 
             self.psi.update(x)
+            if save_wfn and RANK==0:
+                np.save(f'psi{step+1}.npy',x)
     def sample(self,sample_size=None,compute_v=True,compute_h=None,save_config=True):
         self.sampler.preprocess(self.psi)
         compute_h = self.compute_h if compute_h is None else compute_h
@@ -200,6 +202,7 @@ class SGD: # stochastic sampling
         p = self.sampler.p
         all_cfs = self.sampler.all_cfs
         ixs = self.sampler.nonzeros
+        #print(all_cfs,ixs)
         ntotal = len(ixs)
         if RANK==SIZE-1:
             print('\tnsamples per process=',ntotal)
@@ -252,10 +255,10 @@ class SGD: # stochastic sampling
             if fi is not None:
                 f.append(fi)
         e = np.concatenate(e)
-        #print('all_e=',e)
+        print('all_e=',e)
         if fi is not None:
             f = np.concatenate(f)
-            #print('all_f=',f)
+            print('all_f=',f)
             self.E = np.dot(f,e)
             self.Eerr,self.n = 0,1
         else:
@@ -463,9 +466,10 @@ class DenseSampler:
         omega = self.p[idx]
         return config,omega
 class MHSampler:
-    def __init__(self,burn_in=40,seed=None):
+    def __init__(self,burn_in=40,every=10,seed=None):
         self.burn_in = burn_in
         self.rng = np.random.default_rng(seed)
+        self.every = every
         self.exact = False
     def preprocess(self,psi):
         self.psi = psi
@@ -486,15 +490,16 @@ class MHSampler:
         if RANK==SIZE-1:
             print('\tburn in time=',time.time()-t0)
     def sample(self):
-        cfs = self.psi.new_configs(self.cf)
-        y = cfs[self.rng.choice(len(cfs))]
-        py = self.psi.log_prob(y)
-        if py is None:
-            return self.cf,self.px
-        acceptance = np.exp(py-self.px)
-        if acceptance<self.rng.uniform():
-            return self.cf,self.px
-        self.cf,self.px = y,py
+        for _ in range(self.every):
+            cfs = self.psi.new_configs(self.cf)
+            y = cfs[self.rng.choice(len(cfs))]
+            py = self.psi.log_prob(y)
+            if py is None:
+                continue
+            acceptance = np.exp(py-self.px)
+            if acceptance<self.rng.uniform():
+                continue
+            self.cf,self.px = y,py
         return self.cf,self.px
 class VMC:
     def __init__(self,psi,ham):

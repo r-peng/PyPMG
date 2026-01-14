@@ -19,7 +19,8 @@ def read(out):
     return np.array(e)
 
 eref = -1.6303275411526
-fnames = 'exact','n10000','n5000','n2000','n1000'
+#fnames = 'exact','n10000','n5000','n2000','n1000'
+fnames = 'fix0','fix1','fix2','singlet'
 colors = 'tab:blue','tab:green','tab:orange','tab:red','tab:cyan'
 for f,c in zip(fnames,colors):
     out = open(f+f'.out', 'r').readlines()
