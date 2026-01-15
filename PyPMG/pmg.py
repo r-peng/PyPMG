@@ -7,8 +7,8 @@ class H2State(FermionState):
         # modes order: c1,c2,c3,c4
         super().__init__(4,(1,1),symmetry=symmetry)
 
-        self.nparam = 4 
-        assert len(kvec)==3
+        self.nparam = 3
+        assert len(kvec)==2
 
         self.hmat = np.zeros((4,4))
         self.hmat[0,2] = 1
@@ -21,10 +21,6 @@ class H2State(FermionState):
         self.k13 = np.zeros((4,4))
         self.k13[1,3] = 1 
         self.k13 -= self.k13.T
-
-        self.k12 = np.zeros((4,4))
-        self.k12[0,1] = 1 
-        self.k12 -= self.k12.T
 
         self._update(h,kvec)
     def get_x(self,h=None,kvec=None):
@@ -40,11 +36,8 @@ class H2State(FermionState):
         self.left = scipy.linalg.expm(-h*self.hmat)
 
         self.kvec = kvec
-        k1 = self.k02*kvec[0]+self.k13*kvec[1]
-        u1 = scipy.linalg.expm(k1)
-        k2 = self.k12*kvec[2]
-        u2 = scipy.linalg.expm(k2)
-        self.right = np.dot(u1,u2[:,:2]) 
+        k = self.k02*kvec[0]+self.k13*kvec[1]
+        self.right = scipy.linalg.expm(k)[:,:2]
     def amplitude_and_derivative(self,x):
         if self.symmetry=='u1':
             if sum(x)!=sum(self.nelec):
@@ -60,18 +53,14 @@ class H2State(FermionState):
         hmat = torch.tensor(self.hmat,requires_grad=False)
         k02 = torch.tensor(self.k02,requires_grad=False)
         k13 = torch.tensor(self.k13,requires_grad=False)
-        k12 = torch.tensor(self.k12,requires_grad=False)
 
         h_ = h*(-1)**x[1]
         left = torch.linalg.matrix_exp(-h_*hmat)
         idx = np.argwhere(x).flatten()
         left = left[:,idx]
 
-        k1 = k02*kvec[0]+k13*kvec[1]
-        u1 = torch.linalg.matrix_exp(k1)
-        k2 = k12*kvec[2]
-        u2 = torch.linalg.matrix_exp(k2)
-        right = torch.matmul(u1,u2[:,:2])
+        k = k02*kvec[0]+k13*kvec[1]
+        right = torch.linalg.matrix_exp(k)[:,:2]
 
         psi_x = torch.matmul(left.T,right)
         psi_x = torch.linalg.det(psi_x)
@@ -93,29 +82,44 @@ class H2State(FermionState):
         left = self.left if x[1]==0 else self.left.T
         idx = np.argwhere(x).flatten()
         left = left[:,idx]
-
         M = np.dot(left.T,self.right)
         return np.linalg.det(M)
     def get_PMG_MB(self,basis):
         basis_map = {b:i for i,b in enumerate(basis)}
         kappa = np.zeros((len(basis),)*2)
-        def fill(ops,coeff):
+        def fill(i,ops,coeff):
+            x = basis[i]
             y,sign = string_act(x,ops)
             if y is not None:
                 j = basis_map[tuple(y)]
                 kappa[j,i] += sign*coeff
 
-        for i,x in enumerate(basis):
+        for i in range(len(basis)):
             ops = (0,'cre'),(2,'des')
-            fill(ops,self.h)
+            fill(i,ops,self.h)
             ops = (0,'cre'),(1,'cre'),(1,'des'),(2,'des')
-            fill(ops,-2*self.h)
+            fill(i,ops,-2*self.h)
 
             ops = (2,'cre'),(0,'des')
-            fill(ops,-self.h)
+            fill(i,ops,-self.h)
             ops = (2,'cre'),(1,'cre'),(1,'des'),(0,'des')
-            fill(ops,2*self.h)
+            fill(i,ops,2*self.h)
         return kappa
+    def get_13_MB(self,basis):
+        basis_map = {b:i for i,b in enumerate(basis)}
+        kappa = np.zeros((len(basis),)*2)
+        def fill(i,ops,coeff):
+            x = basis[i]
+            y,sign = string_act(x,ops)
+            if y is not None:
+                j = basis_map[tuple(y)]
+                kappa[j,i] += sign*coeff
+        for i in range(len(basis)):
+            ops = (0,'cre'),(2,'des')
+            fill(i,ops,self.kvec[0])
+            ops = (2,'cre'),(0,'des')
+            fill(i,ops,-self.kvec[0])
+        return -kappa
 class H2State_GHF(H2State):
     def __init__(self,h,kvec,symmetry='u11'):
         super().__init__(h,kvec,symmetry=symmetry)
@@ -124,6 +128,7 @@ class H2State_GHF(H2State):
         return super().get_x(h=h,kvec=kvec)[1:]
     def update(self,x):
         super()._update(self.h,x)
+#class Jastrow(FermionState):
 if __name__=='__main__':
     N = 4
     h = np.random.rand()

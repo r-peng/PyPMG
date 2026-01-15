@@ -58,6 +58,30 @@ def new_configs(x,nexs=2,symmetry='u11'):
                     continue
             new_cfs.append(tuple(y))
     return new_cfs
+def get_Sz(nsite,basis):
+    basis_map = {b:i for i,b in enumerate(basis)}
+    M = np.zeros((len(basis),)*2)
+    for i,x in enumerate(basis):
+        Mii = 0
+        for p in range(nsite):
+            Mii += x[p]*(-1)**(p%2)
+        M[i,i] = Mii/2
+    return M
+def get_Spm(nsite,basis,typ):
+    basis_map = {b:i for i,b in enumerate(basis)}
+    M = np.zeros((len(basis),)*2)
+    for i,x in enumerate(basis):
+        for p in range(nsite//2):
+            if typ=='+':
+                ops = (2*p,'cre'),(2*p+1,'des')
+            else:
+                ops = (2*p+1,'cre'),(2*p,'des')
+            y,sign = string_act(x,ops)
+            if y is None:
+                continue
+            j = basis_map[y]
+            M[j,i] += sign
+    return M
 class QCHamiltonian:
     def __init__(self,hcore,eri):
         self.nao = hcore.shape[0]
@@ -110,13 +134,13 @@ class QCHamiltonian:
             else:
                 raise NotImplementedError
         basis_map = {b:i for i,b in enumerate(basis)}
-        H = np.zeros((len(basis),)*2)
+        M = np.zeros((len(basis),)*2)
         for i,x in enumerate(basis):
             terms = self.eloc_terms(x)
             for y,coeff in terms.items():
                 j = basis_map[y]
-                H[j,i] += coeff
-        return H,basis
+                M[j,i] += coeff
+        return M,basis
 class MBHamiltonian:
     def __init__(self,H,basis):
         self.H = H
