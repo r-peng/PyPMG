@@ -6,17 +6,6 @@ from mpi4py import MPI
 COMM = MPI.COMM_WORLD
 SIZE = COMM.Get_size()
 RANK = COMM.Get_rank()
-def compute_local_energy(x,psi,ham,compute_v=True,compute_h=False):
-    if compute_v:
-        psi_x,vx = psi.amplitude_and_derivative(x)
-    else:
-        psi_x = psi.amplitude(x)
-        vx = 0
-    terms = ham.eloc_terms(x)
-    eloc = 0
-    for (y,coeff) in terms.items():
-        eloc += psi.amplitude(y)*coeff
-    return psi_x,eloc/psi_x,vx/psi_x,None
 def blocking_analysis(energies, weights=None, neql=0, printQ=True):
     weights = np.ones_like(energies) if weights is None else weights
     nSamples = weights.shape[0] - neql
@@ -109,12 +98,23 @@ class SGD: # stochastic sampling
         gc.collect()
     def run(self,start,stop,save_wfn=True):
         self.Eold = None 
+        self.Lold = None
         for step in range(start,stop):
             self.step = step
             if RANK==0:
+                print('step=',step)
                 print('\nnparam=',self.nparam)
             self.sample()
             self.extract_energy_gradient()
+            if RANK==0:
+                dE = 0 if self.Eold is None else self.E-self.Eold
+                print(f'energy={self.E},dE={dE},std={self.Eerr}')
+                self.Eold = self.E
+
+                dL = 0 if self.Lold is None else self.L-self.Lold
+                print(f'loss  ={self.L},dloss={dL},std={self.Lerr}')
+                self.Lold = self.L
+                print(f'\tgnorm=',np.linalg.norm(self.g))
             x = self.transform_gradients()
             self.free_quantities()
             COMM.Bcast(x,root=0) 
@@ -122,17 +122,9 @@ class SGD: # stochastic sampling
             if save_wfn and RANK==0:
                 np.save(f'psi{step+1}.npy',x)
     def sample(self,sample_size=None,compute_v=True,compute_h=None,save_config=True):
-        self.sampler.preprocess(self.psi)
+        ham = self.ham['energy']
+        self.sampler.preprocess(self.psi,ham=ham)
         compute_h = self.compute_h if compute_h is None else compute_h
-        self.c = []
-        self.e = []
-        if compute_v:
-            self.evsum = np.zeros(self.nparam,dtype=self.dtype)
-            self.vsum = np.zeros(self.nparam,dtype=self.dtype)
-            self.v = []
-        if compute_h:
-            self.hsum = np.zeros(self.nparam,dtype=self.dtype)
-            self.h = [] 
         if self.sampler.exact:
             if RANK==0:
                 return
@@ -151,54 +143,47 @@ class SGD: # stochastic sampling
         recv = 0
         for send in range(SIZE-1):
             COMM.send(send,dest=send+1)
-        configs = []
         while recv<sample_size:
-            rank,step,config = COMM.recv(tag=0)
+            rank,step = COMM.recv(tag=0)
             if step!=self.step:
                 raise ValueError(f'step={step},self.step={self.step}')
             recv += 1
-            configs.append(config)
             send += 1
             COMM.send(send,dest=rank)
         print('\tsample time=',time.time()-t0)
-        #print(configs)
-        return configs
+    def _accumulate(self,x,compute_v,compute_h):
+        self.cfs.append(x)
+        for key in self.ham:
+            self.ham[key].compute_eloc(x,self.psi)
+        if compute_v:
+            self.psi.amplitude_and_derivative(x)
+    def _collect(self,compute_v,compute_h):
+        self.c = np.array([self.psi.amps[x] for x in self.cfs])
+        self.psi.amps = dict()
+
+        self.e = {'loss':0} 
+        for key in self.ham:
+            self.e[key] = np.array([self.ham[key].elocs[x] for x in self.cfs])
+            self.e['loss'] += self.ham[key].weight*self.e[key]
+            self.ham[key].elocs = dict()
+        if compute_v:
+            self.v = np.array([self.psi.ders[x] for x in self.cfs])
+        self.psi.ders = dict()
     def _sample_stochastic(self,sample_size,compute_v,compute_h):
-        self.f = None
+        self.cfs = []
+        ham = self.ham['energy']
         while True:
             send = COMM.recv(source=0)
             if send>=sample_size:
                 break 
-            cf,_ = self.sampler.sample()
-            cx,ex,vx,hx = compute_local_energy(cf,self.psi,self.ham,compute_v=compute_v,compute_h=compute_h)
-            if cx is None or np.fabs(ex.real) > self.discard:
-                print(f'RANK={RANK},cx={cx},ex={ex}')
-                ex = np.zeros(1)[0]
-                err = 0.
-                if compute_v:
-                    vx = np.zeros(self.nparam,dtype=self.dtype)
-                if compute_h:
-                    hx = np.zeros(self.nparam,dtype=self.dtype)
-            self.c.append(cx)
-            self.e.append(ex)
-            if compute_v:
-                self.vsum += vx
-                self.evsum += vx * ex.conj()
-                self.v.append(vx)
-            if compute_h:
-                self.hsum += hx
-                self.h.append(hx)
-            COMM.send((RANK,self.step,cf),dest=0,tag=0) 
-
-        #self.sampler.config = self.config
-        self.e = np.array(self.e)
-        self.c = np.array(self.c)
-        if compute_v:
-            self.v = np.array(self.v)
-        if compute_h:
-            self.h = np.array(self.h)
+            x,_ = self.sampler.sample(self.psi,ham=ham)
+            cx = self.psi.amplitude(x)
+            if cx is None or np.fabs(cx) < self.psi.thresh:
+                continue
+            self._accumulate(x,compute_v,compute_h)
+            COMM.send((RANK,self.step),dest=0,tag=0) 
+        self._collect(compute_v,compute_h)
     def _sample_exact(self,compute_v,compute_h): 
-        self.f = []
         p = self.sampler.p
         all_cfs = self.sampler.all_cfs
         ixs = self.sampler.nonzeros
@@ -206,29 +191,15 @@ class SGD: # stochastic sampling
         ntotal = len(ixs)
         if RANK==SIZE-1:
             print('\tnsamples per process=',ntotal)
+
+        self.cfs = []
         for ix in ixs:
-            cf = all_cfs[ix]
-            cx,ex,vx,hx = compute_local_energy(cf,self.psi,self.ham,compute_v=compute_v,compute_h=compute_h)
+            x = all_cfs[ix]
+            cx = self.psi.amplitude(x)
             if cx is None:
                 raise ValueError
-            if np.fabs(ex.real)*p[ix] > self.discard:
-                raise ValueError(f'RANK={RANK},config={config},cx={cx},ex={ex}')
-            self.f.append(p[ix])
-            self.e.append(ex)
-            if compute_v:
-                self.vsum += vx * p[ix]
-                self.evsum += vx * ex.conj() * p[ix]
-                self.v.append(vx)
-            if compute_h:
-                self.hsum += hx * p[ix]
-                self.h.append(hx)
-        self.f = np.array(self.f)
-        self.e = np.array(self.e)
-        self.c = np.array(self.c)
-        if compute_v:
-            self.v = np.array(self.v)
-        if compute_h:
-            self.h = np.array(self.h)
+            self._accumulate(x,compute_v,compute_h)
+        self._collect(compute_v,compute_h)
     def extract_energy_gradient(self):
         t0 = time.time()
         self.extract_energy()
@@ -236,45 +207,54 @@ class SGD: # stochastic sampling
         if self.optimizer in ['rgn','lin','trust']:
             self._extract_hmean()
         if RANK==0:
-            try:
-                dE = 0 if self.Eold is None else self.E-self.Eold
-                print(f'step={self.step},E={self.E},dE={dE},std={self.Eerr}')
-                print(f'\tgnorm=',np.linalg.norm(self.g))
-            except TypeError:
-                print('E=',self.E)
             print('\tcollect g,h time=',time.time()-t0)
     def extract_energy(self):
         if RANK>0:
-            COMM.send((self.e,self.f),dest=0,tag=1)
+            if self.sampler.exact:
+                self.f = self.c*self.c.conj() 
+            else:
+                self.f = np.ones(len(self.c))
+            COMM.send((self.e['loss'],self.e['energy'],self.f),dest=0,tag=1)
             return
+        l = []
         e = []
         f = []
         for worker in range(1,SIZE):
-            ei,fi = COMM.recv(source=worker,tag=1)
+            li,ei,fi = COMM.recv(source=worker,tag=1)
+            l.append(li)
             e.append(ei)
-            if fi is not None:
-                f.append(fi)
+            f.append(fi)
+        l = np.concatenate(l)
         e = np.concatenate(e)
+        self.f = np.concatenate(f)
+        self.n = self.f.sum()
         print('all_e=',e)
-        if fi is not None:
-            f = np.concatenate(f)
-            print('all_f=',f)
-            self.E = np.dot(f,e)
-            self.Eerr,self.n = 0,1
+        if self.sampler.exact:
+            print('all_f=',self.f)
+            self.L = np.dot(self.f,l)
+            self.E = np.dot(self.f,e)
+            self.Lerr,self.Eerr = 0,0
         else:
-            self.n = len(e)
             print('nsamples=',self.n)
             self.E,self.Eerr = blocking_analysis(e)
+            self.L,self.Lerr = blocking_analysis(l)
     def extract_gradient(self):
-        vmean = np.zeros(self.nparam,dtype=self.dtype)
-        COMM.Reduce(self.vsum,vmean,op=MPI.SUM,root=0)
-        evmean = np.zeros(self.nparam,dtype=self.dtype)
-        COMM.Reduce(self.evsum,evmean,op=MPI.SUM,root=0)
+        self.vmean = np.zeros(self.nparam,dtype=self.dtype)
+        vsum = self.vmean.copy() if RANK==0 else\
+               np.dot(self.f,self.v) 
+        COMM.Reduce(vsum,self.vmean,op=MPI.SUM,root=0)
+
+        self.evmean = np.zeros(self.nparam,dtype=self.dtype)
+        evsum = self.evmean.copy() if RANK==0 else\
+                np.dot(self.f*self.e['loss'],self.v) 
+        COMM.Reduce(evsum,self.evmean,op=MPI.SUM,root=0)
         if RANK>0:
+            self.vmean = None
+            self.evmean = None
             return 
-        self.vmean = vmean/self.n
-        self.evmean = evmean/self.n
-        self.g = (self.evmean - self.E.conj() * self.vmean).real
+        self.vmean /= self.n
+        self.evmean /= self.n
+        self.g = (self.evmean - self.L.conj() * self.vmean).real
     def update(self,deltas):
         x = self.psi.get_x()
         xnorm = np.linalg.norm(x)
@@ -305,13 +285,9 @@ class SR(SGD):
         self.cond1 = None
     def _get_Smatrix(self):
         t0 = time.time()
-        if RANK==0:
-            vvsum = np.zeros((self.nparam,)*2,dtype=self.dtype)
-        else:
-            v = self.v
-            vvsum = np.dot(v.T.conj(),v) if self.f is None else\
-                    np.einsum('s,si,sj->ij',self.f,v.conj(),v)
-        vvmean = np.zeros_like(vvsum)
+        vvmean = np.zeros((self.nparam,)*2,dtype=self.dtype)
+        vvsum = vvmean.copy() if RANK==0 else\
+                np.einsum('s,si,sj->ij',self.f,self.v.conj(),self.v)
         COMM.Reduce(vvsum,vvmean,op=MPI.SUM,root=0)
         if RANK>0:
             return
@@ -335,8 +311,7 @@ class SR(SGD):
                 if self.terminate[0]==1:
                     return 0 
                 COMM.Bcast(x,root=0)
-                Sx1 = np.dot(np.dot(v,x),v.conj()) if self.f is None else \
-                      np.dot(self.f*np.dot(v,x),v.conj())
+                Sx1 = np.dot(self.f*np.dot(v,x),v.conj())
                 COMM.Reduce(Sx1,self.Sx1,op=MPI.SUM,root=0)     
                 return 0 
         return matvec
@@ -407,8 +382,8 @@ class DenseSampler:
         self.exact = exact 
         self.thresh = thresh
         self.all_cfs = None
-    def initialize(self):
-        self.all_cfs = self.psi.get_all_configs()
+    def initialize(self,psi):
+        self.all_cfs = psi.get_all_configs()
         self.ntot = len(self.all_cfs)
         if RANK==0:
             print('ntotal configs=',self.ntot)
@@ -421,12 +396,11 @@ class DenseSampler:
         self.disp = np.concatenate([np.array([0]),np.cumsum(self.count[:-1])])
         self.start = self.disp[RANK]
         self.stop = self.start + self.count[RANK]
-    def preprocess(self,psi):
-        self.psi = psi
+    def preprocess(self,psi,ham=None):
         if self.all_cfs is None:
-            self.initialize()
-        self.compute_dense_prob()
-    def compute_dense_prob(self):
+            self.initialize(psi)
+        self.compute_dense_prob(psi)
+    def compute_dense_prob(self,psi):
         t0 = time.time()
         ptot = np.zeros(self.ntot)
         start,stop = self.start,self.stop
@@ -434,7 +408,7 @@ class DenseSampler:
 
         plocal = [] 
         for x in cfs:
-            px = self.psi.log_prob(x)
+            px = psi.log_prob(x)
             px = 0 if px is None else np.exp(px) 
             plocal.append(px)
         plocal = np.array(plocal)
@@ -446,6 +420,7 @@ class DenseSampler:
                 nonzeros.append(ix) 
         n = np.sum(ptot)
         self.p = ptot/n
+        print(self.p)
 
         ntot = len(nonzeros)
         batchsize,remain = ntot//(SIZE-1),ntot%(SIZE-1)
@@ -471,13 +446,12 @@ class MHSampler:
         self.rng = np.random.default_rng(seed)
         self.every = every
         self.exact = False
-    def preprocess(self,psi):
-        self.psi = psi
-        self._burn_in()
-    def _burn_in(self,cf=None,burn_in=None,exclude_root=True):
+    def preprocess(self,psi,ham=None):
+        self._burn_in(psi,ham=ham)
+    def _burn_in(self,psi,ham=None,cf=None,burn_in=None,exclude_root=True):
         if cf is not None:
             self.cf = cf 
-        self.px = self.psi.log_prob(self.cf)
+        self.px = psi.log_prob(self.cf)
 
         if exclude_root and RANK==0:
             print('\tlog prob=',self.px)
@@ -486,17 +460,18 @@ class MHSampler:
         burn_in = self.burn_in if burn_in is None else burn_in
         t0 = time.time()
         for n in range(burn_in):
-            self.cf,_ = self.sample()
+            self.cf,_ = self.sample(psi,ham=ham)
         if RANK==SIZE-1:
             print('\tburn in time=',time.time()-t0)
-    def sample(self):
+    def sample(self,psi,ham=None):
         for _ in range(self.every):
-            cfs = self.psi.new_configs(self.cf)
-            y = cfs[self.rng.choice(len(cfs))]
-            py = self.psi.log_prob(y)
+            y,qx2y = psi.propose(self.cf,self.rng,ham=ham)
+            qy2x = psi.propose_reverse(self.cf,y,ham=ham)
+            py = psi.log_prob(y)
             if py is None:
                 continue
             acceptance = np.exp(py-self.px)
+            acceptance *= qy2x/qx2y
             if acceptance<self.rng.uniform():
                 continue
             self.cf,self.px = y,py

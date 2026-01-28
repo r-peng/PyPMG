@@ -33,7 +33,6 @@ for r in r_list:
     # oao integrals for the molecule
     S = mol.intor('int1e_ovlp')
     print(S)
-    continue
     T = mol.intor('int1e_kin')
     V = mol.intor('int1e_nuc')
     hcore = T + V
@@ -44,6 +43,8 @@ for r in r_list:
     # np.testing.assert_allclose(X.T @ S @ X, np.eye(X.shape[1]), atol=1e-10)
 
     hcore_oao = X.T.conj() @ hcore @ X
+    print(X)
+    exit()
     n_oao = X.shape[1]
     eri_packed = ao2mo.kernel(mol, X)
     eri_oao = ao2mo.restore(1, eri_packed, n_oao)

@@ -15,15 +15,20 @@ eri = f['eri_oao'][:]
 hcore = f['hcore_oao'][:]
 f.close()
 
-ham = QCHamiltonian(hcore,eri)
 basis = (1,1,0,0),(1,0,1,0),(0,1,1,0),(1,0,0,1),(0,1,0,1),(0,0,1,1)
 basis = (1,1,0,0),(1,0,0,1),(0,1,1,0),(0,0,1,1),(1,0,1,0),(0,1,0,1)
 nsite = 4
-Sz = get_Sz(nsite,basis)
-Sp = get_Spm(nsite,basis,'+')
-Sm = get_Spm(nsite,basis,'-')
-Ssq = np.dot(Sz,Sz)+(np.dot(Sp,Sm)+np.dot(Sm,Sp))/2
-Hmat,_ = ham.get_MB_hamiltonian(basis=basis)
+#Sz = get_MB_Sz(nsite,basis)
+#Sp = get_MB_Spm(nsite,basis,'+')
+#Sm = get_MB_Spm(nsite,basis,'-')
+#Ssq = np.dot(Sz,Sz)+(np.dot(Sp,Sm)+np.dot(Sm,Sp))/2
+#S2,_ = TotalSpin(2).get_MB_matrix(basis=basis)
+#print(Ssq)
+#print(S2)
+#exit()
+
+ham = QCHamiltonian(hcore,eri)
+Hmat,_ = ham.get_MB_matrix(basis=basis)
 if RANK==0:
     print('Hmat')
     print(Hmat)
@@ -33,13 +38,11 @@ if RANK==0:
 #    print('[H,S^2]=',np.linalg.norm(comm))
 
 check_mo = False
-x = np.load('../pmg_R1/init.npy')[:3]
-h,kvec = x[0],x[1:]
-h = np.pi/4
-kvec[0] = np.pi/4
+#x = np.load('../pmg_R1/init.npy')[:3]
+x = np.array([np.pi/4,np.pi/4,0])
 #if RANK==0:
 #    print('h=',h,np.pi/4)
-psi = H2State_GHF(h,kvec)
+psi = H2State(x)
 if check_mo:
     mo = np.array([[ 0.704936,  0.0553673], #c1
                    [ 0.0137269,-0.17477],   #c2

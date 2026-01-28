@@ -19,6 +19,30 @@ def string_act(x,ops,order=-1):
         if y is None:
             return None,0
     return tuple(y),np.prod(s)
+def get_MB_Sz(nsite,basis):
+    basis_map = {b:i for i,b in enumerate(basis)}
+    M = np.zeros((len(basis),)*2)
+    for i,x in enumerate(basis):
+        Mii = 0
+        for p in range(nsite):
+            Mii += x[p]*(-1)**(p%2)
+        M[i,i] = Mii/2
+    return M
+def get_MB_Spm(nsite,basis,typ):
+    basis_map = {b:i for i,b in enumerate(basis)}
+    M = np.zeros((len(basis),)*2)
+    for i,x in enumerate(basis):
+        for p in range(nsite//2):
+            if typ=='+':
+                ops = (2*p,'cre'),(2*p+1,'des')
+            else:
+                ops = (2*p+1,'cre'),(2*p,'des')
+            y,sign = string_act(x,ops)
+            if y is None:
+                continue
+            j = basis_map[y]
+            M[j,i] += sign
+    return M
 def get_all_configs_u1(nsites,nelecs):
     configs = []
     for cf in itertools.product((0,1),repeat=nsites):
@@ -36,96 +60,33 @@ def get_all_configs_u11(nsites,nelecs):
         cf[1::2] = cfb
         configs.append(tuple(cf))
     return configs
-def new_configs(x,nexs=2,symmetry='u11'):
-    x = list(x)
-    na,nb = sum(x[::2]),sum(x[1::2])
-    occ = np.argwhere(np.array(x)>0.5).flatten()
-    vir = np.argwhere(np.array(x)<0.5).flatten()
-    new_cfs = []
-    for nex in range(1,nexs+1):
-    #for nex in [2]:
-        occ_ = list(itertools.combinations(occ,nex))
-        vir_ = list(itertools.combinations(vir,nex))
-        for oix,vix in itertools.product(occ_,vir_): 
-            y = list(x)
-            for i,a in zip(oix,vix):
-                y[i] = 1-y[i]
-                y[a] = 1-y[a]
-            if symmetry=='u11':
-                if sum(y[::2])!=na:
-                    continue
-                if sum(y[1::2])!=nb:
-                    continue
-            new_cfs.append(tuple(y))
-    return new_cfs
-def get_Sz(nsite,basis):
-    basis_map = {b:i for i,b in enumerate(basis)}
-    M = np.zeros((len(basis),)*2)
-    for i,x in enumerate(basis):
-        Mii = 0
-        for p in range(nsite):
-            Mii += x[p]*(-1)**(p%2)
-        M[i,i] = Mii/2
-    return M
-def get_Spm(nsite,basis,typ):
-    basis_map = {b:i for i,b in enumerate(basis)}
-    M = np.zeros((len(basis),)*2)
-    for i,x in enumerate(basis):
-        for p in range(nsite//2):
-            if typ=='+':
-                ops = (2*p,'cre'),(2*p+1,'des')
-            else:
-                ops = (2*p+1,'cre'),(2*p,'des')
-            y,sign = string_act(x,ops)
-            if y is None:
-                continue
-            j = basis_map[y]
-            M[j,i] += sign
-    return M
-class QCHamiltonian:
-    def __init__(self,hcore,eri):
-        self.nao = hcore.shape[0]
-        self.hcore = hcore # ao-integrals
-
-        eri = eri.transpose(0,2,1,3) # permute to physicist notation (b1,b2,k1,k2)
-        nso = self.nao*2
-        v = np.zeros((nso,nso,nso,nso))
-        v[::2,::2,::2,::2] = eri.copy()
-        v[1::2,1::2,1::2,1::2] = eri.copy()
-        v[::2,1::2,::2,1::2] = eri.copy()
-        v[1::2,::2,1::2,::2] = eri.copy()
-        self.eri = v-v.transpose(0,1,3,2)
-        self.eri /= 4
-
-        self.thresh = 1e-6
-    def eloc_terms(self,x):
-        terms = {}
-        for i in (0,1):
-            for (p,q) in itertools.product(range(self.nao),repeat=2):
-                ops = (2*p+i,'cre'),(2*q+i,'des')
-                y,sign = string_act(x,ops)
-                if y is None:
-                    continue
-                coeff = sign*self.hcore[p,q]
-                if np.fabs(coeff)>self.thresh:
-                    if y not in terms:
-                        terms[y] = 0
-                    terms[y] += coeff
-
-        for (p,q,r,s) in itertools.product(range(self.nao*2),repeat=4):
-            ops = (p,'cre'),(q,'cre'),(s,'des'),(r,'des')
-            y,sign = string_act(x,ops)
-            if y is None:
-                continue
-            y = tuple(y)
-            coeff = sign*self.eri[p,q,r,s]
-            if np.fabs(coeff)>self.thresh:
-                if np.fabs(coeff)>self.thresh:
-                    if y not in terms:
-                        terms[y] = 0
-                    terms[y] += coeff
-        return terms
-    def get_MB_hamiltonian(self,basis=None,nelec=None,symmetry='u1'):
+class Operator:
+    def __init__(self,thresh=1e-6,weight=1):
+        self.thresh = thresh 
+        self.weight = weight 
+        self.elocs = dict()
+    def add_term(self,x,ops,coeff):
+        if np.fabs(coeff)<self.thresh:
+            return 
+        y,sign = string_act(x,ops)
+        if y is None:
+            return 
+        if y not in self.terms:
+            self.terms[y] = 0
+        self.terms[y] += sign*coeff
+    def compute_eloc(self,x,psi):
+        if x in self.elocs:
+            return 
+        psi_x = psi.amplitude(x)
+        if np.fabs(psi_x)<self.thresh:
+            self.elocs[x] = 0
+            return
+        terms = self.eloc_terms(x)
+        eloc = 0 
+        for (y,coeff) in terms.items():
+            eloc += psi.amplitude(y)*coeff
+        self.elocs[x] = eloc/psi_x
+    def get_MB_matrix(self,basis=None,nelec=None,symmetry='u1'):
         if basis is None:
             if symmetry=='u1':
                 basis = get_all_configs_u1(self.nao*2,nelec)
@@ -141,12 +102,60 @@ class QCHamiltonian:
                 j = basis_map[y]
                 M[j,i] += coeff
         return M,basis
-class MBHamiltonian:
-    def __init__(self,H,basis):
-        self.H = H
+class QCHamiltonian(Operator):
+    def __init__(self,hcore,eri,thresh=1e-6):
+        super().__init__(thresh=thresh)
+        self.nao = hcore.shape[0]
+        self.hcore = hcore # ao-integrals
+        self.eri_qc = eri.copy()
+
+        eri = eri.transpose(0,2,1,3) # permute to physicist notation (b1,b2,k1,k2)
+        nso = self.nao*2
+        v = np.zeros((nso,nso,nso,nso))
+        v[::2,::2,::2,::2] = eri.copy()
+        v[1::2,1::2,1::2,1::2] = eri.copy()
+        v[::2,1::2,::2,1::2] = eri.copy()
+        v[1::2,::2,1::2,::2] = eri.copy()
+        self.eri = v-v.transpose(0,1,3,2)
+        self.eri /= 4
+    def eloc_terms(self,x):
+        self.terms = {}
+        for i in (0,1):
+            for (p,q) in itertools.product(range(self.nao),repeat=2):
+                ops = (2*p+i,'cre'),(2*q+i,'des')
+                self.add_term(x,ops,self.hcore[p,q])
+        for (p,q,r,s) in itertools.product(range(self.nao*2),repeat=4):
+            ops = (p,'cre'),(q,'cre'),(s,'des'),(r,'des')
+            self.add_term(x,ops,self.eri[p,q,r,s])
+        return self.terms
+class TotalSpin(Operator):
+    def __init__(self,nao,weight=1):
+        super().__init__(weight=weight)
+        self.nao = nao
+    def eloc_terms(self,x):
+        xup,xdown = x[::2],x[1::2]
+        self.terms = {}
+        # Sz**2
+        self.terms[x] = (sum(xup)-sum(xdown))**2/4.
+        # SpSm+SmSp
+        self.terms[x] += sum(x)/2.
+        for i in range(self.nao):
+            self.terms[x] -= x[2*i]*x[2*i+1]
+        for i in range(self.nao):
+            for j in range(i+1,self.nao):
+                ops = (2*i,'cre'),(2*j+1,'cre'),(2*j,'des'),(2*i+1,'des')
+                self.add_term(x,ops,1)
+                ops = (2*i+1,'cre'),(2*j,'cre'),(2*j+1,'des'),(2*i,'des')
+                self.add_term(x,ops,1)
+        return self.terms
+class MBOperator(Operator):
+    def __init__(self,matrix,basis,thresh=1e-6):
+        self.matrix = matrix
         self.basis = basis
         self.basis_map = {b:i for i,b in enumerate(basis)}
-        self.thresh = 1e-6
+        self.thresh = thresh 
+        self.elocs = dict()
+        self.weight = 1.
     def eloc_terms(self,x):
         terms = {}
         xix = self.basis_map[x]
@@ -154,37 +163,4 @@ class MBHamiltonian:
             if np.absolute(val)>self.thresh:
                 terms[y] = val
         return terms
-class FermionState:
-    def __init__(self,nsite,nelec,symmetry='u11'):
-        self.nsite = nsite
-        self.nelec = nelec
-        self.symmetry = symmetry
-        self.nnew = None
-    def get_all_configs(self):
-        if self.symmetry=='u1':
-            return get_all_configs_u1(self.nsite,sum(self.nelec))
-        elif self.symmetry=='u11':
-            return get_all_configs_u11((self.nsite//2,)*2,self.nelec) 
-        else:
-            raise NotImplementedError
-    def new_configs(self,x):
-        ls = new_configs(x,symmetry=self.symmetry)
-        if self.nnew is None:
-            self.nnew = len(ls)
-        else:
-            if len(ls)!=self.nnew:
-                print(len(ls),self.nnew)
-                exit()
-        return ls
-    def log_prob(self,x):
-        if self.symmetry=='u1':
-            if sum(x)!=sum(self.nelec):
-                return 0,None
-        if self.symmetry=='u11':
-            if sum(x[::2])!=self.nelec[0]:
-                return 0,None
-            if sum(x[1::2])!=self.nelec[1]:
-                return 0,None
 
-        psi_x = self.amplitude(x)
-        return np.log(psi_x*psi_x.conj())
