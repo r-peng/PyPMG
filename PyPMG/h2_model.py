@@ -1,22 +1,7 @@
 import numpy as np
 import scipy,itertools
 import torch
-from PyPMG.fermion_state import * 
-def get_MG_MB(basis,ix1,ix2,theta):
-    basis_map = {b:i for i,b in enumerate(basis)}
-    kappa = np.zeros((len(basis),)*2)
-    def fill(i,ops,coeff):
-        x = basis[i]
-        y,sign = string_act(x,ops)
-        if y is not None:
-            j = basis_map[tuple(y)]
-            kappa[j,i] += sign*coeff
-    for i in range(len(basis)):
-        ops = (ix1,'cre'),(ix2,'des')
-        fill(i,ops,theta)
-        ops = (ix2,'cre'),(ix1,'des')
-        fill(i,ops,-theta)
-    return kappa
+from PyPMG.pmg import * 
 class H2State(FermionState):
     def __init__(self,x,**kwargs):
         # modes order: c1,c2,c3,c4
