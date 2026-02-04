@@ -8,13 +8,24 @@ np.set_printoptions(suppress=True,precision=6)
 dR = 0.11
 Rmin = 1.01
 nR = 12
+typ = 'lowdin'
+typ = 'diag'
 
-def get_orthoAO(S, LINDEP_CUTOFF=1e-14):
+def get_orthoAO(mol, LINDEP_CUTOFF=1e-14):
+    if typ=='HF': 
+        mf = pyscf.scf.RHF(mol)
+        mf.kernel()
+        return mf.mo_coeff
+    S = mol.intor('int1e_ovlp')
     sdiag, Us = np.linalg.eigh(S)
     Us = Us[:, sdiag > LINDEP_CUTOFF]
     sdiag = sdiag[sdiag > LINDEP_CUTOFF]
-    X = np.dot(Us/np.sqrt(sdiag),Us.T)
-    #X = Us/np.sqrt(sdiag)
+    if typ=='lowdin':
+        X = np.dot(Us/np.sqrt(sdiag),Us.T)
+    elif typ=='diag':
+        X = Us/np.sqrt(sdiag)
+    else:
+        raise NotImplementedError
     return X
 
 for i in range(nR):
@@ -34,38 +45,19 @@ for i in range(nR):
     mol.build()
 
     # oao integrals for the molecule
-    S = mol.intor('int1e_ovlp')
     T = mol.intor('int1e_kin')
     V = mol.intor('int1e_nuc')
     hcore = T + V
     eri = mol.intor('int2e')
     ecore = mol.energy_nuc()
-    X = get_orthoAO(S)
-    print('hcore')
-    print(hcore)
-    print('S')
-    print(S)
-    print('X')
-    print(X)
-    xinv = np.linalg.inv(X)
+    X = get_orthoAO(mol)
     # np.testing.assert_allclose(X.T @ S @ X, np.eye(X.shape[1]), atol=1e-10)
 
     hcore_oao = X.T.conj() @ hcore @ X
-    print('hcore_oao')
-    print(hcore_oao)
-    exit()
     n_oao = X.shape[1]
     eri_packed = ao2mo.kernel(mol, X)
     eri_oao = ao2mo.restore(1, eri_packed, n_oao)
-    #for i,j,k,l in itertools.product((0,1),repeat=4):
-    #    if np.fabs(eri_oao[i,j,k,l])>1e-6:
-    #        print(i,j,k,l,eri_oao[i,j,k,l])
-    #exit()
 
-    # mf = pyscf.scf.RHF(h4_mol)
-    # mf.kernel()
-
-    # moa = mf.mo_coeff
     # moa_oao = xinv @ moa
     # nocca, noccb = h4_mol.nelec
 
@@ -81,7 +73,8 @@ for i in range(nR):
     # print(f"Coulomb energy in OAO basis: {EJ_oao}")
     # print(f"alpha Exchange energy in OAO basis: {EK_oao_a}")
 
-    with h5py.File(f'lowdin/h2_{r:.2f}.h5', 'w') as f:
+    with h5py.File(f'{typ}/h4_{r:.2f}.h5', 'w') as f:
         f.create_dataset('hcore_oao', data=hcore_oao)
         f.create_dataset('eri_oao', data=eri_oao)
         f.create_dataset('ecore', data=ecore)
+    exit()

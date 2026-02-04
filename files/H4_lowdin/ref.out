@@ -1,0 +1,28 @@
+##################### R=1.01 #############################
+MPO site    0 /    4
+MPO site    1 /    4
+MPO site    2 /    4
+Time elapsed =      0.066 | E =   -4.600756806901297 | DE = 0.00E+00 | MDW = 4.64E-16 | MEM =  200 MB
+Time sweep =      0.066 | Time davidson =      0.000 | Time decomp =      0.004
+Time elapsed =      0.079 | E =   -4.600756810707673 | DE = 3.81E-09 | MDW = 3.47E-17 | MEM =  200 MB
+Time sweep =      0.012 | Time davidson =      0.000 | Time decomp =      0.004
+Time elapsed =      0.091 | E =   -4.600756810777056 | DE = 6.94E-11 | MDW = 2.94E-14 | MEM =  200 MB
+Time sweep =      0.012 | Time davidson =      0.000 | Time decomp =      0.004
+Time elapsed =      0.103 | E =   -4.600756810777053 | DE = 2.66E-15 | MDW = 1.46E-19 | MEM =  200 MB
+Time sweep =      0.012 | Time davidson =      0.000 | Time decomp =      0.004
+Electronic Energy= -4.600756810777053
+Total Energy= -2.027442816585219
+
+
+######################## R=1.01 ###########################
+building molecule...
+ecore= 2.5733139941918335
+
+nelec= (2, 2)
+running unrestricted Hartree Fock...
+converged SCF energy = -1.9338299498272  <S^2> = 0  2S+1 = 1
+Hartree Fock total energy= -1.9338299498271994
+
+running unrestricted FCI...
+FCI total energy= -2.027442816585733
+FCI correlation energy= -0.09361286675853364

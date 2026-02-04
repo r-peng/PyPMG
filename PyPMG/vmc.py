@@ -251,10 +251,25 @@ class SGD: # stochastic sampling
         if RANK>0:
             self.vmean = None
             self.evmean = None
+            #COMM.send(self.v,dest=0,tag=10)
+            #exit()
             return 
         self.vmean /= self.n
         self.evmean /= self.n
         self.g = (self.evmean - self.L.conj() * self.vmean).real
+        #v = COMM.recv(source=1,tag=10)
+        #v -= self.vmean.reshape(1,self.nparam)
+        #v *= self.f.reshape(len(self.f),1)
+        ##q,r = np.linalg.qr(v)
+        #q,r,p = scipy.linalg.qr(v,pivoting=True)
+        #print('p=',p)
+        #for i in range(r.shape[1]):
+        #    ri = r[:,i]
+        #    print('i=',i,ri)
+        #    ri = np.fabs(ri)
+        #    li = len(ri[ri>1e-6])
+        #    print(li,p[:li])
+        #exit()
     def update(self,deltas):
         x = self.psi.get_x()
         xnorm = np.linalg.norm(x)
