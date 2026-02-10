@@ -14,7 +14,7 @@ x = .1,.2,.13
 psi = H2MinimalState(x,rho_swap=rho_swap,propose_by=propose_by)
 
 ham = dict()
-R = 1.3
+R = 1.
 f = h5py.File(f'../lowdin/h2_{R:.2f}.h5','r')
 const = f['ecore'][()]
 eri = f['eri_oao'][:] 
@@ -41,6 +41,7 @@ if RANK>0:
     exit()
 psi = vmc.psi
 print(psi.get_x())
-print(psi.mg.mo)
+for pmg in psi.pmg_ls:
+    print(pmg.Y['expY'])
 #x = psi.get_x()
 #np.save('x_100.npy',x)

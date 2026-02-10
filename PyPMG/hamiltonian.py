@@ -65,6 +65,7 @@ class Operator:
         self.thresh = thresh 
         self.weight = weight 
         self.elocs = dict()
+        self.hs = dict()
     def add_term(self,x,ops,coeff):
         if np.fabs(coeff)<self.thresh:
             return 
@@ -74,18 +75,28 @@ class Operator:
         if y not in self.terms:
             self.terms[y] = 0
         self.terms[y] += sign*coeff
-    def compute_eloc(self,x,psi):
+    def compute_eloc(self,x,psi,compute_h=False):
         if x in self.elocs:
             return 
         psi_x = psi.amplitude(x)
         if np.fabs(psi_x)<self.thresh:
             self.elocs[x] = 0
+            if compute_h:
+                self.hs[x] = np.zeros(psi.nparam)
             return
         terms = self.eloc_terms(x)
         eloc = 0 
+        hx = 0 
         for (y,coeff) in terms.items():
-            eloc += psi.amplitude(y)*coeff
+            if compute_h:
+                psi_y,vy = psi.amplitude_and_derivative(y)
+                hx += vy*coeff
+            else:
+                psi_y = psi.amplitude(y)
+            eloc += psi_y*coeff
         self.elocs[x] = eloc/psi_x
+        if compute_h:
+            self.hs[x] = hx/psi_x
     def get_MB_matrix(self,basis=None,nelec=None,symmetry='u1'):
         if basis is None:
             if symmetry=='u1':

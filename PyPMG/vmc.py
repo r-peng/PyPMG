@@ -96,7 +96,7 @@ class SGD: # stochastic sampling
         self.Hx1 = None
         self.Hx1h = None
         gc.collect()
-    def run(self,start,stop,save_wfn=True):
+    def run(self,start,stop,fname=None):
         self.Eold = None 
         self.Lold = None
         for step in range(start,stop):
@@ -108,19 +108,25 @@ class SGD: # stochastic sampling
             self.extract_energy_gradient()
             if RANK==0:
                 dE = 0 if self.Eold is None else self.E-self.Eold
-                print(f'energy={self.E},dE={dE},std={self.Eerr}')
+                print(f'E={self.E},dE={dE},std={self.Eerr}')
                 self.Eold = self.E
 
                 dL = 0 if self.Lold is None else self.L-self.Lold
-                print(f'loss  ={self.L},dloss={dL},std={self.Lerr}')
+                print(f'L={self.L},dL={dL},std={self.Lerr}')
                 self.Lold = self.L
                 print(f'\tgnorm=',np.linalg.norm(self.g))
+
+                if self.sampler.exact and dL>0:
+                    exit()
+
             x = self.transform_gradients()
             self.free_quantities()
             COMM.Bcast(x,root=0) 
             self.psi.update(x)
-            if save_wfn and RANK==0:
-                np.save(f'psi{step+1}.npy',x)
+            if fname is None:
+                continue
+            if RANK==0:
+                np.save(fname,x)
     def sample(self,sample_size=None,compute_v=True,compute_h=None,save_config=True):
         ham = self.ham['energy']
         self.sampler.preprocess(self.psi,ham=ham)
@@ -154,7 +160,7 @@ class SGD: # stochastic sampling
     def _accumulate(self,x,compute_v,compute_h):
         self.cfs.append(x)
         for key in self.ham:
-            self.ham[key].compute_eloc(x,self.psi)
+            self.ham[key].compute_eloc(x,self.psi,compute_h=compute_h)
         if compute_v:
             self.psi.amplitude_and_derivative(x)
     def _collect(self,compute_v,compute_h):
@@ -168,7 +174,17 @@ class SGD: # stochastic sampling
             self.ham[key].elocs = dict()
         if compute_v:
             self.v = np.array([self.psi.ders[x] for x in self.cfs])
+            self.v /= self.c.reshape(self.c.size,1)
+            #for vi in self.v:
+            #    print(vi[:-12])
+            #exit()
         self.psi.ders = dict()
+        if compute_h:
+            self.h = 0
+            for key in self.ham:
+                hi = np.array([self.ham[key].hs[x] for x in self.cfs])
+                self.h += self.ham[key].weight*hi 
+                self.ham[key].hs = dict()
     def _sample_stochastic(self,sample_size,compute_v,compute_h):
         self.cfs = []
         ham = self.ham['energy']
@@ -228,11 +244,13 @@ class SGD: # stochastic sampling
         e = np.concatenate(e)
         self.f = np.concatenate(f)
         self.n = self.f.sum()
-        print('all_e=',e)
+        print('self.n=',self.n)
+        #exit()
+        #print('all_e=',e)
         if self.sampler.exact:
-            print('all_f=',self.f)
-            self.L = np.dot(self.f,l)
-            self.E = np.dot(self.f,e)
+            #print('all_f=',self.f)
+            self.L = np.dot(self.f,l)/self.n
+            self.E = np.dot(self.f,e)/self.n
             self.Lerr,self.Eerr = 0,0
         else:
             print('nsamples=',self.n)
@@ -244,32 +262,16 @@ class SGD: # stochastic sampling
                np.dot(self.f,self.v) 
         COMM.Reduce(vsum,self.vmean,op=MPI.SUM,root=0)
 
-        self.evmean = np.zeros(self.nparam,dtype=self.dtype)
-        evsum = self.evmean.copy() if RANK==0 else\
+        evmean = np.zeros(self.nparam,dtype=self.dtype)
+        evsum = evmean.copy() if RANK==0 else\
                 np.dot(self.f*self.e['loss'],self.v) 
-        COMM.Reduce(evsum,self.evmean,op=MPI.SUM,root=0)
+        COMM.Reduce(evsum,evmean,op=MPI.SUM,root=0)
         if RANK>0:
             self.vmean = None
             self.evmean = None
-            #COMM.send(self.v,dest=0,tag=10)
-            #exit()
             return 
         self.vmean /= self.n
-        self.evmean /= self.n
-        self.g = (self.evmean - self.L.conj() * self.vmean).real
-        #v = COMM.recv(source=1,tag=10)
-        #v -= self.vmean.reshape(1,self.nparam)
-        #v *= self.f.reshape(len(self.f),1)
-        ##q,r = np.linalg.qr(v)
-        #q,r,p = scipy.linalg.qr(v,pivoting=True)
-        #print('p=',p)
-        #for i in range(r.shape[1]):
-        #    ri = r[:,i]
-        #    print('i=',i,ri)
-        #    ri = np.fabs(ri)
-        #    li = len(ri[ri>1e-6])
-        #    print(li,p[:li])
-        #exit()
+        self.g = (evmean/self.n - self.L.conj() * self.vmean).real
     def update(self,deltas):
         x = self.psi.get_x()
         xnorm = np.linalg.norm(x)
@@ -293,8 +295,8 @@ class SGD: # stochastic sampling
             raise NotImplementedError
         return self.update(self.rate1*deltas)
 class SR(SGD):
-    def __init__(self,psi,ham,sampler,**kwargs):
-        super().__init__(psi,ham,sampler,**kwargs) 
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs) 
         self.optimizer = 'sr' 
         self.eigen_thresh = None
         self.cond1 = None
@@ -306,8 +308,7 @@ class SR(SGD):
         COMM.Reduce(vvsum,vvmean,op=MPI.SUM,root=0)
         if RANK>0:
             return
-        vmean = self.vmean
-        self.S = vvmean/self.n - np.outer(vmean.conj(),vmean)
+        self.S = vvmean/self.n - np.outer(self.vmean.conj(),self.vmean)
         print('\tcollect S matrix time=',time.time()-t0)
     def _get_S_iterative(self):
         self.Sx1 = np.zeros(self.nparam,dtype=self.dtype)
@@ -349,8 +350,9 @@ class SR(SGD):
             deltas = np.linalg.solve(self.S + self.cond1 * np.eye(self.nparam),self.g)
         else:
             w,v = np.linalg.eigh(self.S)
+            #print(w)
             w = w[w>self.eigen_thresh*w[-1]]
-            print(f'\tnonzero={len(w)},wmax={w[-1]}')
+            print(f'\tnonzero={len(w)},wmax={w[-1]},wmin={w[0]}')
             v = v[:,-len(w):]
             deltas = np.dot(v/w.reshape(1,len(w)),np.dot(v.T,self.g)) 
         print('\tSR solver time=',time.time()-t0)
@@ -385,6 +387,89 @@ class SR(SGD):
                 A(deltas)
             if RANK==1:
                 print('niter=',nit)
+        return deltas
+class RGN(SR):
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs) 
+        self.optimizer = 'rgn' 
+        self.compute_h = True
+        self.eigen_thresh = None
+        self.cond1 = None
+        self.cond2 = None
+        self.rate2 = None
+    def _extract_hmean(self):
+        self.hmean = np.zeros(self.nparam,dtype=self.dtype)
+        hsum = self.hmean.copy() if RANK==0 else\
+               np.dot(self.f,self.h) 
+        COMM.Reduce(hsum,self.hmean,op=MPI.SUM,root=0)
+        if RANK>0:
+            self.hmean = None
+            return 
+        self.hmean /= self.n
+    def _get_Hmatrix(self):
+        t0 = time.time()
+        vhmean = np.zeros((self.nparam,)*2,dtype=self.dtype)
+        vhsum = vhmean.copy() if RANK==0 else\
+                np.einsum('s,si,sj->ij',self.f,self.v.conj(),self.h)
+        COMM.Reduce(vhsum,vhmean,op=MPI.SUM,root=0)
+        if RANK>0:
+            return
+        self.H = vhmean/self.n 
+        self.H -= np.outer(self.vmean.conj(),self.hmean)
+        self.H -= np.outer(self.g,self.vmean)
+        print('\tcollect H matrix time=',time.time()-t0)
+    def transform_gradients(self):
+        delta_SR = self._transform_gradients_sr(self.solve_dense)
+        delta_RGN = self._transform_gradients_rgn(self.solve_dense)
+        x = self.psi.get_x()
+        E = self.E if RANK==0 else None
+        L = self.L if RANK==0 else None
+
+        xnew = self.update(delta_RGN) 
+        COMM.Bcast(xnew,root=0)
+        self.psi.update(xnew)
+        self.sample(compute_v=False,compute_h=False)
+        self.extract_energy()
+        if RANK==0:
+            dloss = self.L-L
+            print(f'\tRGN updated loss={self.L},dloss={dloss}')
+            use_RGN = 1 if dloss<0 else 0
+            use_RGN = np.array([use_RGN])
+            self.E = E
+            self.L = L
+        else:
+            use_RGN = np.array([0])
+        COMM.Bcast(use_RGN,root=0)
+        if use_RGN[0]==1:
+            return xnew
+
+        self.psi.update(x)
+        if RANK>0:
+            return delta_SR
+        return self.update(self.rate1*delta_SR)
+    def _transform_gradients_rgn(self,solve_dense):
+        if not solve_dense:
+            #self._get_S_iterative()
+            #return self._transform_gradients_sr_iterative()
+            raise NotImplementedError
+
+        self._get_Hmatrix()
+        if RANK>0:
+            return np.zeros(self.nparam,dtype=self.dtype) 
+
+        t0 = time.time()
+        H = self.H + (1./self.rate2 - self.L)*self.S 
+        if self.eigen_thresh is None:
+            deltas = np.linalg.solve(H + self.cond1 * np.eye(self.nparam),self.g)
+        else:
+            u,s,v = np.linalg.svd(H)
+            #print(s)
+            s = s[s>self.eigen_thresh*s[0]]
+            print(f'\tnonzero={len(s)},smax={s[0]},smin={s[-1]}')
+            u = u[:,:len(s)]
+            v = v[:len(s),:]
+            deltas = np.dot(v.T.conj(),np.dot(u.T.conj(),self.g)/s) 
+        print('\tRGN solver time=',time.time()-t0)
         return deltas
 ##############################################################################################
 # sampler
@@ -435,7 +520,7 @@ class DenseSampler:
                 nonzeros.append(ix) 
         n = np.sum(ptot)
         self.p = ptot/n
-        print(self.p)
+        #print(self.p)
 
         ntot = len(nonzeros)
         batchsize,remain = ntot//(SIZE-1),ntot%(SIZE-1)

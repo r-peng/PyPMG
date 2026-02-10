@@ -8,6 +8,8 @@ for R in np.arange(1,2.01,.01):
     eri = f['eri_oao'][:] 
     hcore = f['hcore_oao'][:]
     f.close()
+    print(hcore)
+    exit()
 
     # check symmetry in chemistry notation (b1,k1,b2,k2)
     assert np.linalg.norm(eri-eri.transpose(1,0,2,3))<1e-12

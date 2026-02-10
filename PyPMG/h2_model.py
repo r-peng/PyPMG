@@ -7,12 +7,19 @@ class H2MinimalState(PMGState):
         # modes order: c1,c2,c3,c4
         nsites = 2,2
         nelec = 1,1
-        pairs = (0,2),(1,3)
-        super().__init__(nsites,nelec,pairs=pairs,**kwargs)
 
-        def fxn(cf):
-            return (-1)**cf[1]
-        self.add_pmg(0,2,fxn)
+        pmg_ls = []
+
+        nsite = sum(nsites)
+        hop_ls = (0,2),
+        def fxn(cf,x):
+            return 1-2*cf[1]
+        pmg_ls.append(PMG(nsite,hop_ls,fxn=fxn))
+
+        hop_ls = (0,2),(1,3)
+        pmg_ls.append(MG(nsites,hop_ls=hop_ls))
+        super().__init__(nsites,nelec,pmg_ls,**kwargs)
+
         self._update(x)
 def comm(A,B):
     return np.dot(A,B)-np.dot(B,A)
@@ -50,6 +57,4 @@ class H2MinimalHamiltonian(QCHamiltonian):
             print('h=',h) 
             print('H conj=')
             print(np.dot(U.T.conj(),np.dot(H,U)))
-
-#if __name__=='__main__':
 

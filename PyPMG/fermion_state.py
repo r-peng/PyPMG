@@ -132,5 +132,5 @@ class FermionState:
         if x in self.ders:
             return self.amps[x],self.ders[x]
         self.amps[x],vx = self._amplitude_and_derivative(x)
-        self.ders[x] = vx/self.amps[x]
+        self.ders[x] = vx
         return self.amps[x],self.ders[x]

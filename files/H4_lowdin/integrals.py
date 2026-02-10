@@ -5,14 +5,15 @@ from pyscf import ao2mo
 import h5py,itertools
 np.set_printoptions(suppress=True,precision=6)
 
-dR = 0.11
+dR = 0.02
 Rmin = 1.01
-nR = 12
+nR = 50
 typ = 'lowdin'
-typ = 'diag'
+#typ = 'diag'
+#typ = 'hf_mo'
 
 def get_orthoAO(mol, LINDEP_CUTOFF=1e-14):
-    if typ=='HF': 
+    if typ=='hf_mo': 
         mf = pyscf.scf.RHF(mol)
         mf.kernel()
         return mf.mo_coeff
@@ -77,4 +78,4 @@ for i in range(nR):
         f.create_dataset('hcore_oao', data=hcore_oao)
         f.create_dataset('eri_oao', data=eri_oao)
         f.create_dataset('ecore', data=ecore)
-    exit()
+    #exit()

@@ -4,13 +4,29 @@ from pyblock3.algebra.mpe import MPE
 from pyblock3.hamiltonian import Hamiltonian 
 from pyblock3.fcidump import FCIDUMP
 
+norb = 4
+nelec = (2, 2)
+def print_amplitudes(mps):
+    orbs_a = itertools.combinations(range(norb),nelec[0])
+    orbs_b = itertools.combinations(range(norb),nelec[1])
+    for orb_a,orb_b in itertools.product(orbs_a,orbs_b):
+        det = [0] * norb
+        for p in orb_a:
+            det[p] += 2
+        for p in orb_b:
+            det[p] += 1
+        amp = mps.amplitude(det)
+        if abs(amp)>1e-6:
+            print(f'occ_a={orb_a},occ_b={orb_b},c={amp}')
+
 dR = 0.11
 Rmin = 1.01
 nR = 12
 R = Rmin
+typ = 'lowdin'
 for i in range(nR):
     print(f'##################### R={R:.2f} #############################')
-    f = h5py.File(f'lowdin/h4_{R:.2f}.h5','r')
+    f = h5py.File(f'{typ}/h4_{R:.2f}.h5','r')
     const = f['ecore'][()]
     eri = f['eri_oao'][:] 
     hcore = f['hcore_oao'][:]
@@ -63,5 +79,7 @@ for i in range(nR):
     ener = dmrg.energies[-1]
     print("Electronic Energy=",ener)
     print("Total Energy=",ener+const)
+    smps = mps.to_non_flat().to_sliceable()
+    print_amplitudes(smps)
     R += dR
     exit()
