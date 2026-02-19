@@ -11,21 +11,22 @@ np.set_printoptions(precision=10,suppress=True)
 
 propose_by = 'uniform'
 rho_swap = 0.
-run = 2 
+run = 3 
 U0 = True
-start,stop = 150,200
+start,stop = 30,50
 optimizer = 'RGN'
 #optimizer = 'SR'
 rate1 = 0.05
-rate2 = 1
+rate2 = 0.5 
 eigen_thresh = 1e-3
 #eigen_thresh = None
 penalty = False 
 if start==0:
     optimizer = 'SR'
     rate1 = 0.05
+symmetry = 'u1'
 
-R = 1.21
+R = 1.01
 #dR = 0.02
 #Rprev = R-dR
 #try:
@@ -48,10 +49,12 @@ if U0:
 else:
     U0 = None
     eps = 0.5
-psi = JastrowPMGState(nsites,nelec,pmg_ls,jas_ls,U0=U0,rho_swap=rho_swap,propose_by=propose_by)
+psi = JastrowPMGState(nsites,nelec,pmg_ls,jas_ls,U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
 if start==0:
     x = (np.random.rand(psi.nparam)*2-1)*eps
-    np.save(f'R{R:.2f}/run{run}_start{start}.npy',x)
+    COMM.Bcast(x,root=0)
+    if RANK==0:
+        np.save(f'R{R:.2f}/run{run}_start{start}.npy',x)
     #x = np.load(f'R{R:.2f}/run{run}_start{start}.npy')
 else:
     x = np.load(f'R{R:.2f}/run{run}_start{start}.npy')

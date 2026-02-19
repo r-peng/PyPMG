@@ -10,7 +10,7 @@ Rmin = 1.01
 nR = 50
 typ = 'lowdin'
 #typ = 'diag'
-#typ = 'hf_mo'
+typ = 'hf_mo'
 
 def get_orthoAO(mol, LINDEP_CUTOFF=1e-14):
     if typ=='hf_mo': 

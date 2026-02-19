@@ -55,6 +55,8 @@ class FermionState:
             return get_all_configs_u1(self.nsite,sum(self.nelec))
         elif self.symmetry=='u11':
             return get_all_configs_u11(self.nsites,self.nelec) 
+        elif self.symmetry=='fock':
+            return list(itertools.product((0,1),repeat=self.nsite))
         else:
             raise NotImplementedError
     def _propose_uniform(self,x):

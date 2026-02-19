@@ -175,8 +175,6 @@ class SGD: # stochastic sampling
         if compute_v:
             self.v = np.array([self.psi.ders[x] for x in self.cfs])
             self.v /= self.c.reshape(self.c.size,1)
-            #for vi in self.v:
-            #    print(vi[:-12])
             #exit()
         self.psi.ders = dict()
         if compute_h:
@@ -220,7 +218,7 @@ class SGD: # stochastic sampling
         t0 = time.time()
         self.extract_energy()
         self.extract_gradient()
-        if self.optimizer in ['rgn','lin','trust']:
+        if self.optimizer in ['rgn','lm','trust']:
             self._extract_hmean()
         if RANK==0:
             print('\tcollect g,h time=',time.time()-t0)
@@ -268,7 +266,6 @@ class SGD: # stochastic sampling
         COMM.Reduce(evsum,evmean,op=MPI.SUM,root=0)
         if RANK>0:
             self.vmean = None
-            self.evmean = None
             return 
         self.vmean /= self.n
         self.g = (evmean/self.n - self.L.conj() * self.vmean).real
@@ -276,7 +273,8 @@ class SGD: # stochastic sampling
         x = self.psi.get_x()
         xnorm = np.linalg.norm(x)
         dnorm = np.linalg.norm(deltas) 
-        print(f'\txnorm={xnorm},dnorm={dnorm}')
+        if RANK==0:
+            print(f'\txnorm={xnorm},dnorm={dnorm}')
         if self.ctr_update is not None:
             tg = self.ctr_update * xnorm
             if dnorm > tg:
@@ -307,9 +305,31 @@ class SR(SGD):
                 np.einsum('s,si,sj->ij',self.f,self.v.conj(),self.v)
         COMM.Reduce(vvsum,vvmean,op=MPI.SUM,root=0)
         if RANK>0:
+            #COMM.send(self.v,dest=0,tag=10)
+            #exit()
             return
         self.S = vvmean/self.n - np.outer(self.vmean.conj(),self.vmean)
         print('\tcollect S matrix time=',time.time()-t0)
+        #F = COMM.recv(source=1,tag=10)-self.vmean.reshape(1,self.nparam)
+        #F = np.sqrt(self.f).reshape(len(self.f),1)*F/np.sqrt(self.n)
+        #S = np.dot(F.T,F)
+        #print('check S=',np.linalg.norm(S-self.S))
+        ##w,v = np.linalg.eigh(S)
+        ##print('number of zero eigenvalues=',len(w[w<1e-10]))
+        ###print(w)
+        ##i = 16
+        ##print((v[:,:i]**2).sum(axis=1))
+        #q,r,p = scipy.linalg.qr(F,pivoting=True)
+        #print(np.sort(p[:35]))
+        #print(np.sort(p[35:]))
+        ##print('q=',q.shape,'r=',r.shape)
+        #print('R=',np.diag(r))
+        ##q,r = scipy.linalg.qr(F[:,p])
+        ##print('R=',np.diag(r))
+        ##u,s,v = np.linalg.svd(F)
+        ##print((s**2)[::-1])
+        ##print(np.sort(np.diag(S)))
+        #exit()
     def _get_S_iterative(self):
         self.Sx1 = np.zeros(self.nparam,dtype=self.dtype)
         vmean = self.vmean
@@ -471,6 +491,51 @@ class RGN(SR):
             deltas = np.dot(v.T.conj(),np.dot(u.T.conj(),self.g)/s) 
         print('\tRGN solver time=',time.time()-t0)
         return deltas
+class LM(RGN):
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs) 
+        self.optimizer = 'lm' 
+    def _transform_gradients_rgn(self,solve_dense):
+        if not solve_dense:
+            #self._get_S_iterative()
+            #return self._transform_gradients_sr_iterative()
+            raise NotImplementedError
+
+        self._get_Hmatrix()
+        if RANK>0:
+            return np.zeros(self.nparam,dtype=self.dtype) 
+        t0 = time.time()
+        H = np.zeros((self.nparam+1,)*2)
+        H[0,0] = self.L
+        H[1:,1:] = self.H 
+        H[0,1:] = self.hmean - self.L*self.vmean
+        H[1:,0] = self.g 
+        S = np.zeros((self.nparam+1,)*2)
+        S[0,0] = 1.
+        S[1:,1:] = self.S
+        if self.eigen_thresh is None:
+            H[1:,1:] += self.cond1*np.eye(self.nparam)
+            S[1:,1:] += self.cond1*np.eye(self.nparam)
+            herm_err = np.linalg.norm(H-H.T.conj())
+            if herm_err<1e-6:
+                w,v = scipy.linalg.eigh(H,b=S)
+            else:
+                raise NotImplementedError
+        else:
+            raise NotImplementedError
+        print('\tw[0]=',w[0])
+        print('\tLM solver time=',time.time()-t0)
+        v = v[:,0]
+        print('\tv[0]=',v[0])
+        delta = v[1:]/v[0]
+
+        xi = self.rate2
+        denom = np.sqrt(1+np.dot(delta,self.S,delta))*xi+1-xi
+        Ni = -(1-xi)*np.dot(self.S,delta)/denom
+        norm = 1-np.dot(Ni,delta)
+        print('norm=',norm)
+        return -delta/norm
+
 ##############################################################################################
 # sampler
 #############################################################################################
@@ -519,6 +584,8 @@ class DenseSampler:
             if px > self.thresh:
                 nonzeros.append(ix) 
         n = np.sum(ptot)
+        #print('n=',n)
+        #exit()
         self.p = ptot/n
         #print(self.p)
 
@@ -589,7 +656,7 @@ class VMC:
             vx = 0
         if np.absolute(psi_x)<self.thresh:
             return psi_x,0,None
-        terms = self.ham.eloc_terms(x)
+        terms = self.ham['energy'].eloc_terms(x)
         eloc = 0
         for (y,coeff) in terms.items():
             eloc += self.psi.amplitude(y)*coeff
