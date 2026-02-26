@@ -24,35 +24,86 @@ def get_MB_matrix(basis,hop_ls,x,fxn):
             ops = (q,'cre'),(p,'des')
             fill(i,ops,-xi)
     return Y 
-def get_ctr_ls(in_ls,order=1):
-    out_ls = []
+def get_ctr_ls(decimated,order=1):
+    ls = []
     for r in range(1,order+1):
-        out_ls += list(itertools.combinations(in_ls,r))
-    return out_ls
+        ls += list(itertools.combinations(decimated,r))
+    return ls
 def _prodZ(cf,orbs):
     facs = [1-2*cf[i] for i in orbs]
     return np.prod(facs)
 def _default_ctr_fxn(cf,x,ctr_ls):
-    facs = [_prodZ(cf,key) for key in ctr_ls] 
-    return facs[0]+sum([xi*fi for xi,fi in zip(x,facs[1:])])
+    facs = [_prodZ(cf,key) for key in ctr_ls]
+    return facs[0]+sum([xi*fi for xi,fi in zip(x,facs[1:])]),facs[1:]
+def compute_adjugate(A,detA=None,thresh=1e-6):
+    n = A.shape[0]
+    u,s,v = np.linalg.svd(A)
+    if s[0]>thresh:
+        if detA is None:
+            detA = np.linalg.det(A)
+        Ainv = np.dot(v.T.conj()/s.reshape(1,n),u.T.conj())
+        return detA*Ainv
+    C = np.zeros_like(A)
+    for i in range(n):
+        rix = list(range(n))
+        rix.remove(i)
+        Mi = A[np.array(rix)]
+        for j in range(n):
+            cix = list(range(n))
+            cix.remove(j)
+            Mij = Mi[:,cix]
+            C[i,j] = np.linalg.det(Mij)*(-1)**(i+j)
+    return C.T
+def determinant_derivative(A,thresh=1e-6):
+    detA = np.linalg.det(A)
+    adjA = compute_adjugate(A,detA=detA)
+    return detA,adjA.T
 class PMG:
-    def __init__(self,nsite,hop_ls,fxn=None,ctr_ls=None,order=1):
+    def __init__(self,nsite,hop_ls,decimated,fxn='default',order=1,jac_by='ad'):
         self.nsite = nsite
         self.hop_ls = hop_ls # orbital pair
+        self.nparam = len(hop_ls) 
+        if decimated is None:
+            self.decimated = None
+        else:
+            self.decimated = list(decimated)
+            self.decimated.sort()
+        if fxn=='default':
+            self.ctr_ls = get_ctr_ls(decimated,order=order)
+            def fxn(cf,x):
+                return _default_ctr_fxn(cf,x,self.ctr_ls)
+            self.nparam += len(self.ctr_ls)-1
+        elif fxn is None:
+            def fxn(cf,x):
+                return 1,None
+        else:
+            raise ValueError
+        self.fxn = fxn
+
         self.Y = dict()
         for (p,q) in self.hop_ls:
             Y = np.zeros((nsite,)*2)
             Y[p,q] = 1
-            self.Y[p,q] = torch.tensor(Y-Y.T,requires_grad=False)
+            self.Y[p,q] = Y-Y.T
+        self.jac_by = jac_by
+        if jac_by=='ad':
+            for (p,q),Y in self.Y.items():
+                self.Y[p,q] = torch.tensor(Y,requires_grad=False)
+            def fxn(x,f):
+                Y = sum([xi*self.Y[p,q] for xi,(p,q) in zip(x,self.hop_ls)])
+                expY = torch.linalg.matrix_exp(f*Y)
+                return expY,expY 
+            self._get_mo_torch = fxn
+            self._get_mo_jac = torch.func.jacfwd(fxn,has_aux=True)
+        elif jac_by=='frechet':
+            pass
+        else:
+            raise ValueError
 
-        self.nparam = len(hop_ls) 
-        if ctr_ls is not None:
-            self.ctr_ls = get_ctr_ls(ctr_ls,order=order)
-            def fxn(cf,x):
-                return _default_ctr_fxn(cf,x,self.ctr_ls)
-            self.nparam += len(ctr_ls)-1
-        self.fxn = fxn
+        self.amps = dict() # stores mo
+        self.ders = dict() # stores jacobian
     def _update(self,x):
+        t0 = time.time()
         self.x = np.array(x) # param
 
         Y = np.zeros((self.nsite,)*2)
@@ -60,24 +111,68 @@ class PMG:
             Y[p,q] = xi
             Y[q,p] = -xi
         self.Y['full'] = Y
-        self.Y['expY'] = scipy.linalg.expm(self.Y['full'])
-    def get_mo_derivative(self,cf):
-        x = torch.tensor(self.x,requires_grad=True)
-        Y = sum([xi*self.Y[p,q] for xi,(p,q) in zip(x,self.hop_ls)])
 
         n = len(self.hop_ls)
-        f = self.fxn(cf,x[n:])
-        return x,torch.linalg.matrix_exp(f*Y)
+        x = torch.tensor(x[:n],requires_grad=True)
+        if self.jac_by=='ad': 
+            jac,expY = self._get_mo_jac(x,1)
+            self.amps['f=1'] = expY.numpy(force=True)
+            self.ders['f=1'] = jac.numpy(force=True)
+            x.grad = None
+        elif self.jac_by=='frechet':
+            Y = self.Y['full']
+            jac = np.zeros((self.nsite,self.nsite,n),dtype=Y.dtype)
+            for i,(p,q) in enumerate(self.hop_ls):
+                expY,jac[:,:,i] = scipy.linalg.expm_frechet(Y,self.Y[p,q])
+            self.amps['f=1'] = expY
+            self.ders['f=1'] = jac
+        else:
+            raise NotImplementedError
+        if RANK==0:
+            print(f'update time=',time.time()-t0)
+    def get_mo_derivative(self,cf):
+        key = None if self.decimated is None else \
+              tuple([cf[p] for p in self.decimated])
+        if key in self.ders:
+            return self.amps[key],self.ders[key]
+        n = len(self.hop_ls)
+        f,fder = self.fxn(cf,self.x[n:])
+        if f==1:
+            return self.amps['f=1'],(self.ders['f=1'],None)
+        if f==-1: 
+            return self.amps['f=1'].T,(self.ders['f=1'].T,None)
+        if self.jac_by=='ad':
+            x = torch.tensor(self.x[:n],requires_grad=True)
+            jac,expfY = self._get_mo_jac(x,f)
+            expfY = expfY.numpy(force=True)
+            jac = jac.numpy(force=True)
+            x.grad = None
+        elif self.jac_by=='frechet':
+            Y = self.Y['full']
+            jac = np.zeros((self.nsite,self.nsite,n),dtype=Y.dtype)
+            for i,(p,q) in enumerate(self.hop_ls):
+                expfY,jac[:,:,i] = scipy.linalg.expm_frechet(Y*f,self.Y[p,q])
+            jac *= f
+        else:
+            raise NotImplementedError
+        self.amps[key] = expfY
+        self.ders[key] = jac,fder
+        return self.amps[key],self.ders[key]
     def get_mo(self,cf,derivative=False):
         if derivative:
             return self.get_mo_derivative(cf)
+        key = None if self.decimated is None else \
+              tuple([cf[p] for p in self.decimated])
+        if key in self.amps:
+            return self.amps[key],None
         n = len(self.hop_ls)
-        f = self.fxn(cf,self.x[n:])
+        f,_ = self.fxn(cf,self.x[n:])
         if f==1:
-            return None,self.Y['expY']
+            return self.amps['f=1'],None
         if f==-1:
-            return None,self.Y['expY'].T
-        return None,scipy.linalg.expm(f*self.Y['full'])
+            return self.amps['f=1'].T,None
+        self.amps[key] = scipy.linalg.expm(f*self.Y['full'])
+        return self.amps[key],None
     def get_MB_matrix(self,basis):
         n = len(self.hop_ls)
         def fxn(cf):
@@ -135,36 +230,29 @@ class Jastrow:
 class PMGState(FermionState):
     def __init__(self,nsites,nelec,U0=None,**kwargs):
         super().__init__(nsites,nelec,**kwargs)
-        # convention: ...[PMG2][(P)MG1]\prod_ic_i^\dagger|vac>
+        # convention: [PMG1]...[(P)MGK]\prod_ic_i^\dagger|vac>
         # orbital rotation: 
-        # ...exp(Y2)exp(Y1)(c_i)exp(-Y1)exp(-Y2)...
-        # =...exp(Y2)\sum_{j}c_j[exp(Y1)]_{ji}exp(-Y2)...
-        # =...\sum_{jk}c_k[exp(Y2)]_{kj}[exp(Y1)]_{ji}
+        # ...exp(Y_{K-1})exp(Y_{K})(c_i)exp(-Y_{K})exp(-Y_{K-1})...
+        # =...exp(Y_{K-1})\sum_{j}c_j[exp(Y_{K})]_{ji}exp(-Y_{K-1})...
+        # =...\sum_{jk}c_k[exp(Y_{K-1})]_{kj}[exp(Y_{K})]_{ji}
         self.pmg_ls = []
         self.nparam = None
-        if U0 is None:
-            self.U0 = self.U0_torch = None
-        else:
-            self.U0 = U0[:,:sum(self.nelec)] 
-            self.U0_torch = torch.tensor(self.U0,requires_grad=False)
-
-        self.decimated = None
-        self.active = None
-    def add_pmg(self,hop_ls,fxn=None,ctr_ls=None,order=1,remove_redundant=False):
+        self.U0 = None if U0 is None else U0[:,:sum(self.nelec)]
+    def add_pmg(self,hop_ls,decimated,jac_by='ad',fxn='default',order=1,remove_redundant=False):
         if remove_redundant:
             hop_ls = set(hop_ls)
             for pmg in self.pmg_ls:
                 hop_ls -= set(pmg.hop_ls)
             hop_ls = list(hop_ls)
 
-        pmg = PMG(self.nsite,hop_ls,fxn=fxn,ctr_ls=ctr_ls,order=order)
+        pmg = PMG(self.nsite,hop_ls,decimated,fxn=fxn,order=order,jac_by=jac_by)
         self.pmg_ls.append(pmg)
         if RANK==0:
-            print('layer=',len(self.pmg_ls)-1)
+            print('layer=',len(self.pmg_ls))
             print('nparam=',pmg.nparam)
             print('hop_ls=',pmg.hop_ls)
             print()
-    def add_mg(self,hop_ls,remove_redundant=False,remove_unphysical=None):
+    def add_mg(self,hop_ls,jac_by='ad',remove_redundant=False,remove_unphysical=None):
         if hop_ls=='GHF':
             hop_ls = list(itertools.combinations(range(self.nsite),2))
         if hop_ls=='UHF':
@@ -183,9 +271,7 @@ class PMGState(FermionState):
                 hop_ls.discard((p,q))
             hop_ls = list(hop_ls)
             
-        def fxn(cf,x):
-            return 1
-        mg = PMG(self.nsite,hop_ls,fxn=fxn)
+        mg = PMG(self.nsite,hop_ls,None,fxn=None,jac_by=jac_by)
         self.pmg_ls.append(mg)
         if RANK==0:
             print('layer=',len(self.pmg_ls)-1)
@@ -201,41 +287,77 @@ class PMGState(FermionState):
     def get_x(self):
         x = [pmg.x for pmg in self.pmg_ls]
         return np.concatenate(x)
-    def get_mo_coeff(self,cf,derivative=False):
+    def get_mo_coeff(self,cf,derivative=False,lix=None):
         n = len(self.pmg_ls)
-        x = [None] * n 
-        if derivative:
-            dot = torch.matmul 
-            U0 = self.U0_torch
-        else:
-            dot = np.dot
-            U0 = self.U0
+        Us = [None] * n + [self.U0]
+        jacs = [None] * n  
+        fders = [None] * n 
         for i,pmg in enumerate(self.pmg_ls):
-            x[i],Ui = pmg.get_mo(cf,derivative=derivative)
-            if i==n-1 and U0 is None:
-                Ui = Ui[:,:sum(self.nelec)] 
-            if i==0:
-                U = Ui 
+            Us[i],deri = pmg.get_mo(cf,derivative=derivative)
+            if i==0 and lix is not None:
+                Us[i] = Us[i][lix]
+            if not derivative:
+                continue
+            jacs[i],fders[i] = deri 
+        # left sweep:
+        lenv = [Us[0]] + [None] * n 
+        for i in range(1,n+1):
+            Ui = Us[i]
+            if Ui is None:
+                assert i==n
+                lenv[i] = lenv[i-1][:,:sum(self.nelec)]
             else:
-                U = dot(U,Ui)
-        if U0 is not None:
-            U = dot(U,U0)
-        return x,U
+                lenv[i] = np.dot(lenv[i-1],Ui)
+        return Us,lenv,jacs,fders
     def _amplitude_and_derivative(self,cf,derivative=True):
-        x,U = self.get_mo_coeff(cf,derivative=derivative) 
-
-        idx = np.argwhere(cf).flatten()
-        if derivative:
-            det = torch.linalg.det
-        else:
-            det = np.linalg.det
-        psi_x = det(U[idx])
+        lix = np.argwhere(cf).flatten()
+        Us,lenv,jacs,fders = self.get_mo_coeff(cf,derivative=derivative,lix=lix) 
+        
+        U = lenv[-1]
         if not derivative:
-            return psi_x,None
-        psi_x.backward()
-        vx = np.concatenate([xi.grad.numpy(force=True) for xi in x])
-        psi_x = psi_x.numpy(force=True)
-        print(cf,psi_x,vx)
+            return np.linalg.det(U),None
+        psi_x,dU = determinant_derivative(U) 
+
+        # right sweep:
+        n = len(self.pmg_ls)
+        renv = [None] * n + [Us[-1]]
+        nelec = sum(self.nelec)
+        for i in range(n-1,0,-1):
+            Ui,prev = Us[i],renv[i+1]
+            if prev is None:
+                assert i==n-1
+                renv[i] = Ui[:,:nelec]
+            else:
+                renv[i] = np.dot(Ui,prev)
+        # jacs
+        for i in range(n):
+            jaci,right = jacs[i],renv[i+1]
+            if right is not None:
+                jaci = np.einsum('jkq,kl->jlq',jaci,right)
+            else:
+                jaci = jaci[:,:nelec]
+            if i>0:
+                jaci = np.einsum('ij,jkq->ikq',lenv[i-1],jaci)
+            else:
+                jaci = jaci[lix]
+            jacs[i] = np.einsum('ij,ijq->q',dU,jaci)
+        # fders
+        for i,pmg in enumerate(self.pmg_ls):
+            if fders[i] is None:
+                continue
+            fderi = np.dot(lenv[i],pmg.Y['full'])
+            right = renv[i+1]
+            if right is not None:
+                fderi = np.dot(fderi,right)
+            fderi = np.sum(fderi*dU)
+            fders[i] = np.array(fders[i])*fderi
+        vx = []
+        for jac,fder in zip(jacs,fders):
+            vx.append(jac)
+            if fder is not None:
+                vx.append(fder)
+        vx = np.concatenate(vx)
+        #print(cf,psi_x,vx)
         return psi_x,vx
     def _amplitude(self,cf):
         return self._amplitude_and_derivative(cf,derivative=False)[0]

@@ -30,9 +30,26 @@ psi = H4MinimalState(HF_typ,pmg_typ=pmg_typ,U0=U0,remove_redundant=remove_redund
 x = np.load('x.npy')
 psi._update(x)
 G = psi.rdm1_simple()
-G = psi.rdm1()
 print(G)
-G_ = np.zeros_like(G)
+
+G = psi.rdm1()
+active = list(set(range(psi.nsite))-set(psi.decimated))
+active.sort()
+idx = np.array(active+psi.decimated)
+na = len(active)
+G = G[idx,:][:,idx]
+Gaa,Gad,Gda,Gdd = G[:na,:na],G[:na,na:],G[na:,:na],G[na:,na:]
+print('aa')
+print(Gaa.real)
+print('ad')
+print(Gad.real)
+print('da')
+print(Gda.real)
+print('dd')
+print(Gdd.real)
+print(np.linalg.norm(G.imag))
+
+G = np.zeros_like(G)
 for p,q in itertools.product(range(psi.nsite),repeat=2):
     for x in itertools.product((0,1),repeat=psi.nsite):
         psi_x = psi.amplitude(x)
@@ -44,5 +61,15 @@ for p,q in itertools.product(range(psi.nsite),repeat=2):
         if y is None:
             continue
         psi_y = psi.amplitude(y)
-        G_[p,q] += psi_x*psi_y*sign
-print(G_)
+        G[p,q] += psi_x*psi_y*sign
+G = G[idx,:][:,idx]
+Gaa,Gad,Gda,Gdd = G[:na,:na],G[:na,na:],G[na:,:na],G[na:,na:]
+print('aa')
+print(Gaa.real)
+print('ad')
+print(Gad.real)
+print('da')
+print(Gda.real)
+print('dd')
+print(Gdd.real)
+print(np.linalg.norm(G.imag))

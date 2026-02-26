@@ -35,7 +35,7 @@ def covariance_product(g1,g2):
 
     M = soft_inv(I+g12)
     return I-np.dot(I-g2,np.dot(M,I-g1)),tr
-def partial_trace(C,E,decimated,active=None):
+def decompose(C,decimated,active=None):
     nsite = C.shape[0]
     if active is None:
         active = list(set(range(nsite))-set(decimated))
@@ -44,7 +44,9 @@ def partial_trace(C,E,decimated,active=None):
     na = len(active)
 
     C = C[idx,:][:,idx] 
-    A,B,C,D = C[:na,:na],C[:na,na:],C[na:,:na],C[na:,na:]
+    return C[:na,:na],C[:na,na:],C[na:,:na],C[na:,na:]
+def partial_trace(C,E,decimated,active=None):
+    A,B,C,D = decompose(C,decimated,active=active)
     M = D+E
     Minv = soft_inv(M)
     BMC = np.dot(B,np.dot(Minv,C))

@@ -24,6 +24,7 @@ Rmin = 1.01
 nR = 12
 R = Rmin
 typ = 'lowdin'
+nelec = 4
 for i in range(nR):
     print(f'##################### R={R:.2f} #############################')
     f = h5py.File(f'{typ}/h4_{R:.2f}.h5','r')
@@ -49,7 +50,7 @@ for i in range(nR):
     assert np.linalg.norm(v_asym+v_asym.transpose(0,1,3,2))<1e-10
     assert np.linalg.norm(v_asym-v_asym.transpose(1,0,3,2))<1e-10
     
-    fcidump = FCIDUMP(pg='c1',n_sites=nao,n_elec=nao,twos=0,ipg=0,orb_sym=[0]*nao)
+    fcidump = FCIDUMP(pg='c1',n_sites=nao,n_elec=nelec,twos=0,ipg=0,orb_sym=[0]*nao)
     hamil = Hamiltonian(fcidump,flat=True)
     cutoff = 1e-9
     def generate_terms(n_sites,c,d):

@@ -11,45 +11,39 @@ np.set_printoptions(precision=10,suppress=True)
 
 propose_by = 'uniform'
 rho_swap = 0
-run = 0
+run = 0 
 U0 = True
-start,stop = 0,1
-optimizer = 'SR'
-#optimizer = 'LM'
+#U0 = False
+start,stop = 0,100
+optimizer = 'RGN'
 rate1 = 0.1
-rate2 = 5
-if optimizer=='LM':
-    rate2 = 0.5
+rate2 = 2 
 #if start==0:
 #    optimizer = 'SR'
 #eigen_thresh = 1e-6
 eigen_thresh = None
 penalty = False 
 HF_typ = 'GHF'
-symmetry = 'u1'
-pmg_typ = 3 
-remove_redundant = True
+symmetry = 'u11'
+pmg_typ = 1 
 
-R = 1.11
+R = 1.01
 dR = 0.02
 if U0:
-    U0 = np.zeros((8,8))
-    U0[::2,::2] = U0[1::2,1::2] = np.array([[1, 1, 1, 1.],
-                                            [1, 1,-1,-1],
-                                            [1,-1, 1,-1],
-                                            [1,-1,-1, 1]])/2.
+    mo = np.load(f'../lowdin_hfmo/R{R:.2f}.npy')
+    U0 = np.zeros((16,16))
+    U0[::2,::2] = mo[0]
+    U0[1::2,1::2] = mo[1]
     eps = 0.1
-    #eps = 1
 else:
     U0 = None
     eps = 0.5
-psi = H4MinimalState(HF_typ,pmg_typ=pmg_typ,U0=U0,remove_redundant=remove_redundant,
-                     symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
+psi = H4_6_31G(HF_typ,pmg_typ=pmg_typ,U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
 
 if start==0:
-    x = (np.random.rand(psi.nparam)*2-1)*eps
-    COMM.Bcast(x,root=0)
-    #x = np.load(f'R{R:.2f}/run{run}_start{start}.npy') 
+    #x = (np.random.rand(psi.nparam)*2-1)*eps
+    #COMM.Bcast(x,root=0)
+    x = np.load(f'R{R:.2f}/run{run}_start{start}.npy') 
     #if RANK==0:
     #    np.save(f'R{R:.2f}/run{run}_start{start}.npy',x)
 else:
@@ -62,21 +56,18 @@ const = f['ecore'][()]
 eri = f['eri_oao'][:] 
 hcore = f['hcore_oao'][:]
 f.close()
-eri = np.zeros_like(eri)
+#w,v = np.linalg.eigh(hcore)
+#print(w)
+#print(v)
+#Y = scipy.linalg.logm(v)
+#print(Y.real)
+#print(Y.imag)
+#exit()
+#print(hcore)
 
 ham['energy'] = QCHamiltonian(hcore,eri)
 if penalty:
     ham['S^2'] = TotalSpin(hcore.shape[0],weight=0.1)
-
-if RANK==0:
-    hcore = np.zeros((psi.nsite,)*2)
-    hcore[::2,::2] = ham['energy'].hcore
-    hcore[1::2,1::2] = ham['energy'].hcore
-    E = 0
-    for x in itertools.product((0,1),repeat=len(psi.decimated)):
-        E += psi.compute_energy(x,hcore,eri=ham['energy'].eri)
-    print('energy by summing decimated indices=',E)
-#exit()
 
 sampler = DenseSampler(exact=True)
 #sampler = MHSampler(burn_in=20,every=20)
@@ -87,8 +78,6 @@ elif optimizer=='SR':
     vmc = SR(psi,ham,sampler)
 elif optimizer=='RGN':
     vmc = RGN(psi,ham,sampler)
-elif optimizer=='LM':
-    vmc = LM(psi,ham,sampler)
 else:
     raise ValueError
 vmc.eigen_thresh = eigen_thresh 
@@ -104,5 +93,5 @@ psi = vmc.psi
 for pmg in psi.pmg_ls:
     print(pmg.x)
 #U = psi.pmg_ls[-1].Y['expY']
-#x = psi.get_x()
-#np.save(f'R{R:.2f}/run{run}_start{stop}.npy',x)
+x = psi.get_x()
+np.save(f'R{R:.2f}/run{run}_start{stop}.npy',x)
