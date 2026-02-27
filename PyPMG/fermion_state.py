@@ -36,13 +36,13 @@ def get_swap_list(x):
         new_cfs.append(tuple(y))
     return new_cfs 
 class FermionState:
-    def __init__(self,nsites,nelec,symmetry='u11',thresh=1e-10,rho_swap=0.,propose_by='uniform'):
+    def __init__(self,nsites,nelec,**sampling_kwargs):
         self.nsites = nsites
         self.nelec = nelec
         self.nsite = sum(nsites)
+        self.set_sampling_kwargs(**sampling_kwargs)
+    def set_sampling_kwargs(self,symmetry='u11',thresh=1e-10,rho_swap=0.,propose_by='uniform'):
         self.symmetry = symmetry
-        self.amps = dict()
-        self.ders = dict()
         self.thresh = thresh # |amplitude|<thresh are treated as 0
         self.rho_swap = rho_swap
         self.propose_by = propose_by 

@@ -207,12 +207,15 @@ class SGD: # stochastic sampling
             print('\tnsamples per process=',ntotal)
 
         self.cfs = []
+        t0 = time.time()
         for ix in ixs:
             x = all_cfs[ix]
             cx = self.psi.amplitude(x)
             if cx is None:
                 raise ValueError
             self._accumulate(x,compute_v,compute_h)
+        if RANK==SIZE-1:
+            print('\tsample time=',time.time()-t0)
         self._collect(compute_v,compute_h)
     def extract_energy_gradient(self):
         t0 = time.time()

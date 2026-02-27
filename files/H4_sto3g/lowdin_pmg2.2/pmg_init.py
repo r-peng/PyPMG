@@ -13,14 +13,10 @@ propose_by = 'uniform'
 rho_swap = 0
 run = 1
 U0 = True
-#U0 = False
-start,stop = 100,200
+start,stop = 0,100
 optimizer = 'RGN'
-optimizer = 'LM'
 rate1 = 0.1
 rate2 = 2 
-if optimizer=='LM':
-    rate2 = 0.5
 #if start==0:
 #    optimizer = 'SR'
 #eigen_thresh = 1e-6
@@ -30,7 +26,7 @@ HF_typ = 'GHF'
 symmetry = 'u11'
 pmg_typ = 2,2 
 
-R = 1.21
+R = 1.01
 dR = 0.02
 if U0:
     U0 = np.zeros((8,8))
@@ -42,7 +38,7 @@ if U0:
 else:
     U0 = None
     eps = 0.5
-psi = H4MinimalState(HF_typ,pmg_typ=pmg_typ,U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
+psi = get_h4_minimum(HF_typ,pmg_typ,manual_derivative=True,U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
 
 if start==0:
     x = (np.random.rand(psi.nparam)*2-1)*eps
@@ -52,7 +48,7 @@ if start==0:
         np.save(f'R{R:.2f}/run{run}_start{start}.npy',x)
 else:
     x = np.load(f'R{R:.2f}/run{run}_start{start}.npy')
-psi._update(x)
+psi.update(x)
 
 ham = dict()
 f = h5py.File(f'../lowdin/h4_{R:.2f}.h5','r')
