@@ -1,4 +1,5 @@
 import numpy as np
+from PyPMG.fermion_state import * 
 class Jastrow:
     def __init__(self,gps=None,nsite=None,Jmax=None):
         if gps is None: 
@@ -10,7 +11,7 @@ class Jastrow:
             self.gps = gps 
             self.nparam = len(self.gps)
         self.Jmax = Jmax 
-    def _amplitude_and_derivative(self,cf):
+    def _amplitude_and_derivative(self,cf,derivative=True):
         if self.gps is not None:
             occ = np.zeros(len(self.gps))
             for i,gp in enumerate(self.gps):
@@ -29,29 +30,27 @@ class Jastrow:
                 if x[i]<-self.Jmax:
                     x[i] = -self.Jmax
         self.x = x
-class JastrowPMGState(PMGState):
-    def __init__(self,nsites,nelec,pmg_ls,jastrow_ls,U0=None,**kwargs):
-        super().__init__(nsites,nelec,pmg_ls,U0=U0,**kwargs)
-        self.jastrow_ls = jastrow_ls
-        for jas in jastrow_ls:
-            self.nparam += jas.nparam
+class JastrowPMGState(FermionState):
+    def __init__(self,jas,pmg):
+        super().__init__(pmg.nsites,pmg.nelec,symmetry=pmg.symmetry,thresh=pmg.thresh,rho_swap=pmg.rho_swap,propose_by=pmg.propose_by)
+        pmg.get_nparam()
+        self.pmg = pmg
+        self.jas = jas
+        self.nparam = pmg.nparam + jas.nparam
     def _update(self,x):
-        for jas in self.jastrow_ls:
-            xi,x = x[:jas.nparam],x[jas.nparam:]
-            jas._update(xi)
-        super()._update(x)
+        self.x = x
+        n = self.jas.nparam
+        self.jas._update(x[:n])
+        self.pmg._update(x[n:])
     def get_x(self):
-        x = [jas.x for jas in self.jastrow_ls]
-        return np.concatenate(x+[super().get_x()])
+        return np.concatenate([self.jas.x,self.pmg.x])
     def _amplitude_and_derivative(self,cf,derivative=True):
-        psi_x = [None] * (len(self.jastrow_ls)+1)
-        vx = [None] * (len(self.jastrow_ls)+1)
-        psi_x[-1],vx[-1] = super()._amplitude_and_derivative(cf,derivative=derivative) 
-        for i,jas in enumerate(self.jastrow_ls):
-            psi_x[i],vx[i] = jas._amplitude_and_derivative(cf)
-            vx[i] *= psi_x[-1]
-        psi_x = np.prod(psi_x)
-        if derivative:
-            return psi_x,np.concatenate(vx)
-        else:
+        psi_1,vx1 = self.jas._amplitude_and_derivative(cf,derivative=derivative)
+        psi_2,vx2 = self.pmg._amplitude_and_derivative(cf,derivative=derivative)
+        psi_x = psi_1*psi_2
+        if not derivative:
             return psi_x,None
+        vx = np.concatenate([vx1*psi_2,vx2*psi_1])
+        return psi_x,vx
+    def _amplitude(self,cf):
+        return self._amplitude_and_derivative(cf,derivative=False)[0]

@@ -28,6 +28,22 @@ def get_ctr_ls(decimated,order=1):
     for r in range(1,order+1):
         ls += list(itertools.combinations(decimated,r))
     return ls
+def complement(nsite,ls1):
+    ls2 = list(set(range(nsite)) - set(ls1))
+    ls2.sort()
+    return ls2
+def get_hop_ls(ls,HF_typ):
+    hop_ls = list(itertools.combinations(ls,2))
+    if HF_typ=='GHF':
+        return hop_ls
+    elif HF_typ=='UHF':
+        ls = []
+        for (p,q) in hop_ls:
+            if p%2==q%2:
+                ls.append((p,q))
+        return ls
+    else:
+        raise ValueError
 def _prodZ(cf,orbs):
     facs = [1-2*cf[i] for i in orbs]
     return np.prod(facs)
@@ -58,10 +74,11 @@ def determinant_derivative(A,thresh=1e-6):
     adjA = compute_adjugate(A,detA=detA)
     return detA,adjA.T
 class PMG:
-    def __init__(self,nsite,hop_ls,decimated,fxn='default',order=1):
+    def __init__(self,nsite,hop_ls,decimated,fxn='default',order=1,jac_by=None):
         self.nsite = nsite
         self.hop_ls = hop_ls # orbital pair
         self.nparam = len(hop_ls) 
+        self.jac_by = jac_by
         if decimated is None:
             self.decimated = None
         else:
@@ -109,13 +126,13 @@ class PMG_autodiff(PMG):
         Y = sum([xi*self.Y[p,q] for xi,(p,q) in zip(x,self.hop_ls)])
 
         n = len(self.hop_ls)
-        f = self.fxn(cf,x[n:])
+        f,_ = self.fxn(cf,x[n:])
         return x,torch.linalg.matrix_exp(f*Y)
     def get_mo(self,cf,derivative=False):
         if derivative:
             return self.get_mo_derivative(cf)
         n = len(self.hop_ls)
-        f = self.fxn(cf,self.x[n:])
+        f,_ = self.fxn(cf,self.x[n:])
         if f==1:
             return None,self.Y['expY']
         if f==-1:
@@ -141,11 +158,10 @@ class RMG_autodiff(PMG_autodiff):
         self.Y['full'] = Y
         self.Y['expY'] = scipy.linalg.expm(self.Y['full'])
 class PMG_manual(PMG):
-    def __init__(self,*args,jac_by='frechet',**kwargs):
+    def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        self.jac_by = jac_by
         nhop = len(self.hop_ls)
-        if jac_by=='ad':
+        if self.jac_by=='ad':
             for (p,q),Y in self.Y.items():
                 self.Y[p,q] = torch.tensor(Y,requires_grad=False)
             def fxn(x,f):
@@ -160,7 +176,7 @@ class PMG_manual(PMG):
                 jac = jac.numpy(force=True)
                 x.grad = None
                 return U,jac
-        elif jac_by=='frechet':
+        elif self.jac_by=='frechet':
             def _get_mo_derivative(f):
                 Y = self.Y['full']
                 jac = np.zeros((self.nsite,self.nsite,nhop),dtype=Y.dtype)
@@ -260,6 +276,7 @@ class PMGState(FermionState):
     def get_nparam(self):
         self.nparam = sum([pmg.nparam for pmg in self.pmg_ls])
     def _update(self,x):
+        self.x = x
         for pmg in self.pmg_ls:
             xi,x = x[:pmg.nparam],x[pmg.nparam:]
             pmg._update(xi)

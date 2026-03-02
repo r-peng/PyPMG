@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -J jas1.4 
+#SBATCH -p joonholee 
+#SBATCH -n 100 
+#SBATCH --mem=64G # memory per node
+#SBATCH -t 0-23:00:00 # time limit
+#SBATCH -o out.out
+#SBATCH -e err.err
+
+eval "$(conda shell.bash hook)"
+
+conda activate /n/home12/rpeng/.conda/envs/numba
+
+python -u benchmark_XXZ_MSD.py > run.out

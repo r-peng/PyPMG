@@ -1,22 +1,6 @@
 import numpy as np
 import scipy,itertools
 from PyPMG.pmg import * 
-def complement(nsite,ls1):
-    ls2 = list(set(range(nsite)) - set(ls1))
-    ls2.sort()
-    return ls2
-def get_hop_ls(ls,HF_typ):
-    hop_ls = list(itertools.combinations(ls,2))
-    if HF_typ=='GHF':
-        return hop_ls
-    elif HF_typ=='UHF':
-        ls = []
-        for (p,q) in hop_ls:
-            if p%2==q%2:
-                ls.append((p,q))
-        return ls
-    else:
-        raise ValueError
 def get_h4_minimum(HF_typ,pmg_typ,manual_derivative=False,remove_redundant=False,**kwargs):
     nsites = 4,4
     nelec = 2,2

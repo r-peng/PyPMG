@@ -96,7 +96,7 @@ class SGD: # stochastic sampling
         self.Hx1 = None
         self.Hx1h = None
         gc.collect()
-    def run(self,start,stop,fname=None):
+    def run(self,start,stop,fname=None,save_every=1):
         self.Eold = None 
         self.Lold = None
         for step in range(start,stop):
@@ -125,8 +125,8 @@ class SGD: # stochastic sampling
             self.psi.update(x)
             if fname is None:
                 continue
-            if RANK==0:
-                np.save(fname,x)
+            if RANK==0 and step%save_every==0:
+                np.save(fname+f'{step}.npy',x)
     def sample(self,sample_size=None,compute_v=True,compute_h=None,save_config=True):
         ham = self.ham['energy']
         self.sampler.preprocess(self.psi,ham=ham)
