@@ -11,9 +11,9 @@ np.set_printoptions(precision=10,suppress=True)
 
 propose_by = 'uniform'
 rho_swap = 0
-run = 3 
+run = 0 
 U0 = True
-start,stop = 0,100
+start,stop = 0,50
 optimizer = 'RGN'
 rate1 = 0.1
 rate2 = 2 
@@ -36,8 +36,7 @@ if U0:
 else:
     U0 = None
     eps = 0.5
-#psi = get_h8_minimum(HF_typ,pmg_typ,manual_derivative=False,U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
-psi = get_h8_minimum(HF_typ,pmg_typ,manual_derivative=True,U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
+psi = get_h8_minimum(HF_typ,pmg_typ,nlayer=1,manual_derivative=True,remove_redundant=True,order=2,U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
 
 if start==0:
     x = (np.random.rand(psi.nparam)*2-1)*eps

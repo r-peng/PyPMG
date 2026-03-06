@@ -1,0 +1,1163 @@
+layer= 0
+nparam= 224
+hop_ls= [(1, 3), (1, 5), (1, 7), (1, 9), (1, 11), (1, 13), (1, 15), (3, 5), (3, 7), (3, 9), (3, 11), (3, 13), (3, 15), (5, 7), (5, 9), (5, 11), (5, 13), (5, 15), (7, 9), (7, 11), (7, 13), (7, 15), (9, 11), (9, 13), (9, 15), (11, 13), (11, 15), (13, 15)]
+
+layer= 1
+nparam= 264
+hop_ls= [(0, 1), (0, 2), (0, 4), (0, 5), (0, 6), (0, 8), (0, 9), (0, 10), (0, 12), (0, 13), (0, 14), (1, 2), (1, 4), (1, 5), (1, 6), (1, 8), (1, 9), (1, 10), (1, 12), (1, 13), (1, 14), (2, 4), (2, 5), (2, 6), (2, 8), (2, 9), (2, 10), (2, 12), (2, 13), (2, 14), (4, 5), (4, 6), (4, 8), (4, 9), (4, 10), (4, 12), (4, 13), (4, 14), (5, 6), (5, 8), (5, 9), (5, 10), (5, 12), (5, 13), (5, 14), (6, 8), (6, 9), (6, 10), (6, 12), (6, 13), (6, 14), (8, 9), (8, 10), (8, 12), (8, 13), (8, 14), (9, 10), (9, 12), (9, 13), (9, 14), (10, 12), (10, 13), (10, 14), (12, 13), (12, 14), (13, 14)]
+
+layer= 2
+nparam= 120
+hop_ls= [(0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7), (0, 8), (0, 9), (0, 10), (0, 11), (0, 12), (0, 13), (0, 14), (0, 15), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2, 9), (2, 10), (2, 11), (2, 12), (2, 13), (2, 14), (2, 15), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8), (3, 9), (3, 10), (3, 11), (3, 12), (3, 13), (3, 14), (3, 15), (4, 5), (4, 6), (4, 7), (4, 8), (4, 9), (4, 10), (4, 11), (4, 12), (4, 13), (4, 14), (4, 15), (5, 6), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11), (5, 12), (5, 13), (5, 14), (5, 15), (6, 7), (6, 8), (6, 9), (6, 10), (6, 11), (6, 12), (6, 13), (6, 14), (6, 15), (7, 8), (7, 9), (7, 10), (7, 11), (7, 12), (7, 13), (7, 14), (7, 15), (8, 9), (8, 10), (8, 11), (8, 12), (8, 13), (8, 14), (8, 15), (9, 10), (9, 11), (9, 12), (9, 13), (9, 14), (9, 15), (10, 11), (10, 12), (10, 13), (10, 14), (10, 15), (11, 12), (11, 13), (11, 14), (11, 15), (12, 13), (12, 14), (12, 15), (13, 14), (13, 15), (14, 15)]
+
+step= 0
+
+nparam= 608
+ntotal configs= 4900
+	dense amplitude time= 0.4436042308807373
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.207832336425781
+self.n= 0.8367521296127294
+	collect g,h time= 6.75709867477417
+E=-13.105150884875787,dE=0,std=0
+L=-13.105150884875787,dL=0,std=0
+	gnorm= 1.5221956949621112
+	collect S matrix time= 0.06337213516235352
+	SR solver time= 0.006241321563720703
+	collect H matrix time= 0.03389406204223633
+	RGN solver time= 0.007460832595825195
+	xnorm=1.4169244760325221,dnorm=2.5730849521434926
+	dense amplitude time= 0.00721430778503418
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.102432012557983
+self.n= 0.7080641902851741
+	RGN updated loss=-13.56962415584203,dloss=-0.46447327096624313
+step= 1
+
+nparam= 608
+	dense amplitude time= 0.48378825187683105
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.247765064239502
+self.n= 0.7080641902851738
+	collect g,h time= 6.653095960617065
+E=-13.569624155842027,dE=-0.4644732709662396,std=0
+L=-13.569624155842027,dL=-0.4644732709662396,std=0
+	gnorm= 0.9673615347972854
+	collect S matrix time= 0.054314374923706055
+	SR solver time= 0.005945920944213867
+	collect H matrix time= 0.035805702209472656
+	RGN solver time= 0.0071218013763427734
+	xnorm=2.565392849875134,dnorm=1.2272832894587662
+	dense amplitude time= 0.004847049713134766
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.076724290847778
+self.n= 0.8236076363819378
+	RGN updated loss=-13.955440655713625,dloss=-0.3858164998715985
+step= 2
+
+nparam= 608
+	dense amplitude time= 0.1296374797821045
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.244288921356201
+self.n= 0.8236076363819375
+	collect g,h time= 6.649502515792847
+E=-13.955440655713623,dE=-0.3858164998715967,std=0
+L=-13.955440655713623,dL=-0.3858164998715967,std=0
+	gnorm= 0.24634551091368992
+	collect S matrix time= 0.04992175102233887
+	SR solver time= 0.005136251449584961
+	collect H matrix time= 0.03241276741027832
+	RGN solver time= 0.006030082702636719
+	xnorm=2.350219395172069,dnorm=0.7787296253022508
+	dense amplitude time= 0.004970550537109375
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.091346502304077
+self.n= 0.8903783101291933
+	RGN updated loss=-13.99368589883343,dloss=-0.038245243119806815
+step= 3
+
+nparam= 608
+	dense amplitude time= 0.024822711944580078
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.234808444976807
+self.n= 0.8903783101291911
+	collect g,h time= 6.647485256195068
+E=-13.993685898833434,dE=-0.03824524311981037,std=0
+L=-13.993685898833434,dL=-0.03824524311981037,std=0
+	gnorm= 0.0948828420306524
+	collect S matrix time= 0.04951071739196777
+	SR solver time= 0.00551605224609375
+	collect H matrix time= 0.034629106521606445
+	RGN solver time= 0.006299018859863281
+	xnorm=2.1065742420414217,dnorm=0.5824416176677505
+	dense amplitude time= 0.00527501106262207
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.024425268173218
+self.n= 0.8913712297884031
+	RGN updated loss=-14.00009232786399,dloss=-0.006406429030556993
+step= 4
+
+nparam= 608
+	dense amplitude time= 0.09224224090576172
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.117990255355835
+self.n= 0.8913712297884022
+	collect g,h time= 6.886976957321167
+E=-14.000092327863992,dE=-0.006406429030558769,std=0
+L=-14.000092327863992,dL=-0.006406429030558769,std=0
+	gnorm= 0.03927076727080512
+	collect S matrix time= 0.061914920806884766
+	SR solver time= 0.00545811653137207
+	collect H matrix time= 0.049480438232421875
+	RGN solver time= 0.0068285465240478516
+	xnorm=2.063900401478995,dnorm=0.4151772313438657
+	dense amplitude time= 0.005430936813354492
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.090015411376953
+self.n= 0.8762952980511627
+	RGN updated loss=-14.001760263017678,dloss=-0.0016679351536854625
+step= 5
+
+nparam= 608
+	dense amplitude time= 0.007211208343505859
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.225895166397095
+self.n= 0.876295298051162
+	collect g,h time= 6.599518060684204
+E=-14.001760263017676,dE=-0.0016679351536836862,std=0
+L=-14.001760263017676,dL=-0.0016679351536836862,std=0
+	gnorm= 0.029870214203799757
+	collect S matrix time= 0.05394315719604492
+	SR solver time= 0.00543665885925293
+	collect H matrix time= 0.033477783203125
+	RGN solver time= 0.006844758987426758
+	xnorm=2.0933153361702868,dnorm=0.2971614588452464
+	dense amplitude time= 0.00497889518737793
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.997967481613159
+self.n= 0.872973587080502
+	RGN updated loss=-14.0024102276859,dloss=-0.000649964668223646
+step= 6
+
+nparam= 608
+	dense amplitude time= 0.008222103118896484
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.119730234146118
+self.n= 0.8729735870805009
+	collect g,h time= 6.632172107696533
+E=-14.0024102276859,dE=-0.000649964668223646,std=0
+L=-14.0024102276859,dL=-0.000649964668223646,std=0
+	gnorm= 0.019323090461000014
+	collect S matrix time= 0.0621185302734375
+	SR solver time= 0.005461931228637695
+	collect H matrix time= 0.035672664642333984
+	RGN solver time= 0.005910158157348633
+	xnorm=2.111393772620305,dnorm=0.22562033435301088
+	dense amplitude time= 0.005097866058349609
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.905757188796997
+self.n= 0.8710163024514825
+	RGN updated loss=-14.00271771590624,dloss=-0.0003074882203399909
+step= 7
+
+nparam= 608
+	dense amplitude time= 0.006116628646850586
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.061993598937988
+self.n= 0.8710163024514815
+	collect g,h time= 6.6722235679626465
+E=-14.002717715906241,dE=-0.00030748822034176726,std=0
+L=-14.002717715906241,dL=-0.00030748822034176726,std=0
+	gnorm= 0.011921311159625456
+	collect S matrix time= 0.04968428611755371
+	SR solver time= 0.005970478057861328
+	collect H matrix time= 0.03522849082946777
+	RGN solver time= 0.007708072662353516
+	xnorm=2.1174630028474906,dnorm=0.18472555789784323
+	dense amplitude time= 0.004938364028930664
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.0815887451171875
+self.n= 0.8663823186528774
+	RGN updated loss=-14.00289126554179,dloss=-0.00017354963554794267
+step= 8
+
+nparam= 608
+	dense amplitude time= 0.03812861442565918
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.224496364593506
+self.n= 0.8663823186528778
+	collect g,h time= 6.422237396240234
+E=-14.002891265541786,dE=-0.00017354963554438996,std=0
+L=-14.002891265541786,dL=-0.00017354963554438996,std=0
+	gnorm= 0.007577080142147995
+	collect S matrix time= 0.05219864845275879
+	SR solver time= 0.00634765625
+	collect H matrix time= 0.033933401107788086
+	RGN solver time= 0.006430149078369141
+	xnorm=2.1179084329903333,dnorm=0.1625531820386782
+	dense amplitude time= 0.00437617301940918
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.0736353397369385
+self.n= 0.8590760208432427
+	RGN updated loss=-14.003005285579864,dloss=-0.00011402003807781114
+step= 9
+
+nparam= 608
+	dense amplitude time= 0.014672517776489258
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.216247320175171
+self.n= 0.8590760208432415
+	collect g,h time= 6.636169672012329
+E=-14.003005285579862,dE=-0.00011402003807603478,std=0
+L=-14.003005285579862,dL=-0.00011402003807603478,std=0
+	gnorm= 0.004814189303497353
+	collect S matrix time= 0.052614688873291016
+	SR solver time= 0.005570650100708008
+	collect H matrix time= 0.03604245185852051
+	RGN solver time= 0.006539106369018555
+	xnorm=2.1177290942954703,dnorm=0.14261378996633553
+	dense amplitude time= 0.0160214900970459
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.089588403701782
+self.n= 0.8510809080596107
+	RGN updated loss=-14.00308373945966,dloss=-7.845387979799057e-05
+step= 10
+
+nparam= 608
+	dense amplitude time= 0.022372007369995117
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.224830627441406
+self.n= 0.8510809080596107
+	collect g,h time= 6.550680160522461
+E=-14.00308373945966,dE=-7.845387979799057e-05,std=0
+L=-14.00308373945966,dL=-7.845387979799057e-05,std=0
+	gnorm= 0.0031415883976138956
+	collect S matrix time= 0.046213388442993164
+	SR solver time= 0.0058782100677490234
+	collect H matrix time= 0.034932851791381836
+	RGN solver time= 0.006305217742919922
+	xnorm=2.117852778310275,dnorm=0.12659153019538938
+	dense amplitude time= 0.005329132080078125
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.087076663970947
+self.n= 0.8431947077366213
+	RGN updated loss=-14.003140265157047,dloss=-5.652569738678892e-05
+step= 11
+
+nparam= 608
+	dense amplitude time= 0.3884575366973877
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.2146077156066895
+self.n= 0.8431947077366198
+	collect g,h time= 6.625017404556274
+E=-14.003140265157045,dE=-5.652569738501256e-05,std=0
+L=-14.003140265157045,dL=-5.652569738501256e-05,std=0
+	gnorm= 0.0023681586444226775
+	collect S matrix time= 0.05072641372680664
+	SR solver time= 0.0052280426025390625
+	collect H matrix time= 0.03455042839050293
+	RGN solver time= 0.0057370662689208984
+	xnorm=2.118425401074993,dnorm=0.11425683029297762
+	dense amplitude time= 0.004873991012573242
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.9923713207244873
+self.n= 0.8360297014371116
+	RGN updated loss=-14.003183696285582,dloss=-4.3431128537108066e-05
+step= 12
+
+nparam= 608
+	dense amplitude time= 0.004682302474975586
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.14246392250061
+self.n= 0.836029701437111
+	collect g,h time= 6.505951642990112
+E=-14.003183696285586,dE=-4.343112854066078e-05,std=0
+L=-14.003183696285586,dL=-4.343112854066078e-05,std=0
+	gnorm= 0.0020246229576118806
+	collect S matrix time= 0.06376981735229492
+	SR solver time= 0.006014585494995117
+	collect H matrix time= 0.05280041694641113
+	RGN solver time= 0.010816812515258789
+	xnorm=2.1195400347927795,dnorm=0.10373272909291273
+	dense amplitude time= 0.0051271915435791016
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.122849702835083
+self.n= 0.8297956816548726
+	RGN updated loss=-14.003218242982244,dloss=-3.4546696658921405e-05
+step= 13
+
+nparam= 608
+	dense amplitude time= 0.02388310432434082
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.252502679824829
+self.n= 0.8297956816548712
+	collect g,h time= 6.637110471725464
+E=-14.003218242982248,dE=-3.454669666247412e-05,std=0
+L=-14.003218242982248,dL=-3.454669666247412e-05,std=0
+	gnorm= 0.001745775988969612
+	collect S matrix time= 0.049492597579956055
+	SR solver time= 0.009493589401245117
+	collect H matrix time= 0.032904624938964844
+	RGN solver time= 0.009689569473266602
+	xnorm=2.121433741275676,dnorm=0.09401443892071736
+	dense amplitude time= 0.0049898624420166016
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.024869680404663
+self.n= 0.8245552760698216
+	RGN updated loss=-14.003245748833066,dloss=-2.7505850818343447e-05
+step= 14
+
+nparam= 608
+	dense amplitude time= 0.004320621490478516
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.153068542480469
+self.n= 0.8245552760698214
+	collect g,h time= 6.462419271469116
+E=-14.003245748833066,dE=-2.7505850818343447e-05,std=0
+L=-14.003245748833066,dL=-2.7505850818343447e-05,std=0
+	gnorm= 0.0014435700360629056
+	collect S matrix time= 0.05306887626647949
+	SR solver time= 0.005285024642944336
+	collect H matrix time= 0.03565359115600586
+	RGN solver time= 0.005807399749755859
+	xnorm=2.1241402072036775,dnorm=0.08486968442509038
+	dense amplitude time= 0.004763603210449219
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.7711870670318604
+self.n= 0.8203051484496586
+	RGN updated loss=-14.003267561809462,dloss=-2.1812976395807482e-05
+step= 15
+
+nparam= 608
+	dense amplitude time= 0.020267724990844727
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.856949090957642
+self.n= 0.8203051484496586
+	collect g,h time= 6.531325340270996
+E=-14.003267561809459,dE=-2.1812976392254768e-05,std=0
+L=-14.003267561809459,dL=-2.1812976392254768e-05,std=0
+	gnorm= 0.0011505706760793274
+	collect S matrix time= 0.05256962776184082
+	SR solver time= 0.005741596221923828
+	collect H matrix time= 0.03650331497192383
+	RGN solver time= 0.006341457366943359
+	xnorm=2.1274680232404046,dnorm=0.07705347695510709
+	dense amplitude time= 0.005006313323974609
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.098031997680664
+self.n= 0.8169493180891458
+	RGN updated loss=-14.00328515237591,dloss=-1.7590566450564893e-05
+step= 16
+
+nparam= 608
+	dense amplitude time= 0.02840709686279297
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.229753732681274
+self.n= 0.8169493180891445
+	collect g,h time= 6.619461297988892
+E=-14.003285152375911,dE=-1.759056645234125e-05,std=0
+L=-14.003285152375911,dL=-1.759056645234125e-05,std=0
+	gnorm= 0.0008989391398946147
+	collect S matrix time= 0.05253028869628906
+	SR solver time= 0.005287885665893555
+	collect H matrix time= 0.03490900993347168
+	RGN solver time= 0.006356716156005859
+	xnorm=2.1312594160397533,dnorm=0.07111688521968593
+	dense amplitude time= 0.004631757736206055
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.911029815673828
+self.n= 0.8142758577776097
+	RGN updated loss=-14.00329993868283,dloss=-1.4786306918423975e-05
+step= 17
+
+nparam= 608
+	dense amplitude time= 0.025814056396484375
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.045168161392212
+self.n= 0.814275857777609
+	collect g,h time= 6.568427801132202
+E=-14.003299938682826,dE=-1.4786306914871261e-05,std=0
+L=-14.003299938682826,dL=-1.4786306914871261e-05,std=0
+	gnorm= 0.0007156993790877186
+	collect S matrix time= 0.05221748352050781
+	SR solver time= 0.0054433345794677734
+	collect H matrix time= 0.03607797622680664
+	RGN solver time= 0.0058231353759765625
+	xnorm=2.135494948504529,dnorm=0.06696526489631213
+	dense amplitude time= 0.005394458770751953
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.764975070953369
+self.n= 0.8120573018551142
+	RGN updated loss=-14.003313022879176,dloss=-1.3084196350376942e-05
+step= 18
+
+nparam= 608
+	dense amplitude time= 0.07306599617004395
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.875661849975586
+self.n= 0.8120573018551144
+	collect g,h time= 6.7303667068481445
+E=-14.003313022879174,dE=-1.3084196348600585e-05,std=0
+L=-14.003313022879174,dL=-1.3084196348600585e-05,std=0
+	gnorm= 0.000591156157539469
+	collect S matrix time= 0.050074100494384766
+	SR solver time= 0.005668163299560547
+	collect H matrix time= 0.03526616096496582
+	RGN solver time= 0.00630497932434082
+	xnorm=2.1401577101603735,dnorm=0.06423724150915792
+	dense amplitude time= 0.0048062801361083984
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.7722110748291016
+self.n= 0.8101208688536246
+	RGN updated loss=-14.003325118859086,dloss=-1.209597991191913e-05
+step= 19
+
+nparam= 608
+	dense amplitude time= 0.04236865043640137
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.882462978363037
+self.n= 0.8101208688536241
+	collect g,h time= 6.66194224357605
+E=-14.00332511885909,dE=-1.2095979915471844e-05,std=0
+L=-14.00332511885909,dL=-1.2095979915471844e-05,std=0
+	gnorm= 0.0005164100830716253
+	collect S matrix time= 0.04935336112976074
+	SR solver time= 0.005318641662597656
+	collect H matrix time= 0.03592491149902344
+	RGN solver time= 0.005818843841552734
+	xnorm=2.1452330730390985,dnorm=0.06239273742004187
+	dense amplitude time= 0.005047321319580078
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.8473920822143555
+self.n= 0.8083655626185462
+	RGN updated loss=-14.003336601379868,dloss=-1.1482520777761351e-05
+step= 20
+
+nparam= 608
+	dense amplitude time= 0.024466514587402344
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.946870803833008
+self.n= 0.8083655626185458
+	collect g,h time= 6.724636077880859
+E=-14.003336601379871,dE=-1.1482520781314065e-05,std=0
+L=-14.003336601379871,dL=-1.1482520781314065e-05,std=0
+	gnorm= 0.00047506512376893737
+	collect S matrix time= 0.05052661895751953
+	SR solver time= 0.005645751953125
+	collect H matrix time= 0.03888058662414551
+	RGN solver time= 0.006144046783447266
+	xnorm=2.150621944409396,dnorm=0.060917760899155904
+	dense amplitude time= 0.004903554916381836
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.979156017303467
+self.n= 0.8067413273846256
+	RGN updated loss=-14.003347591272272,dloss=-1.0989892400559143e-05
+step= 21
+
+nparam= 608
+	dense amplitude time= 0.5388638973236084
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.152674198150635
+self.n= 0.8067413273846241
+	collect g,h time= 6.558799982070923
+E=-14.00334759127227,dE=-1.0989892398782786e-05,std=0
+L=-14.00334759127227,dL=-1.0989892398782786e-05,std=0
+	gnorm= 0.00045218603353305853
+	collect S matrix time= 0.05294084548950195
+	SR solver time= 0.0055713653564453125
+	collect H matrix time= 0.03739595413208008
+	RGN solver time= 0.005975246429443359
+	xnorm=2.1561573555314357,dnorm=0.059413481619272034
+	dense amplitude time= 0.0052127838134765625
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.029138565063477
+self.n= 0.8052313092454922
+	RGN updated loss=-14.003358045988415,dloss=-1.045471614524729e-05
+step= 22
+
+nparam= 608
+	dense amplitude time= 0.03125715255737305
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.136299133300781
+self.n= 0.8052313092454919
+	collect g,h time= 7.818634033203125
+E=-14.003358045988413,dE=-1.0454716143470932e-05,std=0
+L=-14.003358045988413,dL=-1.0454716143470932e-05,std=0
+	gnorm= 0.00043491271949789017
+	collect S matrix time= 0.0549013614654541
+	SR solver time= 0.005620241165161133
+	collect H matrix time= 0.04212665557861328
+	RGN solver time= 0.006860017776489258
+	xnorm=2.1616276821869524,dnorm=0.05759448451715407
+	dense amplitude time= 0.015264749526977539
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.8633697032928467
+self.n= 0.8038310576105864
+	RGN updated loss=-14.003367832484534,dloss=-9.786496120156585e-06
+step= 23
+
+nparam= 608
+	dense amplitude time= 0.03952956199645996
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.974397420883179
+self.n= 0.8038310576105862
+	collect g,h time= 7.823086261749268
+E=-14.003367832484534,dE=-9.786496120156585e-06,std=0
+L=-14.003367832484534,dL=-9.786496120156585e-06,std=0
+	gnorm= 0.0004388581138254907
+	collect S matrix time= 0.060649871826171875
+	SR solver time= 0.00591731071472168
+	collect H matrix time= 0.04000520706176758
+	RGN solver time= 0.006444454193115234
+	xnorm=2.1668031117000752,dnorm=0.05527775335566621
+	dense amplitude time= 0.006640434265136719
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.007009983062744
+self.n= 0.802490252798987
+	RGN updated loss=-14.00337678941635,dloss=-8.956931816683777e-06
+step= 24
+
+nparam= 608
+	dense amplitude time= 0.054810523986816406
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.154659032821655
+self.n= 0.8024902527989877
+	collect g,h time= 7.228442907333374
+E=-14.003376789416352,dE=-8.956931818460134e-06,std=0
+L=-14.003376789416352,dL=-8.956931818460134e-06,std=0
+	gnorm= 0.00043434487053750295
+	collect S matrix time= 0.05052971839904785
+	SR solver time= 0.005712985992431641
+	collect H matrix time= 0.03965592384338379
+	RGN solver time= 0.006342411041259766
+	xnorm=2.1715234482900656,dnorm=0.052562417229302445
+	dense amplitude time= 0.016852378845214844
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.114530563354492
+self.n= 0.8012308040081986
+	RGN updated loss=-14.003384800301394,dloss=-8.010885041542792e-06
+step= 25
+
+nparam= 608
+	dense amplitude time= 0.026294231414794922
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.216878890991211
+self.n= 0.8012308040081985
+	collect g,h time= 7.4170355796813965
+E=-14.00338480030139,dE=-8.010885037990079e-06,std=0
+L=-14.00338480030139,dL=-8.010885037990079e-06,std=0
+	gnorm= 0.0004300854954704092
+	collect S matrix time= 0.050188302993774414
+	SR solver time= 0.005574464797973633
+	collect H matrix time= 0.0396115779876709
+	RGN solver time= 0.006052970886230469
+	xnorm=2.1756357591734594,dnorm=0.04955904565233256
+	dense amplitude time= 0.005845308303833008
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.0771307945251465
+self.n= 0.800064179194475
+	RGN updated loss=-14.003391819420015,dloss=-7.019118624995713e-06
+step= 26
+
+nparam= 608
+	dense amplitude time= 0.07840991020202637
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.250988245010376
+self.n= 0.8000641791944743
+	collect g,h time= 7.169214725494385
+E=-14.003391819420017,dE=-7.0191186267720695e-06,std=0
+L=-14.003391819420017,dL=-7.0191186267720695e-06,std=0
+	gnorm= 0.00042539188595288
+	collect S matrix time= 0.04947805404663086
+	SR solver time= 0.00531458854675293
+	collect H matrix time= 0.03578639030456543
+	RGN solver time= 0.0058536529541015625
+	xnorm=2.179031918080981,dnorm=0.04642912078978275
+	dense amplitude time= 0.005166292190551758
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.023023843765259
+self.n= 0.7989690252441632
+	RGN updated loss=-14.003397874911052,dloss=-6.055491034828719e-06
+step= 27
+
+nparam= 608
+	dense amplitude time= 0.0712282657623291
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.141947269439697
+self.n= 0.7989690252441635
+	collect g,h time= 6.477466583251953
+E=-14.003397874911053,dE=-6.055491036605076e-06,std=0
+L=-14.003397874911053,dL=-6.055491036605076e-06,std=0
+	gnorm= 0.00041477009078124305
+	collect S matrix time= 0.05033516883850098
+	SR solver time= 0.005300283432006836
+	collect H matrix time= 0.03873133659362793
+	RGN solver time= 0.006377220153808594
+	xnorm=2.1817212997844533,dnorm=0.04333967013331121
+	dense amplitude time= 0.005647897720336914
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.127378702163696
+self.n= 0.7979561068094487
+	RGN updated loss=-14.00340305579333,dloss=-5.180882276079046e-06
+step= 28
+
+nparam= 608
+	dense amplitude time= 0.010769128799438477
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.239032030105591
+self.n= 0.797956106809447
+	collect g,h time= 6.84454345703125
+E=-14.003403055793328,dE=-5.1808822743026894e-06,std=0
+L=-14.003403055793328,dL=-5.1808822743026894e-06,std=0
+	gnorm= 0.00039869324847059684
+	collect S matrix time= 0.04805493354797363
+	SR solver time= 0.0051920413970947266
+	collect H matrix time= 0.03324770927429199
+	RGN solver time= 0.006030559539794922
+	xnorm=2.1837865141187844,dnorm=0.040509720725392766
+	dense amplitude time= 0.004601478576660156
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.02023458480835
+self.n= 0.7970338853918248
+	RGN updated loss=-14.003407494808311,dloss=-4.4390149831485815e-06
+step= 29
+
+nparam= 608
+	dense amplitude time= 0.034696340560913086
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.119284629821777
+self.n= 0.7970338853918234
+	collect g,h time= 6.499981164932251
+E=-14.003407494808313,dE=-4.439014984924938e-06,std=0
+L=-14.003407494808313,dL=-4.439014984924938e-06,std=0
+	gnorm= 0.00037857383422583386
+	collect S matrix time= 0.049158334732055664
+	SR solver time= 0.0052738189697265625
+	collect H matrix time= 0.036139488220214844
+	RGN solver time= 0.00578618049621582
+	xnorm=2.1853448920893412,dnorm=0.037977582732483424
+	dense amplitude time= 0.004702568054199219
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.9962244033813477
+self.n= 0.7962350553528019
+	RGN updated loss=-14.003411321477026,dloss=-3.826668713458048e-06
+step= 30
+
+nparam= 608
+	dense amplitude time= 0.024897098541259766
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.144803524017334
+self.n= 0.7962350553528015
+	collect g,h time= 6.485949516296387
+E=-14.003411321477028,dE=-3.826668715234405e-06,std=0
+L=-14.003411321477028,dL=-3.826668715234405e-06,std=0
+	gnorm= 0.0003568300522826779
+	collect S matrix time= 0.05262875556945801
+	SR solver time= 0.0055773258209228516
+	collect H matrix time= 0.03548026084899902
+	RGN solver time= 0.006289005279541016
+	xnorm=2.1865181757525374,dnorm=0.03572755609915579
+	dense amplitude time= 0.004948854446411133
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.855254650115967
+self.n= 0.7955468464845898
+	RGN updated loss=-14.003414652602508,dloss=-3.331125480343644e-06
+step= 31
+
+nparam= 608
+	dense amplitude time= 0.4201843738555908
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.970191240310669
+self.n= 0.795546846484589
+	collect g,h time= 6.605906963348389
+E=-14.00341465260251,dE=-3.331125482120001e-06,std=0
+L=-14.00341465260251,dL=-3.331125482120001e-06,std=0
+	gnorm= 0.0003346788482823473
+	collect S matrix time= 0.04558134078979492
+	SR solver time= 0.005419731140136719
+	collect H matrix time= 0.037925004959106445
+	RGN solver time= 0.006373167037963867
+	xnorm=2.1874610908116447,dnorm=0.03383601913511939
+	dense amplitude time= 0.005233287811279297
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.8840413093566895
+self.n= 0.794976506610676
+	RGN updated loss=-14.003417595164546,dloss=-2.942562035812557e-06
+step= 32
+
+nparam= 608
+	dense amplitude time= 0.03148508071899414
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.9604058265686035
+self.n= 0.7949765066106746
+	collect g,h time= 6.6046576499938965
+E=-14.003417595164548,dE=-2.942562037588914e-06,std=0
+L=-14.003417595164548,dL=-2.942562037588914e-06,std=0
+	gnorm= 0.0003145826335515158
+	collect S matrix time= 0.05367445945739746
+	SR solver time= 0.005308389663696289
+	collect H matrix time= 0.0368044376373291
+	RGN solver time= 0.005671262741088867
+	xnorm=2.1883003875779576,dnorm=0.03219279486795467
+	dense amplitude time= 0.01578497886657715
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.8337650299072266
+self.n= 0.7945213515239862
+	RGN updated loss=-14.003420227152427,dloss=-2.63198787919805e-06
+step= 33
+
+nparam= 608
+	dense amplitude time= 0.023415565490722656
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.964224576950073
+self.n= 0.7945213515239851
+	collect g,h time= 6.743040561676025
+E=-14.003420227152429,dE=-2.631987880974407e-06,std=0
+L=-14.003420227152429,dL=-2.631987880974407e-06,std=0
+	gnorm= 0.0002951363579010418
+	collect S matrix time= 0.05232429504394531
+	SR solver time= 0.005818367004394531
+	collect H matrix time= 0.03375530242919922
+	RGN solver time= 0.005671501159667969
+	xnorm=2.1891065812628767,dnorm=0.030831449886675626
+	dense amplitude time= 0.010524749755859375
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.923068046569824
+self.n= 0.7941770089906952
+	RGN updated loss=-14.003422616418527,dloss=-2.3892660987456793e-06
+step= 34
+
+nparam= 608
+	dense amplitude time= 0.022272109985351562
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.053426504135132
+self.n= 0.7941770089906948
+	collect g,h time= 6.653104305267334
+E=-14.003422616418527,dE=-2.3892660987456793e-06,std=0
+L=-14.003422616418527,dL=-2.3892660987456793e-06,std=0
+	gnorm= 0.000276068090404312
+	collect S matrix time= 0.0541689395904541
+	SR solver time= 0.005253791809082031
+	collect H matrix time= 0.03609967231750488
+	RGN solver time= 0.005828380584716797
+	xnorm=2.1899687588244716,dnorm=0.02970425885420026
+	dense amplitude time= 0.0044002532958984375
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.8476827144622803
+self.n= 0.7939333088779386
+	RGN updated loss=-14.003424814235888,dloss=-2.1978173609937812e-06
+step= 35
+
+nparam= 608
+	dense amplitude time= 0.021206140518188477
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.974337577819824
+self.n= 0.7939333088779374
+	collect g,h time= 6.581655979156494
+E=-14.003424814235887,dE=-2.1978173592174244e-06,std=0
+L=-14.003424814235887,dL=-2.1978173592174244e-06,std=0
+	gnorm= 0.00026433137893414565
+	collect S matrix time= 0.058547258377075195
+	SR solver time= 0.0054891109466552734
+	collect H matrix time= 0.03611278533935547
+	RGN solver time= 0.005656003952026367
+	xnorm=2.190950784053587,dnorm=0.028742796531856955
+	dense amplitude time= 0.006140708923339844
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.858668565750122
+self.n= 0.7937732235575008
+	RGN updated loss=-14.003426860822119,dloss=-2.0465862320406814e-06
+step= 36
+
+nparam= 608
+	dense amplitude time= 0.03168153762817383
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.959769010543823
+self.n= 0.7937732235574999
+	collect g,h time= 6.890819311141968
+E=-14.003426860822119,dE=-2.0465862320406814e-06,std=0
+L=-14.003426860822119,dL=-2.0465862320406814e-06,std=0
+	gnorm= 0.00024809216922455955
+	collect S matrix time= 0.05304455757141113
+	SR solver time= 0.005894660949707031
+	collect H matrix time= 0.036885738372802734
+	RGN solver time= 0.006892204284667969
+	xnorm=2.192056529539612,dnorm=0.027952532812741782
+	dense amplitude time= 0.006052970886230469
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.8606903553009033
+self.n= 0.7936960511750358
+	RGN updated loss=-14.003428785759654,dloss=-1.924937535591198e-06
+step= 37
+
+nparam= 608
+	dense amplitude time= 0.052121639251708984
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.983172655105591
+self.n= 0.7936960511750335
+	collect g,h time= 6.830392360687256
+E=-14.003428785759654,dE=-1.924937535591198e-06,std=0
+L=-14.003428785759654,dL=-1.924937535591198e-06,std=0
+	gnorm= 0.00023525487219770087
+	collect S matrix time= 0.05726885795593262
+	SR solver time= 0.00519871711730957
+	collect H matrix time= 0.03607940673828125
+	RGN solver time= 0.0056455135345458984
+	xnorm=2.19333340125975,dnorm=0.027285639772296796
+	dense amplitude time= 0.005769014358520508
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.871168613433838
+self.n= 0.7936814855088659
+	RGN updated loss=-14.003430612963687,dloss=-1.8272040325229e-06
+step= 38
+
+nparam= 608
+	dense amplitude time= 0.06770658493041992
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.955997467041016
+self.n= 0.7936814855088661
+	collect g,h time= 6.874038934707642
+E=-14.003430612963687,dE=-1.8272040325229e-06,std=0
+L=-14.003430612963687,dL=-1.8272040325229e-06,std=0
+	gnorm= 0.00022393183532702917
+	collect S matrix time= 0.052232980728149414
+	SR solver time= 0.005541801452636719
+	collect H matrix time= 0.03998565673828125
+	RGN solver time= 0.00598454475402832
+	xnorm=2.1947952733229523,dnorm=0.02672720742710832
+	dense amplitude time= 0.004620790481567383
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.845698595046997
+self.n= 0.7937353269804301
+	RGN updated loss=-14.003432361221071,dloss=-1.7482573841931526e-06
+step= 39
+
+nparam= 608
+	dense amplitude time= 0.0527801513671875
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.9661948680877686
+self.n= 0.7937353269804294
+	collect g,h time= 6.9037511348724365
+E=-14.003432361221066,dE=-1.748257378864082e-06,std=0
+L=-14.003432361221066,dL=-1.748257378864082e-06,std=0
+	gnorm= 0.0002141485668174975
+	collect S matrix time= 0.05161762237548828
+	SR solver time= 0.005791902542114258
+	collect H matrix time= 0.035704612731933594
+	RGN solver time= 0.006075859069824219
+	xnorm=2.1964329772962854,dnorm=0.02626152433463495
+	dense amplitude time= 0.004491567611694336
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.8588733673095703
+self.n= 0.7938421737244865
+	RGN updated loss=-14.003434045532744,dloss=-1.6843116785736356e-06
+step= 40
+
+nparam= 608
+	dense amplitude time= 0.05968284606933594
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.969815492630005
+self.n= 0.7938421737244874
+	collect g,h time= 6.953843593597412
+E=-14.003434045532748,dE=-1.6843116821263493e-06,std=0
+L=-14.003434045532748,dL=-1.6843116821263493e-06,std=0
+	gnorm= 0.00020416973394539185
+	collect S matrix time= 0.05707406997680664
+	SR solver time= 0.005681276321411133
+	collect H matrix time= 0.0366365909576416
+	RGN solver time= 0.006119728088378906
+	xnorm=2.1982431009797514,dnorm=0.025861112980495475
+	dense amplitude time= 0.011668920516967773
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.907130002975464
+self.n= 0.7940217175517035
+	RGN updated loss=-14.00343567592523,dloss=-1.6303924823546367e-06
+step= 41
+
+nparam= 608
+	dense amplitude time= 0.38250017166137695
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.055863857269287
+self.n= 0.7940217175517037
+	collect g,h time= 6.874781131744385
+E=-14.003435675925235,dE=-1.6303924876837073e-06,std=0
+L=-14.003435675925235,dL=-1.6303924876837073e-06,std=0
+	gnorm= 0.00019707230433408876
+	collect S matrix time= 0.05335521697998047
+	SR solver time= 0.005352497100830078
+	collect H matrix time= 0.04166817665100098
+	RGN solver time= 0.006064653396606445
+	xnorm=2.2002346167585456,dnorm=0.025503478251842442
+	dense amplitude time= 0.016185760498046875
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.9459996223449707
+self.n= 0.7942375411069049
+	RGN updated loss=-14.003437260139894,dloss=-1.5842146581235284e-06
+step= 42
+
+nparam= 608
+	dense amplitude time= 0.07086610794067383
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.062948942184448
+self.n= 0.7942375411069051
+	collect g,h time= 6.789405822753906
+E=-14.003437260139894,dE=-1.5842146581235284e-06,std=0
+L=-14.003437260139894,dL=-1.5842146581235284e-06,std=0
+	gnorm= 0.0001889628044711888
+	collect S matrix time= 0.051201820373535156
+	SR solver time= 0.005792856216430664
+	collect H matrix time= 0.04304003715515137
+	RGN solver time= 0.006439924240112305
+	xnorm=2.202404932778799,dnorm=0.025207138568109053
+	dense amplitude time= 0.0056231021881103516
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.910238265991211
+self.n= 0.7944954462204377
+	RGN updated loss=-14.003438806588017,dloss=-1.5464481233351535e-06
+step= 43
+
+nparam= 608
+	dense amplitude time= 0.05599522590637207
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.078431844711304
+self.n= 0.7944954462204374
+	collect g,h time= 6.853042840957642
+E=-14.00343880658802,dE=-1.5464481268878671e-06,std=0
+L=-14.00343880658802,dL=-1.5464481268878671e-06,std=0
+	gnorm= 0.0001817128969169464
+	collect S matrix time= 0.056738853454589844
+	SR solver time= 0.005789279937744141
+	collect H matrix time= 0.035649776458740234
+	RGN solver time= 0.006686210632324219
+	xnorm=2.2047521792175178,dnorm=0.024946133639008466
+	dense amplitude time= 0.0063495635986328125
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.854326009750366
+self.n= 0.7947832095043172
+	RGN updated loss=-14.003440320346101,dloss=-1.5137580806623419e-06
+step= 44
+
+nparam= 608
+	dense amplitude time= 0.0278470516204834
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.960883617401123
+self.n= 0.7947832095043159
+	collect g,h time= 6.924592733383179
+E=-14.0034403203461,dE=-1.513758078885985e-06,std=0
+L=-14.0034403203461,dL=-1.513758078885985e-06,std=0
+	gnorm= 0.0001775988284064202
+	collect S matrix time= 0.05505943298339844
+	SR solver time= 0.005621194839477539
+	collect H matrix time= 0.03553915023803711
+	RGN solver time= 0.005933284759521484
+	xnorm=2.207272589539972,dnorm=0.024736213115063348
+	dense amplitude time= 0.0049479007720947266
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.851499319076538
+self.n= 0.7951271676628591
+	RGN updated loss=-14.003441807915301,dloss=-1.4875692020410725e-06
+step= 45
+
+nparam= 608
+	dense amplitude time= 0.04524946212768555
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 4.955993413925171
+self.n= 0.7951271676628584
+	collect g,h time= 6.768023729324341
+E=-14.003441807915296,dE=-1.487569196712002e-06,std=0
+L=-14.003441807915296,dL=-1.487569196712002e-06,std=0
+	gnorm= 0.0001726367647905141
+	collect S matrix time= 0.04854464530944824
+	SR solver time= 0.0057582855224609375
+	collect H matrix time= 0.03528285026550293
+	RGN solver time= 0.0061492919921875
+	xnorm=2.2099715663068418,dnorm=0.024553144574688532
+	dense amplitude time= 0.004641532897949219
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.9439942836761475
+self.n= 0.795499376683938
+	RGN updated loss=-14.00344327377951,dloss=-1.4658642140119582e-06
+step= 46
+
+nparam= 608
+	dense amplitude time= 0.08590531349182129
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.068287134170532
+self.n= 0.7954993766839377
+	collect g,h time= 6.6962456703186035
+E=-14.003443273779506,dE=-1.4658642104592445e-06,std=0
+L=-14.003443273779506,dL=-1.4658642104592445e-06,std=0
+	gnorm= 0.00016927941724490997
+	collect S matrix time= 0.05151629447937012
+	SR solver time= 0.005540370941162109
+	collect H matrix time= 0.03388333320617676
+	RGN solver time= 0.0060596466064453125
+	xnorm=2.2128534290673705,dnorm=0.02440575795042353
+	dense amplitude time= 0.0058629512786865234
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.946481227874756
+self.n= 0.7958959289520635
+	RGN updated loss=-14.003444723062943,dloss=-1.449283436372184e-06
+step= 47
+
+nparam= 608
+	dense amplitude time= 0.01938176155090332
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.071408033370972
+self.n= 0.7958959289520628
+	collect g,h time= 6.779370307922363
+E=-14.003444723062943,dE=-1.449283436372184e-06,std=0
+L=-14.003444723062943,dL=-1.449283436372184e-06,std=0
+	gnorm= 0.00016610162768447144
+	collect S matrix time= 0.04943203926086426
+	SR solver time= 0.005780220031738281
+	collect H matrix time= 0.03457498550415039
+	RGN solver time= 0.0061740875244140625
+	xnorm=2.2159261550085723,dnorm=0.024310343418152126
+	dense amplitude time= 0.004810333251953125
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.938499689102173
+self.n= 0.7963200440371775
+	RGN updated loss=-14.00344616168951,dloss=-1.4386265672072795e-06
+step= 48
+
+nparam= 608
+	dense amplitude time= 0.03299832344055176
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.063088893890381
+self.n= 0.7963200440371772
+	collect g,h time= 6.718562364578247
+E=-14.003446161689508,dE=-1.4386265654309227e-06,std=0
+L=-14.003446161689508,dL=-1.4386265654309227e-06,std=0
+	gnorm= 0.00016412747419986863
+	collect S matrix time= 0.052060842514038086
+	SR solver time= 0.005499362945556641
+	collect H matrix time= 0.03598618507385254
+	RGN solver time= 0.0059528350830078125
+	xnorm=2.219191570443125,dnorm=0.0242596395812517
+	dense amplitude time= 0.004616498947143555
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.9451465606689453
+self.n= 0.7967642126676006
+	RGN updated loss=-14.003447596177702,dloss=-1.4344881940075993e-06
+step= 49
+
+nparam= 608
+	dense amplitude time= 0.04434394836425781
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 5.0410988330841064
+self.n= 0.7967642126675993
+	collect g,h time= 6.707714796066284
+E=-14.003447596177702,dE=-1.4344881940075993e-06,std=0
+L=-14.003447596177702,dL=-1.4344881940075993e-06,std=0
+	gnorm= 0.0001631633821134371
+	collect S matrix time= 0.05122232437133789
+	SR solver time= 0.005961179733276367
+	collect H matrix time= 0.03913545608520508
+	RGN solver time= 0.006206989288330078
+	xnorm=2.222658188530314,dnorm=0.024259646438730176
+	dense amplitude time= 0.0053806304931640625
+	total non-zero amplitudes= 4900
+	nsamples per process= 50
+	sample time= 3.9460480213165283
+self.n= 0.7972213248813955
+	RGN updated loss=-14.00344903279676,dloss=-1.4366190583814387e-06

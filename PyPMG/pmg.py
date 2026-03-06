@@ -4,25 +4,6 @@ from PyPMG.fermion_state import *
 from PyPMG.utils import *
 from PyPMG.vmc import *
 np.set_printoptions(linewidth=10000,precision=4)
-def get_MB_matrix(basis,hop_ls,x,fxn):
-    basis_map = {b:i for i,b in enumerate(basis)}
-    Y = np.zeros((len(basis),)*2)
-    def fill(i,ops,coeff):
-        cf = basis[i]
-        coeff *= fxn(cf) 
-        y,sign = string_act(cf,ops)
-        if y is not None:
-            j = basis_map[tuple(y)]
-            Y[j,i] += sign*coeff
-
-    for i in range(len(basis)):
-        for xi,(p,q) in zip(x,hop_ls):
-            ops = (p,'cre'),(q,'des')
-            fill(i,ops,xi)
-
-            ops = (q,'cre'),(p,'des')
-            fill(i,ops,-xi)
-    return Y 
 def get_ctr_ls(decimated,order=1):
     ls = []
     for r in range(1,order+1):
@@ -44,12 +25,11 @@ def get_hop_ls(ls,HF_typ):
         return ls
     else:
         raise ValueError
-def _prodZ(cf,orbs):
-    facs = [1-2*cf[i] for i in orbs]
-    return np.prod(facs)
-def _default_ctr_fxn(cf,x,ctr_ls):
-    facs = [_prodZ(cf,key) for key in ctr_ls] 
-    return facs[0]+sum([xi*fi for xi,fi in zip(x,facs[1:])]),facs[1:]
+def matrix_exp(Y):
+    if isinstance(Y,torch.Tensor):
+        return torch.linalg.matrix_exp(Y)
+    else:
+        return scipy.linalg.expm(Y)
 def compute_adjugate(A,detA=None,thresh=1e-6):
     n = A.shape[0]
     u,s,v = np.linalg.svd(A)
@@ -74,156 +54,102 @@ def determinant_derivative(A,thresh=1e-6):
     adjA = compute_adjugate(A,detA=detA)
     return detA,adjA.T
 class PMG:
-    def __init__(self,nsite,hop_ls,decimated,fxn='default',order=1,jac_by=None):
+    def __init__(self,nsite,hop_ls,decimated,order=1,jac_by=None):
         self.nsite = nsite
         self.hop_ls = hop_ls # orbital pair
-        self.nparam = len(hop_ls) 
         self.jac_by = jac_by
         if decimated is None:
             self.decimated = None
+            self.ctr_ls = None
+            self.nparam = len(self.hop_ls)
         else:
             self.decimated = list(decimated)
             self.decimated.sort()
-        if fxn=='default':
-            self.ctr_ls = get_ctr_ls(decimated,order=order)
-            def fxn(cf,x):
-                return _default_ctr_fxn(cf,x,self.ctr_ls)
-            self.nparam += len(self.ctr_ls)-1
-        elif fxn is None:
-            def fxn(cf,x):
-                return 1,None
+            self.ctr_ls = get_ctr_ls(self.decimated,order=order)
+            self.nparam = len(self.hop_ls)*len(self.ctr_ls)
+    def compute_occ(self,cf):
+        if self.ctr_ls is None:
+            return None
+        occ = [None] * len(self.ctr_ls)
+        for i,rs in enumerate(self.ctr_ls):
+            occ[i] = int(np.prod([cf[r] for r in rs]))
+        return tuple(occ)
+    def compute_kvec(self,occ,x):
+        if occ is None:
+            return x
+        hnop,nctr = len(self.hop_ls),len(self.ctr_ls)
+        x = x.reshape(hnop,nctr) 
+        if isinstance(x,torch.Tensor):
+            occ_ = torch.tensor(occ,requires_grad=False,dtype=x.dtype)
+            return torch.matmul(x,occ_)
         else:
-            raise ValueError
-        self.fxn = fxn
-
-        self.Y = dict()
-        for (p,q) in self.hop_ls:
-            Y = np.zeros((nsite,)*2)
-            Y[p,q] = 1
-            self.Y[p,q] = Y-Y.T
-    def _update(self,x):
-        self.x = np.array(x) # param
-        Y = np.zeros((self.nsite,)*2)
-        for xi,(p,q) in zip(x,self.hop_ls):
-            Y[p,q] = xi
-            Y[q,p] = -xi
-        self.Y['full'] = Y
-    def get_MB_matrix(self,basis):
-        n = len(self.hop_ls)
-        def fxn(cf):
-            return self.fxn(cf,self.x[n:])
-        return get_MB_matrix(basis,self.hop_ls,self.x[:n],fxn)
-class PMG_autodiff(PMG):
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
-        for (p,q),Y in self.Y.items():
-            self.Y[p,q] = torch.tensor(Y,requires_grad=False)
-    def _update(self,x):
-        super()._update(x)
-        self.Y['expY'] = scipy.linalg.expm(self.Y['full'])
-    def get_mo_derivative(self,cf):
-        x = torch.tensor(self.x,requires_grad=True)
-        Y = sum([xi*self.Y[p,q] for xi,(p,q) in zip(x,self.hop_ls)])
-
-        n = len(self.hop_ls)
-        f,_ = self.fxn(cf,x[n:])
-        return x,torch.linalg.matrix_exp(f*Y)
-    def get_mo(self,cf,derivative=False):
-        if derivative:
-            return self.get_mo_derivative(cf)
-        n = len(self.hop_ls)
-        f,_ = self.fxn(cf,self.x[n:])
-        if f==1:
-            return None,self.Y['expY']
-        if f==-1:
-            return None,self.Y['expY'].T
-        return None,scipy.linalg.expm(f*self.Y['full'])
-class RMG_autodiff(PMG_autodiff):
-    def __init__(self,nsites):
-        na = nsites[0]
-        hop_ls = [(2*p,2*q) for p in range(na) for q in range(p+1,na)]
-        def fxn(cf,x):
-            return 1
-        super().__init__(sum(nsites),hop_ls,fxn)
-        for (p,q) in self.Y:
-            self.Y[p,q][p+1,q+1] = 1
-            self.Y[p,q][q+1,p+1] = -1
-    def _update(self,x):
-        self.x = np.array(x) # param
-
-        Y = np.zeros((self.nsite,)*2)
-        for xi,(p,q) in zip(x,self.hop_ls):
-            Y[p,q] = Y[p+1,q+1] = xi
-            Y[q,p] = Y[q+1,p+1] = -xi
-        self.Y['full'] = Y
-        self.Y['expY'] = scipy.linalg.expm(self.Y['full'])
+            return np.dot(x,np.array(occ))
+    def kvec2Y(self,kvec):
+        if isinstance(kvec[0],torch.Tensor):
+            Y = torch.zeros(self.nsite,self.nsite,dtype=kvec[0].dtype)
+        else:
+            Y = np.zeros((self.nsite,)*2,dtype=kvec[0].dtype)
+        for val,(p,q) in zip(kvec,self.hop_ls):
+            Y[p,q] += val
+            Y[q,p] -= val
+        return Y
+    def compute_rotation(self,cf,x,occ=None):
+        if occ is None:
+            occ = self.compute_occ(cf)
+        kvec = self.compute_kvec(occ,x)
+        Y = self.kvec2Y(kvec)
+        return matrix_exp(Y) 
+    def _update(self):
+        pass
 class PMG_manual(PMG):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        nhop = len(self.hop_ls)
         if self.jac_by=='ad':
-            for (p,q),Y in self.Y.items():
-                self.Y[p,q] = torch.tensor(Y,requires_grad=False)
-            def fxn(x,f):
-                Y = sum([xi*self.Y[p,q] for xi,(p,q) in zip(x,self.hop_ls)])
-                U = torch.linalg.matrix_exp(f*Y)
-                return U,U 
+            def fxn(kvec):
+                Y = self.kvec2Y(kvec)
+                U = matrix_exp(Y)
+                return U,U
             jac_fxn = torch.func.jacfwd(fxn,has_aux=True)
-            def _get_mo_derivative(f):
-                x = torch.tensor(self.x[:nhop],requires_grad=True)
-                jac,U = jac_fxn(x,f)
+            def compute_rotation(occ,x):
+                kvec = self.compute_kvec(occ,x)
+                kvec = torch.tensor(kvec,requires_grad=True)
+
+                jac,U = jac_fxn(kvec)
                 U = U.numpy(force=True)
                 jac = jac.numpy(force=True)
-                x.grad = None
+                kvec.grad = None
                 return U,jac
         elif self.jac_by=='frechet':
-            def _get_mo_derivative(f):
-                Y = self.Y['full']
-                jac = np.zeros((self.nsite,self.nsite,nhop),dtype=Y.dtype)
+            E = dict()
+            for (p,q) in self.hop_ls:
+                Epq = np.zeros((self.nsite,)*2)
+                Epq[p,q] = 1
+                Epq[q,p] = -1
+                E[p,q] = Epq
+            def compute_rotation(occ,x):
+                kvec = self.compute_kvec(occ,x)
+                Y = self.kvec2Y(kvec)
+
+                jac = np.zeros((self.nsite,)*2+(len(self.hop_ls),),dtype=x.dtype)
                 for i,(p,q) in enumerate(self.hop_ls):
-                    U,jac[:,:,i] = scipy.linalg.expm_frechet(Y*f,self.Y[p,q])
-                jac *= f
+                    U,jac[:,:,i] = scipy.linalg.expm_frechet(Y,E[p,q])
                 return U,jac
         else:
             raise ValueError
-        self._get_mo_derivative = _get_mo_derivative
-    def _update(self,x):
-        super()._update(x)
-        t0 = time.time()
-        U,jac = self._get_mo_derivative(1)
-        self.amps = {'f=1':U}
-        self.ders = {'f=1':jac}
-        if RANK==0:
-            print(f'update time=',time.time()-t0)
-    def get_mo_derivative(self,cf):
-        key = None if self.decimated is None else \
-              tuple([cf[p] for p in self.decimated])
-        if key in self.ders:
-            return self.amps[key],self.ders[key]
-        n = len(self.hop_ls)
-        f,fder = self.fxn(cf,self.x[n:])
-        if f==1:
-            return self.amps['f=1'],(self.ders['f=1'],None)
-        if f==-1: 
-            return self.amps['f=1'].T,(self.ders['f=1'].T,None)
-        self.amps[key],jac = self._get_mo_derivative(f)
-        self.ders[key] = jac,fder
-        return self.amps[key],self.ders[key]
-    def get_mo(self,cf,derivative=False):
+        self._compute_rotation = compute_rotation 
+    def compute_rotation(self,cf,x,derivative=False):
+        occ = self.compute_occ(cf)
         if derivative:
-            return self.get_mo_derivative(cf)
-        key = None if self.decimated is None else \
-              tuple([cf[p] for p in self.decimated])
-        if key in self.amps:
-            return self.amps[key],None
-        n = len(self.hop_ls)
-        f,_ = self.fxn(cf,self.x[n:])
-        if f==1:
-            return self.amps['f=1'],None
-        if f==-1:
-            return self.amps['f=1'].T,None
-        self.amps[key] = scipy.linalg.expm(f*self.Y['full'])
-        return self.amps[key],None
+            if occ not in self.ders:
+                self.amps[occ],self.ders[occ] = self._compute_rotation(occ,x)
+            return self.amps[occ],(self.ders[occ],occ)
+        else:
+            if occ not in self.amps:
+                self.amps[occ] = super().compute_rotation(cf,x,occ=occ)
+            return self.amps[occ],None
+    def _update(self):
+        self.amps = dict()
+        self.ders = dict()
 class PMGState(FermionState):
     def __init__(self,nsites,nelec,U0=None,**kwargs):
         super().__init__(nsites,nelec,**kwargs)
@@ -254,8 +180,8 @@ class PMGState(FermionState):
                 hop_ls.discard((p,q))
             hop_ls = list(hop_ls)
         return hop_ls
-    def add_pmg(self,hop_ls,decimated,remove_redundant=False,**pmg_kwargs):
-        hop_ls = self._process_hop_ls(hop_ls,remove_redundant=remove_redundant)
+    def add_pmg(self,hop_ls,decimated,remove_redundant=False,remove_unphysical=None,**pmg_kwargs):
+        hop_ls = self._process_hop_ls(hop_ls,remove_redundant=remove_redundant,remove_unphysical=remove_unphysical)
         pmg = self.pmg_class(self.nsite,hop_ls,decimated,**pmg_kwargs)
         self.pmg_ls.append(pmg)
         if RANK==0:
@@ -263,143 +189,16 @@ class PMGState(FermionState):
             print('nparam=',pmg.nparam)
             print('hop_ls=',pmg.hop_ls)
             print()
-    def add_mg(self,hop_ls,remove_redundant=False,remove_unphysical=None,**pmg_kwargs):
-        hop_ls = self._process_hop_ls(hop_ls,remove_redundant=remove_redundant,remove_unphysical=remove_unphysical)
-        pmg_kwargs['fxn'] = None
-        mg = self.pmg_class(self.nsite,hop_ls,None,**pmg_kwargs)
-        self.pmg_ls.append(mg)
-        if RANK==0:
-            print('layer=',len(self.pmg_ls)-1)
-            print('nparam=',mg.nparam)
-            print('hop_ls=',mg.hop_ls)
-            print()
     def get_nparam(self):
         self.nparam = sum([pmg.nparam for pmg in self.pmg_ls])
     def _update(self,x):
         self.x = x
         for pmg in self.pmg_ls:
-            xi,x = x[:pmg.nparam],x[pmg.nparam:]
-            pmg._update(xi)
+            pmg._update()
     def get_x(self):
-        x = [pmg.x for pmg in self.pmg_ls]
-        return np.concatenate(x)
+        return self.x
     def _amplitude(self,cf):
         return self._amplitude_and_derivative(cf,derivative=False)[0]
-    def _rdm1(self,x):
-        n = self.nsite
-        cf = [0] * n
-        for i,xi in zip(self.decimated,x):
-            cf[i] = xi
-        _,U = self.get_mo_coeff(cf)
-        return U,np.dot(U,U.T.conj())
-    def add_rdm1_simple(self,x):
-        _,G = self._rdm1(x)
-        C = 2*G-np.eye(self.nsite) 
-        E = np.array(x)*2-np.ones(len(x))
-        C,Z = partial_trace(C,np.diag(E),self.decimated,active=self.active)
-        #print(x,Z)
-        #print(G)
-        #print((C+np.eye(C.shape[0]))/2)
-        return (C+np.eye(C.shape[0]))/2,Z
-    def rdm1_simple(self):
-        nd = len(self.decimated)
-        if self.active is None:
-            self.active = list(set(range(self.nsite))-set(self.decimated))
-            self.active.sort()
-        G = 0
-        for x in itertools.product((0,1),repeat=nd):
-            Gx,Zx = self.add_rdm1_simple(x)
-            G += Gx*Zx
-        return G
-    def add_rdm1(self,x,y):
-        if (x,y) in self.rdm_map:
-            return self.rdm_map[x,y]
-        n = self.nsite
-        # compute normalized rdm1:
-        # Tr[\hat{\rho}_{yx}'c_p^\dagger c_q]
-        Ux,Gx = self._rdm1(x)
-        gx = rdm12covariance(Gx)
-        #print(x,y)
-        err = np.linalg.norm(gx+gx.T)
-        if err>1e-10:
-            print('skew-symmetry err gx=',err)
-
-        Uy,Gy = self._rdm1(y)
-        gy = rdm12covariance(Gy)
-        err = np.linalg.norm(gy+gy.T)
-        if err>1e-10:
-            print('skew-symmetry err gy=',err)
-
-        gyx,tr = covariance_product(gy,gx) 
-        err = np.linalg.norm(gyx+gyx.T)
-        if err>1e-10:
-            print('skew-symmetry err gxy=',err)
-        ovlp = np.linalg.det(np.dot(Ux.T,Uy))
-        Gyx = covariance2rdm1(gyx)
-        #if x==y:
-        #    print('ovlp=',ovlp)
-        #    g = gyx
-        #    print(g[::2,::2])
-        #    print(g[1::2,1::2])
-        #    print(-1j*g[::2,1::2])
-        #    print(1j*g[1::2,::2])
-        #    print(x,ovlp)
-        #    print(Gyx)
-        err = tr-ovlp**2
-        if err>1e-10:
-            print('tr[xy] err=',err)
-        #exit()
-        
-        Px = np.eye(n)/2
-        for i,xi in zip(self.decimated,x):
-            Px[i,i] = xi
-        gPx = rdm12covariance(Px)
-        err = np.linalg.norm(gPx+gPx.T)
-        if err>1e-10:
-            print('skew-symmetry err gPx=',err)
-
-        gyx_,tr = covariance_product(gyx,gPx) 
-        #tr *= 2**4
-        err = np.linalg.norm(gyx_+gyx_.T)
-        if err>1e-10:
-            print('skew-symmetry gxy_=',err)
-        Gyx_ = covariance2rdm1(gyx_)
-
-        C = 2*Gyx-np.eye(self.nsite) 
-        E = np.array(x)*2-np.ones(len(x))
-        _,tr = partial_trace(C,np.diag(E),self.decimated)
-        #if x==y:
-        #    print(x,tr*ovlp*(2**4))
-        #    print(Gyx_)
-        #    print((C+np.eye(C.shape[0]))/2)
-        #    print(tr)
-        self.rdm_map[x,y] = Gyx_,tr*ovlp
-        return self.rdm_map[x,y]
-    def rdm1(self):
-        nd = len(self.decimated)
-        self.rdm_map = dict()
-        dm = None
-        decimated_map = {p:i for i,p in enumerate(self.decimated)}
-        for x in itertools.product((0,1),repeat=nd):
-            for p,q in itertools.product(range(self.nsite),repeat=2):
-                ops = []
-                if p in decimated_map:
-                    ops.append((decimated_map[p],'des'))
-                if q in decimated_map:
-                    ops.append((decimated_map[q],'cre'))
-                if len(ops)==0:
-                    y,sign = tuple(x),1
-                else:
-                    y,sign = string_act(x,ops,order=1) 
-                    if y is None:
-                        continue
-                    y = tuple(y)
-                T,S = self.add_rdm1(x,y)
-                if dm is None:
-                    dm = T*S
-                else:
-                    dm[p,q] += T[p,q]*S
-        return dm 
 class PMGState_autodiff(PMGState):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
@@ -408,18 +207,25 @@ class PMGState_autodiff(PMGState):
         else:
             self.U0 = self.U0[:,:sum(self.nelec)] 
             self.U0_torch = torch.tensor(self.U0,requires_grad=False)
-        self.pmg_class = PMG_autodiff
+        self.pmg_class = PMG
     def get_mo_coeff(self,cf,derivative=False):
         n = len(self.pmg_ls)
-        x = [None] * n 
         if derivative:
             dot = torch.matmul 
             U0 = self.U0_torch
+            x = torch.tensor(self.x,requires_grad=True) 
         else:
             dot = np.dot
             U0 = self.U0
+            x = self.x
+
+        start = 0
         for i,pmg in enumerate(self.pmg_ls):
-            x[i],Ui = pmg.get_mo(cf,derivative=derivative)
+            stop = start + pmg.nparam
+            xi = x[start:stop]
+            start = stop
+
+            Ui = pmg.compute_rotation(cf,xi)
             if i==n-1 and U0 is None:
                 Ui = Ui[:,:sum(self.nelec)] 
             if i==0:
@@ -441,7 +247,7 @@ class PMGState_autodiff(PMGState):
         if not derivative:
             return psi_x,None
         psi_x.backward()
-        vx = np.concatenate([xi.grad.numpy(force=True) for xi in x])
+        vx = x.grad.numpy(force=True) 
         psi_x = psi_x.numpy(force=True)
         #print(cf,psi_x,vx)
         return psi_x,vx
@@ -454,15 +260,16 @@ class PMGState_manual(PMGState):
     def get_mo_coeff(self,cf,derivative=False,lix=None):
         n = len(self.pmg_ls)
         Us = [None] * n + [self.U0]
-        jacs = [None] * n  
-        fders = [None] * n 
+        Js = [None] * n  
+        start = 0
         for i,pmg in enumerate(self.pmg_ls):
-            Us[i],deri = pmg.get_mo(cf,derivative=derivative)
+            stop = start + pmg.nparam
+            xi = self.x[start:stop]
+            start = stop
+
+            Us[i],Js[i] = pmg.compute_rotation(cf,xi,derivative=derivative)
             if i==0 and lix is not None:
                 Us[i] = Us[i][lix]
-            if not derivative:
-                continue
-            jacs[i],fders[i] = deri 
         # left sweep:
         lenv = [Us[0]] + [None] * n 
         for i in range(1,n+1):
@@ -472,10 +279,10 @@ class PMGState_manual(PMGState):
                 lenv[i] = lenv[i-1][:,:sum(self.nelec)]
             else:
                 lenv[i] = np.dot(lenv[i-1],Ui)
-        return Us,lenv,jacs,fders
+        return Us,lenv,Js
     def _amplitude_and_derivative(self,cf,derivative=True):
         lix = np.argwhere(cf).flatten()
-        Us,lenv,jacs,fders = self.get_mo_coeff(cf,derivative=derivative,lix=lix) 
+        Us,lenv,Js = self.get_mo_coeff(cf,derivative=derivative,lix=lix) 
         
         U = lenv[-1]
         if not derivative:
@@ -495,32 +302,22 @@ class PMGState_manual(PMGState):
                 renv[i] = np.dot(Ui,prev)
         # jacs
         for i in range(n):
-            jaci,right = jacs[i],renv[i+1]
+            (Ji,occ),right = Js[i],renv[i+1]
             if right is not None:
-                jaci = np.einsum('jkq,kl->jlq',jaci,right)
+                Ji = np.einsum('jkq,kl->jlq',Ji,right)
             else:
-                jaci = jaci[:,:nelec]
+                Ji = Ji[:,:nelec]
             if i>0:
-                jaci = np.einsum('ij,jkq->ikq',lenv[i-1],jaci)
+                Ji = np.einsum('ij,jkq->ikq',lenv[i-1],Ji)
             else:
-                jaci = jaci[lix]
-            jacs[i] = np.einsum('ij,ijq->q',dU,jaci)
-        # fders
-        for i,pmg in enumerate(self.pmg_ls):
-            if fders[i] is None:
-                continue
-            fderi = np.dot(lenv[i],pmg.Y['full'])
-            right = renv[i+1]
-            if right is not None:
-                fderi = np.dot(fderi,right)
-            fderi = np.sum(fderi*dU)
-            fders[i] = np.array(fders[i])*fderi
-        vx = []
-        for jac,fder in zip(jacs,fders):
-            vx.append(jac)
-            if fder is not None:
-                vx.append(fder)
-        vx = np.concatenate(vx)
+                Ji = Ji[lix]
+            Ji = np.einsum('ij,ijq->q',dU,Ji)
+            if occ is None:
+                vi = Ji
+            else:
+                vi = np.outer(Ji,np.array(occ)).flatten()
+            Js[i] = vi 
+        vx = np.concatenate(Js)
         #print(cf,psi_x,vx)
         return psi_x,vx
 class PMGGraph:

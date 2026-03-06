@@ -1,0 +1,57 @@
+##################### r=1.40 #############################
+QC MPO site   0 / 8
+QC MPO site   1 / 8
+QC MPO site   2 / 8
+QC MPO site   3 / 8
+QC MPO site   4 / 8
+QC MPO site   5 / 8
+QC MPO site   6 / 8
+QC MPO site   7 / 8
+Time elapsed =      2.200 | E =  -14.004103408403598 | DE = 0.00E+00 | MDW = 6.67E-13 | MEM =  328 MB
+Time sweep =      2.201 | Time davidson =      0.000 | Time decomp =      0.373
+Time elapsed =      3.700 | E =  -14.004103411423191 | DE = 3.02E-09 | MDW = 7.74E-10 | MEM =  398 MB
+Time sweep =      1.500 | Time davidson =      0.000 | Time decomp =      0.196
+Time elapsed =      5.015 | E =  -14.004103411453000 | DE = 2.98E-11 | MDW = 4.02E-13 | MEM =  402 MB
+Time sweep =      1.314 | Time davidson =      0.000 | Time decomp =      0.257
+Time elapsed =      6.350 | E =  -14.004103411453020 | DE = 1.95E-14 | MDW = 7.92E-11 | MEM =  339 MB
+Time sweep =      1.335 | Time davidson =      0.000 | Time decomp =      0.193
+Electronic Energy= -14.00410341145302
+Total Energy= -4.187776880525426
+##################### r=1.80 #############################
+QC MPO site   0 / 8
+QC MPO site   1 / 8
+QC MPO site   2 / 8
+QC MPO site   3 / 8
+QC MPO site   4 / 8
+QC MPO site   5 / 8
+QC MPO site   6 / 8
+QC MPO site   7 / 8
+Time elapsed =      1.774 | E =  -11.980000076403112 | DE = 0.00E+00 | MDW = 5.42E-13 | MEM =  416 MB
+Time sweep =      1.774 | Time davidson =      0.000 | Time decomp =      0.321
+Time elapsed =      3.136 | E =  -11.980000082478144 | DE = 6.08E-09 | MDW = 1.53E-10 | MEM =  400 MB
+Time sweep =      1.362 | Time davidson =      0.000 | Time decomp =      0.186
+Time elapsed =      4.250 | E =  -11.980000082506786 | DE = 2.86E-11 | MDW = 3.12E-13 | MEM =  389 MB
+Time sweep =      1.114 | Time davidson =      0.000 | Time decomp =      0.225
+Time elapsed =      5.433 | E =  -11.980000082506677 | DE = 1.08E-13 | MDW = 1.57E-11 | MEM =  428 MB
+Time sweep =      1.183 | Time davidson =      0.000 | Time decomp =      0.182
+Electronic Energy= -11.980000082506677
+Total Energy= -4.345079447340769
+##################### r=2.40 #############################
+QC MPO site   0 / 8
+QC MPO site   1 / 8
+QC MPO site   2 / 8
+QC MPO site   3 / 8
+QC MPO site   4 / 8
+QC MPO site   5 / 8
+QC MPO site   6 / 8
+QC MPO site   7 / 8
+Time elapsed =      1.608 | E =   -9.908013828840142 | DE = 0.00E+00 | MDW = 4.93E-13 | MEM =  358 MB
+Time sweep =      1.608 | Time davidson =      0.000 | Time decomp =      0.272
+Time elapsed =      2.877 | E =   -9.908013838839675 | DE = 1.00E-08 | MDW = 5.73E-11 | MEM =  389 MB
+Time sweep =      1.269 | Time davidson =      0.000 | Time decomp =      0.177
+Time elapsed =      3.855 | E =   -9.908013838882479 | DE = 4.28E-11 | MDW = 3.33E-13 | MEM =  392 MB
+Time sweep =      0.978 | Time davidson =      0.000 | Time decomp =      0.193
+Time elapsed =      4.973 | E =   -9.908013838882418 | DE = 6.04E-14 | MDW = 5.91E-12 | MEM =  399 MB
+Time sweep =      1.117 | Time davidson =      0.000 | Time decomp =      0.174
+Electronic Energy= -9.908013838882418
+Total Energy= -4.181823362507984
