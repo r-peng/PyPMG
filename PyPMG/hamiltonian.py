@@ -1,33 +1,17 @@
 import numpy as np
 import scipy,itertools
+from PyPMG.walker_numpy_occvec import *
 np.set_printoptions(precision=10,suppress=True)
-def fermion_act(x,oix,typ):
-    kill = {'cre':1,'des':0}[typ]
-    if x[oix]==kill:
-        return None,0
-    sign = (-1)**sum(x[:oix])
-    y = list(x)
-    y[oix] = 1-x[oix] 
-    return tuple(y),sign
-def string_act(x,ops,order=-1):
-    if order==-1:
-        ops = ops[::-1]
-    s = np.zeros(len(ops),dtype=int)
-    y = list(x) 
-    for i,(oix,typ) in enumerate(ops):
-        y,s[i] = fermion_act(y,oix,typ)
-        if y is None:
-            return None,0
-    return tuple(y),np.prod(s)
-def get_MB_Sz(nsite,basis):
-    basis_map = {b:i for i,b in enumerate(basis)}
-    M = np.zeros((len(basis),)*2)
-    for i,x in enumerate(basis):
-        Mii = 0
-        for p in range(nsite):
-            Mii += x[p]*(-1)**(p%2)
-        M[i,i] = Mii/2
-    return M
+# TODO: make compatible with bitstring
+#def get_MB_Sz(nsite,basis):
+#    basis_map = {b:i for i,b in enumerate(basis)}
+#    M = np.zeros((len(basis),)*2)
+#    for i,x in enumerate(basis):
+#        Mii = 0
+#        for p in range(nsite):
+#            Mii += x[p]*(-1)**(p%2)
+#        M[i,i] = Mii/2
+#    return M
 def get_MB_Spm(nsite,basis,typ):
     basis_map = {b:i for i,b in enumerate(basis)}
     M = np.zeros((len(basis),)*2)
@@ -43,23 +27,6 @@ def get_MB_Spm(nsite,basis,typ):
             j = basis_map[y]
             M[j,i] += sign
     return M
-def get_all_configs_u1(nsites,nelecs):
-    configs = []
-    for cf in itertools.product((0,1),repeat=nsites):
-        if sum(cf)!=nelecs:
-            continue
-        configs.append(tuple(cf))
-    return configs
-def get_all_configs_u11(nsites,nelecs):
-    alpha = get_all_configs_u1(nsites[0],nelecs[0])
-    beta = get_all_configs_u1(nsites[1],nelecs[1])
-    configs = []
-    for cfa,cfb in itertools.product(alpha,beta):
-        cf = [None] * (len(cfa)+len(cfb))
-        cf[::2] = cfa
-        cf[1::2] = cfb
-        configs.append(tuple(cf))
-    return configs
 class Operator:
     def __init__(self,thresh=1e-6,weight=1,save_link=True):
         self.thresh = thresh 
@@ -153,26 +120,27 @@ class QCHamiltonian(Operator):
         if self.save_link:
             self.links[x] = cfs,coeffs
         return cfs,coeffs
-class TotalSpin(Operator):
-    def __init__(self,nao,weight=1):
-        super().__init__(weight=weight)
-        self.nao = nao
-    def eloc_terms(self,x):
-        xup,xdown = x[::2],x[1::2]
-        self.terms = {}
-        # Sz**2
-        self.terms[x] = (sum(xup)-sum(xdown))**2/4.
-        # SpSm+SmSp
-        self.terms[x] += sum(x)/2.
-        for i in range(self.nao):
-            self.terms[x] -= x[2*i]*x[2*i+1]
-        for i in range(self.nao):
-            for j in range(i+1,self.nao):
-                ops = (2*i,'cre'),(2*j+1,'cre'),(2*j,'des'),(2*i+1,'des')
-                self.add_term(x,ops,1)
-                ops = (2*i+1,'cre'),(2*j,'cre'),(2*j+1,'des'),(2*i,'des')
-                self.add_term(x,ops,1)
-        return self.terms
+# TODO: make compatible with bitstring
+#class TotalSpin(Operator):
+#    def __init__(self,nao,weight=1):
+#        super().__init__(weight=weight)
+#        self.nao = nao
+#    def eloc_terms(self,x):
+#        xup,xdown = x[::2],x[1::2]
+#        self.terms = {}
+#        # Sz**2
+#        self.terms[x] = (sum(xup)-sum(xdown))**2/4.
+#        # SpSm+SmSp
+#        self.terms[x] += sum(x)/2.
+#        for i in range(self.nao):
+#            self.terms[x] -= x[2*i]*x[2*i+1]
+#        for i in range(self.nao):
+#            for j in range(i+1,self.nao):
+#                ops = (2*i,'cre'),(2*j+1,'cre'),(2*j,'des'),(2*i+1,'des')
+#                self.add_term(x,ops,1)
+#                ops = (2*i+1,'cre'),(2*j,'cre'),(2*j+1,'des'),(2*i,'des')
+#                self.add_term(x,ops,1)
+#        return self.terms
 class MBOperator(Operator):
     def __init__(self,matrix,basis,thresh=1e-6):
         self.matrix = matrix

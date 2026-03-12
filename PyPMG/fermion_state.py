@@ -2,51 +2,7 @@ import numpy as np
 import scipy,itertools,time
 np.set_printoptions(precision=10,suppress=True)
 from PyPMG.hamiltonian import * 
-def get_exc_list_u1(x,nexs=2):
-    xarr = np.array(x) 
-    occ = np.argwhere(xarr>0.5).flatten()
-    vir = np.argwhere(xarr<0.5).flatten()
-    new_cfs = []
-    for nex in range(1,nexs+1):
-        occ_n = list(itertools.combinations(occ,nex))
-        vir_n = list(itertools.combinations(vir,nex))
-        for oix,vix in itertools.product(occ_n,vir_n): 
-            y = list(x)
-            for i,a in zip(oix,vix):
-                y[i] = 1-y[i]
-                y[a] = 1-y[a]
-            new_cfs.append(tuple(y))
-    return new_cfs
-def get_exc_list_u11(x,nexs=2): 
-    na,nb = sum(x[::2]),sum(x[1::2])
-    if nexs==1:
-        xa = get_exc_list_u1(x[::2],nexs=2)
-def get_swap_list(x):
-    xa,xb = x[::2],x[1::2]
-    xa_arr,xb_arr = np.array(xa),np.array(xb) 
-    u = np.argwhere(xa_arr*(1-xb_arr)>0.5).flatten() # singly occ up
-    v = np.argwhere(xb_arr*(1-xa_arr)>0.5).flatten() # singly occ down
-    new_cfs = []
-    for p,q in itertools.product(u,v):
-        y = list(x)
-        for i in (2*p,2*q+1,2*q,2*p+1):
-            y[i] = 1-y[i]
-        new_cfs.append(tuple(y))
-    return new_cfs 
-def get_random_config_u1(nsite,nelec,rng,occ=None):
-    if occ is None:
-        occ = rng.choice(nsite,size=nelec,replace=False)
-    cf = [0] * nsite
-    for i in occ:
-        cf[i] = 1
-    return tuple(cf)
-def get_random_config_u11(nsites,nelecs,rng,occ=(None,None)):
-    cfa = get_random_config_u1(nsites[0],nelecs[0],rng,occ=occ[0])
-    cfb = get_random_config_u1(nsites[1],nelecs[1],rng,occ=occ[1])
-    cf = []
-    for na,nb in zip(cfa,cfb):
-        cf += [na,nb]
-    return tuple(cf)
+#from PyPMG.walker_numpy_occvec import *
 def get_occ_from_mo(mo,nelec):
     ls = []
     for i in range(nelec):
@@ -140,38 +96,23 @@ class FermionState:
         cfs = self._propose(y,ham=ham)
         return cfs[x]
     def amplitude(self,x):
-        if self.symmetry=='u1':
-            if sum(x)!=sum(self.nelec):
-                return 0
-        if self.symmetry=='u11':
-            if sum(x[::2])!=self.nelec[0]:
-                return 0
-            if sum(x[1::2])!=self.nelec[1]:
-                return 0
+        correct_symmetry = check_symmetry(x,self.symmetry,self.nsite,self.nelec)
+        if not correct_symmetry:
+            return 0
         if x in self.amps:
             return self.amps[x]
         self.amps[x] = self._amplitude(x)
         return self.amps[x] 
     def log_prob(self,x):
-        if self.symmetry=='u1':
-            if sum(x)!=sum(self.nelec):
-                return None
-        if self.symmetry=='u11':
-            if sum(x[::2])!=self.nelec[0]:
-                return None
-            if sum(x[1::2])!=self.nelec[1]:
-                return None
+        correct_symmetry = check_symmetry(x,self.symmetry,self.nsite,self.nelec)
+        if not correct_symmetry:
+            return None 
         psi_x = self.amplitude(x)
         return np.log(psi_x*psi_x.conj())
     def amplitude_and_derivative(self,x):
-        if self.symmetry=='u1':
-            if sum(x)!=sum(self.nelec):
-                return 0,None
-        if self.symmetry=='u11':
-            if sum(x[::2])!=self.nelec[0]:
-                return 0,None
-            if sum(x[1::2])!=self.nelec[1]:
-                return 0,None
+        correct_symmetry = check_symmetry(x,self.symmetry,self.nsite,self.nelec)
+        if not correct_symmetry:
+            return 0,None 
         if x in self.ders:
             return self.amps[x],self.ders[x]
         self.amps[x],vx = self._amplitude_and_derivative(x)

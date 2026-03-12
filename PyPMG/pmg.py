@@ -69,13 +69,11 @@ class PMG:
             self.decimated.sort()
             self.ctr_ls = get_ctr_ls(self.decimated,order=order)
             self.nparam = len(self.hop_ls)*len(self.ctr_ls)
+        self.ctr_ls = ctr_ls_to_masks(self.ctr_ls)
     def compute_occ(self,cf):
         if self.ctr_ls is None:
             return None
-        occ = [None] * len(self.ctr_ls)
-        for i,rs in enumerate(self.ctr_ls):
-            occ[i] = int(np.prod([cf[r] for r in rs]))
-        return tuple(occ)
+        return ctr_ls_to_occ(cf,self.ctr_ls,self.masks)
     def compute_kvec(self,occ,x):
         if occ is None:
             return x
@@ -247,8 +245,7 @@ class PMGState_autodiff(PMGState):
         return x,U
     def _amplitude_and_derivative(self,cf,derivative=True):
         x,U = self.get_mo_coeff(cf,derivative=derivative) 
-
-        idx = np.argwhere(cf).flatten()
+        idx = get_occ_indices(cf)
         if derivative:
             det = torch.linalg.det
         else:
@@ -291,7 +288,7 @@ class PMGState_manual(PMGState):
                 lenv[i] = np.dot(lenv[i-1],Ui)
         return Us,lenv,Js
     def _amplitude_and_derivative(self,cf,derivative=True):
-        lix = np.argwhere(cf).flatten()
+        lix = get_occ_indices(cf)
         Us,lenv,Js = self.get_mo_coeff(cf,derivative=derivative,lix=lix) 
         
         U = lenv[-1]
