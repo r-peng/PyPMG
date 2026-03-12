@@ -61,11 +61,13 @@ def get_all_configs_u11(nsites,nelecs):
         configs.append(tuple(cf))
     return configs
 class Operator:
-    def __init__(self,thresh=1e-6,weight=1):
+    def __init__(self,thresh=1e-6,weight=1,save_link=True):
         self.thresh = thresh 
         self.weight = weight 
+        self.save_link = save_link
         self.elocs = dict()
         self.hs = dict()
+        self.links = dict() # <x|H|y>
     def add_term(self,x,ops,coeff):
         if np.fabs(coeff)<self.thresh:
             return 
@@ -84,10 +86,10 @@ class Operator:
             if compute_h:
                 self.hs[x] = np.zeros(psi.nparam)
             return
-        terms = self.eloc_terms(x)
+        cfs,coeffs = self.eloc_terms(x)
         eloc = 0 
         hx = 0 
-        for (y,coeff) in terms.items():
+        for (y,coeff) in zip(cfs,coeffs):
             if compute_h:
                 psi_y,vy = psi.amplitude_and_derivative(y)
                 hx += vy*coeff
@@ -130,6 +132,8 @@ class QCHamiltonian(Operator):
         self.eri = v-v.transpose(0,1,3,2)
         self.eri /= 4
     def eloc_terms(self,x):
+        if x in self.links:
+            return self.links[x]
         self.terms = {}
         for i in (0,1):
             for (p,q) in itertools.product(range(self.nao),repeat=2):
@@ -138,7 +142,17 @@ class QCHamiltonian(Operator):
         for (p,q,r,s) in itertools.product(range(self.nao*2),repeat=4):
             ops = (p,'cre'),(q,'cre'),(s,'des'),(r,'des')
             self.add_term(x,ops,self.eri[p,q,r,s])
-        return self.terms
+
+        cfs = []
+        coeffs = []
+        for y,coeff in self.terms.items():
+            cfs.append(y)
+            coeffs.append(coeff)
+        self.terms = None
+        coeffs = np.array(coeffs) 
+        if self.save_link:
+            self.links[x] = cfs,coeffs
+        return cfs,coeffs
 class TotalSpin(Operator):
     def __init__(self,nao,weight=1):
         super().__init__(weight=weight)

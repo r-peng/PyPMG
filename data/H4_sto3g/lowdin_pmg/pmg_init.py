@@ -11,7 +11,7 @@ np.set_printoptions(precision=10,suppress=True)
 
 propose_by = 'uniform'
 rho_swap = 0
-run = 4 
+run = 6 
 U0 = True
 start,stop = 0,50
 optimizer = 'RGN'
@@ -41,11 +41,11 @@ else:
 psi = get_h4_minimum(HF_typ,manual_derivative=True,remove_redundant=True,jac_by='frechet',U0=U0,symmetry=symmetry,rho_swap=rho_swap,propose_by=propose_by)
 
 if start==0:
-    #x = (np.random.rand(psi.nparam)*2-1)*eps
-    #COMM.Bcast(x,root=0)
-    #if RANK==0:
-    #    np.save(f'R{R:.2f}/run{run}_start{start}.npy',x)
-    x = np.load(f'R{R:.2f}/run{run}_start{start}.npy') 
+    x = (np.random.rand(psi.nparam)*2-1)*eps
+    COMM.Bcast(x,root=0)
+    if RANK==0:
+        np.save(f'R{R:.2f}/run{run}_start{start}.npy',x)
+    #x = np.load(f'R{R:.2f}/run{run}_start{start}.npy') 
 else:
     x = np.load(f'R{R:.2f}/run{run}_start{start}.npy')
 psi.update(x)

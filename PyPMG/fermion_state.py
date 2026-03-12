@@ -35,6 +35,19 @@ def get_swap_list(x):
             y[i] = 1-y[i]
         new_cfs.append(tuple(y))
     return new_cfs 
+def get_random_config_u1(nsite,nelec,rng):
+    idxs = rng.choice(nsite,size=nelec,replace=False)
+    cf = [0] * nsite
+    for i in idxs:
+        cf[i] = 1
+    return tuple(cf)
+def get_random_config_u11(nsites,nelecs,rng):
+    cfa = get_random_config_u1(nsites[0],nelecs[0],rng)
+    cfb = get_random_config_u1(nsites[1],nelecs[1],rng)
+    cf = []
+    for na,nb in zip(cfa,cfb):
+        cf += [na,nb]
+    return tuple(cf)
 class FermionState:
     def __init__(self,nsites,nelec,**sampling_kwargs):
         self.nsites = nsites
@@ -57,6 +70,15 @@ class FermionState:
             return get_all_configs_u11(self.nsites,self.nelec) 
         elif self.symmetry=='fock':
             return list(itertools.product((0,1),repeat=self.nsite))
+        else:
+            raise NotImplementedError
+    def get_random_config(self,rng):
+        if self.symmetry=='u1':
+            return get_random_config_u1(self.nsite,sum(self.nelec),rng)
+        elif self.symmetry=='u11':
+            return get_random_config_u11(self.nsites,self.nelec,rng) 
+        #elif self.symmetry=='fock':
+        #    return list(itertools.product((0,1),repeat=self.nsite))
         else:
             raise NotImplementedError
     def _propose_uniform(self,x):

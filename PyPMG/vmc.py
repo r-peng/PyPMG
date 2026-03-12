@@ -45,7 +45,7 @@ def blocking_analysis(energies, weights=None, neql=0, printQ=True):
 
     return meanEnergy, plateauError
 class SGD: # stochastic sampling
-    def __init__(self,psi,ham,sampler,optimizer='sgd',solve_dense=True):
+    def __init__(self,psi,ham,sampler,optimizer='sgd',solve_dense=False):
         # parse sampler
         self.psi = psi
         self.ham = ham
@@ -245,7 +245,7 @@ class SGD: # stochastic sampling
         e = np.concatenate(e)
         self.f = np.concatenate(f)
         self.n = self.f.sum()
-        print('self.n=',self.n)
+        print('\tself.n=',self.n)
         #exit()
         #print('all_e=',e)
         if self.sampler.exact:
@@ -254,7 +254,7 @@ class SGD: # stochastic sampling
             self.E = np.dot(self.f,e)/self.n
             self.Lerr,self.Eerr = 0,0
         else:
-            print('nsamples=',self.n)
+            print('\tnsamples=',self.n)
             self.E,self.Eerr = blocking_analysis(e)
             self.L,self.Lerr = blocking_analysis(l)
     def extract_gradient(self):
@@ -271,7 +271,7 @@ class SGD: # stochastic sampling
             self.vmean = None
             return 
         self.vmean /= self.n
-        self.g = (evmean/self.n - self.L.conj() * self.vmean).real
+        self.g = (evmean/self.n - self.L * self.vmean).real
     def update(self,deltas):
         x = self.psi.get_x()
         xnorm = np.linalg.norm(x)
@@ -305,13 +305,13 @@ class SR(SGD):
         t0 = time.time()
         vvmean = np.zeros((self.nparam,)*2,dtype=self.dtype)
         vvsum = vvmean.copy() if RANK==0 else\
-                np.einsum('s,si,sj->ij',self.f,self.v.conj(),self.v)
+                np.einsum('s,si,sj->ij',self.f,self.v,self.v)
         COMM.Reduce(vvsum,vvmean,op=MPI.SUM,root=0)
         if RANK>0:
             #COMM.send(self.v,dest=0,tag=10)
             #exit()
             return
-        self.S = vvmean/self.n - np.outer(self.vmean.conj(),self.vmean)
+        self.S = vvmean/self.n - np.outer(self.vmean,self.vmean)
         print('\tcollect S matrix time=',time.time()-t0)
         #F = COMM.recv(source=1,tag=10)-self.vmean.reshape(1,self.nparam)
         #F = np.sqrt(self.f).reshape(len(self.f),1)*F/np.sqrt(self.n)
@@ -335,25 +335,24 @@ class SR(SGD):
         #exit()
     def _get_S_iterative(self):
         self.Sx1 = np.zeros(self.nparam,dtype=self.dtype)
-        vmean = self.vmean
-        v = self.v
         if RANK==0:
+            vm = self.vmean
             def matvec(x):
                 COMM.Bcast(self.terminate,root=0)
                 COMM.Bcast(x,root=0)
                 Sx1 = np.zeros_like(self.Sx1)
                 COMM.Reduce(Sx1,self.Sx1,op=MPI.SUM,root=0)     
-                return self.Sx1/self.n-(vmean.conj()*np.dot(vmean,x))
+                return self.Sx1/self.n-vm*np.dot(vm,x)
         else: 
             def matvec(x):
                 COMM.Bcast(self.terminate,root=0)
                 if self.terminate[0]==1:
                     return 0 
                 COMM.Bcast(x,root=0)
-                Sx1 = np.dot(self.f*np.dot(v,x),v.conj())
+                Sx1 = np.dot(self.f*np.dot(self.v,x),self.v)
                 COMM.Reduce(Sx1,self.Sx1,op=MPI.SUM,root=0)     
                 return 0 
-        return matvec
+        self.S = matvec
     def transform_gradients(self):
         deltas = self._transform_gradients_sr(self.solve_dense)
         if RANK>0:
@@ -361,7 +360,6 @@ class SR(SGD):
         return self.update(self.rate1*deltas)
     def _transform_gradients_sr(self,solve_dense):
         if not solve_dense:
-            self._get_S_iterative()
             return self._transform_gradients_sr_iterative()
 
         self._get_Smatrix()
@@ -381,25 +379,28 @@ class SR(SGD):
         print('\tSR solver time=',time.time()-t0)
         return deltas
     def _transform_gradients_sr_iterative(self):
+        self._get_S_iterative()
         g = self.g if RANK==0 else np.zeros(self.nparam,dtype=self.dtype)
         def R(x):
             return self.S(x) + self.cond1 * x
+        t0 = time.time()
         deltas = self.solve_iterative(R,g,True,x0=g)
         if RANK>0:
             return np.zeros(self.nparam,dtype=self.dtype)  
+        print('\tSR solver time=',time.time()-t0)
         return deltas
     def solve_iterative(self,A,b,symm,x0=None):
         self.terminate = np.array([0])
         deltas = np.zeros_like(b)
         sh = len(b)
         if RANK==0:
-            print('symmetric=',symm)
+            print('\tsymmetric=',symm)
             t0 = time.time()
             LinOp = spla.LinearOperator((sh,sh),matvec=A,dtype=b.dtype)
             if symm:
-                deltas,info = spla.minres(LinOp,b,x0=x0,tol=self.tol,maxiter=self.maxiter)
+                deltas,info = spla.minres(LinOp,b,x0=x0,rtol=self.tol,maxiter=self.maxiter)
             else: 
-                deltas,info = self.solver(LinOp,b,x0=x0,tol=self.tol,maxiter=self.maxiter)
+                deltas,info = spla.lgmres(LinOp,b,x0=x0,rtol=self.tol,maxiter=self.maxiter)
             self.terminate[0] = 1
             COMM.Bcast(self.terminate,root=0)
             print(f'\tsolver time={time.time()-t0},exit status={info}')
@@ -409,7 +410,7 @@ class SR(SGD):
                 nit += 1
                 A(deltas)
             if RANK==1:
-                print('niter=',nit)
+                print('\tniter=',nit)
         return deltas
 class RGN(SR):
     def __init__(self,*args,**kwargs):
@@ -433,14 +434,34 @@ class RGN(SR):
         t0 = time.time()
         vhmean = np.zeros((self.nparam,)*2,dtype=self.dtype)
         vhsum = vhmean.copy() if RANK==0 else\
-                np.einsum('s,si,sj->ij',self.f,self.v.conj(),self.h)
+                np.einsum('s,si,sj->ij',self.f,self.v,self.h)
         COMM.Reduce(vhsum,vhmean,op=MPI.SUM,root=0)
         if RANK>0:
             return
         self.H = vhmean/self.n 
-        self.H -= np.outer(self.vmean.conj(),self.hmean)
+        self.H -= np.outer(self.vmean,self.hmean)
         self.H -= np.outer(self.g,self.vmean)
         print('\tcollect H matrix time=',time.time()-t0)
+    def _get_H_iterative(self):
+        self.Hx1 = np.zeros(self.nparam,dtype=self.dtype)
+        if RANK==0:
+            vm,hm = self.vmean,self.hmean
+            def matvec(x):
+                COMM.Bcast(self.terminate,root=0)
+                COMM.Bcast(x,root=0)
+                Hx1 = np.zeros_like(self.Sx1)
+                COMM.Reduce(Hx1,self.Hx1,op=MPI.SUM,root=0)     
+                return self.Hx1/self.n-vm*np.dot(hm,x)-self.g*np.dot(vm,x)
+        else:
+            def matvec(x):
+                COMM.Bcast(self.terminate,root=0)
+                if self.terminate[0]==1:
+                    return 0 
+                COMM.Bcast(x,root=0)
+                Hx1 = np.dot(self.f*np.dot(self.h,x),self.v)
+                COMM.Reduce(Hx1,self.Hx1,op=MPI.SUM,root=0)     
+                return 0 
+        self.H = matvec
     def transform_gradients(self):
         delta_SR = self._transform_gradients_sr(self.solve_dense)
         delta_RGN = self._transform_gradients_rgn(self.solve_dense)
@@ -472,9 +493,7 @@ class RGN(SR):
         return self.update(self.rate1*delta_SR)
     def _transform_gradients_rgn(self,solve_dense):
         if not solve_dense:
-            #self._get_S_iterative()
-            #return self._transform_gradients_sr_iterative()
-            raise NotImplementedError
+            return self._transform_gradients_rgn_iterative()
 
         self._get_Hmatrix()
         if RANK>0:
@@ -483,7 +502,7 @@ class RGN(SR):
         t0 = time.time()
         H = self.H + (1./self.rate2 - self.L)*self.S 
         if self.eigen_thresh is None:
-            deltas = np.linalg.solve(H + self.cond1 * np.eye(self.nparam),self.g)
+            deltas = np.linalg.solve(H + self.cond2 * np.eye(self.nparam),self.g)
         else:
             u,s,v = np.linalg.svd(H)
             #print(s)
@@ -491,7 +510,27 @@ class RGN(SR):
             print(f'\tnonzero={len(s)},smax={s[0]},smin={s[-1]}')
             u = u[:,:len(s)]
             v = v[:len(s),:]
-            deltas = np.dot(v.T.conj(),np.dot(u.T.conj(),self.g)/s) 
+            deltas = np.dot(v.T,np.dot(u.T,self.g)/s) 
+        print('\tRGN solver time=',time.time()-t0)
+        return deltas
+    def _transform_gradients_rgn_iterative(self):
+        self._get_H_iterative()
+        g = self.g if RANK==0 else np.zeros(self.nparam,dtype=self.dtype)
+        L = self.L if RANK==0 else 0 
+        def R(x):
+            if self.terminate[0]==1:
+                return 0
+            Hx = self.H(x)
+            if self.terminate[0]==1:
+                return 0
+            Sx = self.S(x)
+            if self.terminate[0]==1:
+                return 0
+            return Hx+(1./self.rate2-L)*Sx+self.cond2*x
+        t0 = time.time()
+        deltas = self.solve_iterative(R,g,False,x0=g)
+        if RANK>0:
+            return np.zeros(self.nparam,dtype=self.dtype)  
         print('\tRGN solver time=',time.time()-t0)
         return deltas
 class LM(RGN):
@@ -519,7 +558,7 @@ class LM(RGN):
         if self.eigen_thresh is None:
             H[1:,1:] += self.cond1*np.eye(self.nparam)
             S[1:,1:] += self.cond1*np.eye(self.nparam)
-            herm_err = np.linalg.norm(H-H.T.conj())
+            herm_err = np.linalg.norm(H-H.T)
             if herm_err<1e-6:
                 w,v = scipy.linalg.eigh(H,b=S)
             else:

@@ -54,10 +54,12 @@ def determinant_derivative(A,thresh=1e-6):
     adjA = compute_adjugate(A,detA=detA)
     return detA,adjA.T
 class PMG:
-    def __init__(self,nsite,hop_ls,decimated,order=1,jac_by=None):
+    def __init__(self,nsite,hop_ls,decimated,order=1,jac_by=None,save_mo=True,save_jac=True):
         self.nsite = nsite
         self.hop_ls = hop_ls # orbital pair
         self.jac_by = jac_by
+        self.save_mo = save_mo 
+        self.save_jac = save_jac
         if decimated is None:
             self.decimated = None
             self.ctr_ls = None
@@ -140,13 +142,21 @@ class PMG_manual(PMG):
     def compute_rotation(self,cf,x,derivative=False):
         occ = self.compute_occ(cf)
         if derivative:
-            if occ not in self.ders:
-                self.amps[occ],self.ders[occ] = self._compute_rotation(occ,x)
-            return self.amps[occ],(self.ders[occ],occ)
+            if occ in self.ders:
+                return self.amps[occ],(self.ders[occ],occ)
+            mo,jac = self._compute_rotation(occ,x)
+            if self.save_mo:
+                self.amps[occ] = mo
+            if self.save_jac:
+                self.ders[occ] = jac
+            return mo,(jac,occ)
         else:
-            if occ not in self.amps:
-                self.amps[occ] = super().compute_rotation(cf,x,occ=occ)
-            return self.amps[occ],None
+            if occ in self.amps:
+                return self.amps[occ],None
+            mo = super().compute_rotation(cf,x,occ=occ)
+            if self.save_mo:
+                self.amps[occ] = mo 
+            return mo,None
     def _update(self):
         self.amps = dict()
         self.ders = dict()
