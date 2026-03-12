@@ -1,9 +1,8 @@
 import numpy as np
-import scipy,itertools
+import scipy,itertools,time
 np.set_printoptions(precision=10,suppress=True)
 from PyPMG.hamiltonian import * 
-def get_exc_list(x,nexs=2,symmetry='u11'):
-    na,nb = sum(x[::2]),sum(x[1::2])
+def get_exc_list_u1(x,nexs=2):
     xarr = np.array(x) 
     occ = np.argwhere(xarr>0.5).flatten()
     vir = np.argwhere(xarr<0.5).flatten()
@@ -16,13 +15,12 @@ def get_exc_list(x,nexs=2,symmetry='u11'):
             for i,a in zip(oix,vix):
                 y[i] = 1-y[i]
                 y[a] = 1-y[a]
-            if symmetry=='u11':
-                if sum(y[::2])!=na:
-                    continue
-                if sum(y[1::2])!=nb:
-                    continue
             new_cfs.append(tuple(y))
     return new_cfs
+def get_exc_list_u11(x,nexs=2): 
+    na,nb = sum(x[::2]),sum(x[1::2])
+    if nexs==1:
+        xa = get_exc_list_u1(x[::2],nexs=2)
 def get_swap_list(x):
     xa,xb = x[::2],x[1::2]
     xa_arr,xb_arr = np.array(xa),np.array(xb) 
@@ -35,19 +33,37 @@ def get_swap_list(x):
             y[i] = 1-y[i]
         new_cfs.append(tuple(y))
     return new_cfs 
-def get_random_config_u1(nsite,nelec,rng):
-    idxs = rng.choice(nsite,size=nelec,replace=False)
+def get_random_config_u1(nsite,nelec,rng,occ=None):
+    if occ is None:
+        occ = rng.choice(nsite,size=nelec,replace=False)
     cf = [0] * nsite
-    for i in idxs:
+    for i in occ:
         cf[i] = 1
     return tuple(cf)
-def get_random_config_u11(nsites,nelecs,rng):
-    cfa = get_random_config_u1(nsites[0],nelecs[0],rng)
-    cfb = get_random_config_u1(nsites[1],nelecs[1],rng)
+def get_random_config_u11(nsites,nelecs,rng,occ=(None,None)):
+    cfa = get_random_config_u1(nsites[0],nelecs[0],rng,occ=occ[0])
+    cfb = get_random_config_u1(nsites[1],nelecs[1],rng,occ=occ[1])
     cf = []
     for na,nb in zip(cfa,cfb):
         cf += [na,nb]
     return tuple(cf)
+def get_occ_from_mo(mo,nelec):
+    ls = []
+    for i in range(nelec):
+        vec = np.fabs(mo[:,i])
+        idx = np.argsort(vec)
+        ls.append(idx[-nelec:][::-1])
+    ls = np.array(ls)
+    occ = set()
+    for i in range(nelec):
+        lsi = set(ls[:,i])
+        lsi -= occ
+        n1,n2 = len(occ),len(lsi)
+        if n1+n2>nelec:
+            lsi = list(lsi)[:nelec-n1]
+            occ |= set(lsi)
+            return list(occ)
+        occ |= lsi
 class FermionState:
     def __init__(self,nsites,nelec,**sampling_kwargs):
         self.nsites = nsites
@@ -72,18 +88,20 @@ class FermionState:
             return list(itertools.product((0,1),repeat=self.nsite))
         else:
             raise NotImplementedError
-    def get_random_config(self,rng):
+    def get_random_config(self,rng,occ=None):
         if self.symmetry=='u1':
-            return get_random_config_u1(self.nsite,sum(self.nelec),rng)
+            return get_random_config_u1(self.nsite,sum(self.nelec),rng,occ=occ)
         elif self.symmetry=='u11':
-            return get_random_config_u11(self.nsites,self.nelec,rng) 
+            return get_random_config_u11(self.nsites,self.nelec,rng,occ=occ) 
         #elif self.symmetry=='fock':
         #    return list(itertools.product((0,1),repeat=self.nsite))
         else:
             raise NotImplementedError
     def _propose_uniform(self,x):
+        t0 = time.time()
         ls = get_exc_list(x,symmetry=self.symmetry)
         q = 1./len(ls)
+        print('propose uniform time=',time.time()-t0)
         return {cf:q for cf in ls}
     def _propose_ham(self,x,ham):
         cfs = ham.eloc_terms(x)
@@ -98,6 +116,7 @@ class FermionState:
         else:
             raise ValueError(f'self.propose_by={self.propose_by} not implemented.')
         if self.rho_swap<self.thresh:
+            print('no_swap')
             return cfs
         ls = get_swap_list(x)
         if len(ls)==0:

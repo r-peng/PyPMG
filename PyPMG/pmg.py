@@ -197,7 +197,7 @@ class PMGState(FermionState):
         if RANK==0:
             print('layer=',len(self.pmg_ls)-1)
             print('nparam=',pmg.nparam)
-            print('hop_ls=',pmg.hop_ls)
+            #print('hop_ls=',pmg.hop_ls)
             print()
     def get_nparam(self):
         self.nparam = sum([pmg.nparam for pmg in self.pmg_ls])

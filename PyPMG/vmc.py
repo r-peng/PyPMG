@@ -661,6 +661,9 @@ class MHSampler:
         if cf is not None:
             self.cf = cf 
         self.px = psi.log_prob(self.cf)
+        #print(self.cf,self.px)
+        #print(sum(self.cf[::2]),sum(self.cf[1::2]))
+        #exit()
 
         if exclude_root and RANK==0:
             print('\tlog prob=',self.px)
@@ -670,6 +673,7 @@ class MHSampler:
         t0 = time.time()
         for n in range(burn_in):
             self.cf,_ = self.sample(psi,ham=ham)
+            print(self.cf,self.px)
         if RANK==SIZE-1:
             print('\tburn in time=',time.time()-t0)
     def sample(self,psi,ham=None):
@@ -677,6 +681,7 @@ class MHSampler:
             y,qx2y = psi.propose(self.cf,self.rng,ham=ham)
             qy2x = psi.propose_reverse(self.cf,y,ham=ham)
             py = psi.log_prob(y)
+            print(self.cf,self.px)
             if py is None:
                 continue
             acceptance = np.exp(py-self.px)
