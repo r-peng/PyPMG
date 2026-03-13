@@ -2,7 +2,6 @@ import numpy as np
 import scipy,itertools,time
 np.set_printoptions(precision=10,suppress=True)
 from PyPMG.hamiltonian import * 
-#from PyPMG.walker_numpy_occvec import *
 def get_occ_from_mo(mo,nelec):
     ls = []
     for i in range(nelec):
@@ -25,6 +24,7 @@ class FermionState:
         self.nsites = nsites
         self.nelec = nelec
         self.nsite = sum(nsites)
+        self.pc = precompute_for_exc_ls(self.nsite)
         self.set_sampling_kwargs(**sampling_kwargs)
     def set_sampling_kwargs(self,symmetry='u11',thresh=1e-10,rho_swap=0.,propose_by='uniform'):
         self.symmetry = symmetry
@@ -55,7 +55,12 @@ class FermionState:
             raise NotImplementedError
     def _propose_uniform(self,x):
         t0 = time.time()
-        ls = get_exc_list(x,symmetry=self.symmetry)
+        if self.symmetry=='u1':
+            ls = get_exc_list_u1(x,self.nsite)
+        elif self.symmetry=='u11':
+            ls = get_exc_list_u11(x,self.pc)
+        else:
+            raise NotImplementedError
         q = 1./len(ls)
         print('propose uniform time=',time.time()-t0)
         return {cf:q for cf in ls}

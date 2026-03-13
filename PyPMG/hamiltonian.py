@@ -1,6 +1,7 @@
 import numpy as np
 import scipy,itertools
-from PyPMG.walker_numpy_occvec import *
+#from PyPMG.walker_numpy_occvec import *
+from PyPMG.walker_bitstring import *
 np.set_printoptions(precision=10,suppress=True)
 # TODO: make compatible with bitstring
 #def get_MB_Sz(nsite,basis):

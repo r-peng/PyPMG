@@ -35,7 +35,7 @@ def get_all_configs_u11(nsites,nelecs):
         cf[1::2] = cfb
         configs.append(tuple(cf))
     return configs
-def get_exc_list_u1(x,nexs=2):
+def get_exc_list_u1(x,nsite,nexs=2):
     xarr = np.array(x) 
     occ = np.argwhere(xarr>0.5).flatten()
     vir = np.argwhere(xarr<0.5).flatten()
@@ -50,10 +50,15 @@ def get_exc_list_u1(x,nexs=2):
                 y[a] = 1-y[a]
             new_cfs.append(tuple(y))
     return new_cfs
-def get_exc_list_u11(x,nexs=2): 
-    na,nb = sum(x[::2]),sum(x[1::2])
-    if nexs==1:
-        xa = get_exc_list_u1(x[::2],nexs=2)
+def precompute_for_exc_ls(nsite):
+    return nsite
+def get_exc_list_u11(x,nsite,nexs=2):
+    cfs_u1 = get_exc_list_u1(x,nsite,nexs=nexs)
+    cfs_u11 = []
+    for cf in cfs_u1:
+        if sum(cf[::2])=sum(cf[1::2]):
+            cfs_u11.append(cf)
+    return cfs_u11
 def get_swap_list(x):
     xa,xb = x[::2],x[1::2]
     xa_arr,xb_arr = np.array(xa),np.array(xb) 
@@ -74,12 +79,12 @@ def get_random_config_u1(nsite,nelec,rng,occ=None):
         cf[i] = 1
     return tuple(cf)
 def get_random_config_u11(nsites,nelecs,rng,occ=(None,None)):
-    cfa = get_random_config_u1(nsites[0],nelecs[0],rng,occ=occ[0])
-    cfb = get_random_config_u1(nsites[1],nelecs[1],rng,occ=occ[1])
-    cf = []
-    for na,nb in zip(cfa,cfb):
-        cf += [na,nb]
-    return tuple(cf)
+    if occ[0] is None:
+        occ[0] = rng.choice(nsites[0],size=nelecs[0],replace=False)
+    if occ[1] is None:
+        occ[1] = rng.choice(nsites[1],size=nelecs[1],replace=False)
+    occ = [2*p for p in occ[0]]+[2*p+1 for p in occ[1]]
+    return get_random_config_u1(None,None,None,occ=occ)
 def check_symmetry(x,symmetry,nsite,nelec):
     assert len(x)==nsite
     if symmetry=='u1':

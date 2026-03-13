@@ -73,7 +73,7 @@ class PMG:
     def compute_occ(self,cf):
         if self.ctr_ls is None:
             return None
-        return ctr_ls_to_occ(cf,self.ctr_ls,self.masks)
+        return ctr_ls_to_occ(cf,self.ctr_ls)
     def compute_kvec(self,occ,x):
         if occ is None:
             return x
@@ -289,6 +289,8 @@ class PMGState_manual(PMGState):
         return Us,lenv,Js
     def _amplitude_and_derivative(self,cf,derivative=True):
         lix = get_occ_indices(cf)
+        #print(cf,f'{cf:08b}',len(lix),lix)
+        #exit()
         Us,lenv,Js = self.get_mo_coeff(cf,derivative=derivative,lix=lix) 
         
         U = lenv[-1]
