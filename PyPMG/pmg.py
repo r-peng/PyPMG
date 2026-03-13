@@ -245,7 +245,7 @@ class PMGState_autodiff(PMGState):
         return x,U
     def _amplitude_and_derivative(self,cf,derivative=True):
         x,U = self.get_mo_coeff(cf,derivative=derivative) 
-        idx = get_occ_indices(cf)
+        idx = np.array(get_occ_indices(cf))
         if derivative:
             det = torch.linalg.det
         else:
@@ -288,7 +288,7 @@ class PMGState_manual(PMGState):
                 lenv[i] = np.dot(lenv[i-1],Ui)
         return Us,lenv,Js
     def _amplitude_and_derivative(self,cf,derivative=True):
-        lix = get_occ_indices(cf)
+        lix = np.array(get_occ_indices(cf))
         #print(cf,f'{cf:08b}',len(lix),lix)
         #exit()
         Us,lenv,Js = self.get_mo_coeff(cf,derivative=derivative,lix=lix) 

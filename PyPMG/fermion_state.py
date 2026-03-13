@@ -8,7 +8,7 @@ def get_occ_from_mo(mo,nelec):
         vec = np.fabs(mo[:,i])
         idx = np.argsort(vec)
         ls.append(idx[-nelec:][::-1])
-    ls = np.array(ls)
+    ls = np.array(ls,dtype=int)
     occ = set()
     for i in range(nelec):
         lsi = set(ls[:,i])
@@ -54,7 +54,6 @@ class FermionState:
         else:
             raise NotImplementedError
     def _propose_uniform(self,x):
-        t0 = time.time()
         if self.symmetry=='u1':
             ls = get_exc_list_u1(x,self.nsite)
         elif self.symmetry=='u11':
@@ -62,7 +61,6 @@ class FermionState:
         else:
             raise NotImplementedError
         q = 1./len(ls)
-        print('propose uniform time=',time.time()-t0)
         return {cf:q for cf in ls}
     def _propose_ham(self,x,ham):
         cfs = ham.eloc_terms(x)
@@ -77,7 +75,6 @@ class FermionState:
         else:
             raise ValueError(f'self.propose_by={self.propose_by} not implemented.')
         if self.rho_swap<self.thresh:
-            print('no_swap')
             return cfs
         ls = get_swap_list(x)
         if len(ls)==0:

@@ -1,5 +1,5 @@
 import numpy as np
-import scipy,itertools
+import scipy,itertools,time
 #from PyPMG.walker_numpy_occvec import *
 from PyPMG.walker_bitstring import *
 np.set_printoptions(precision=10,suppress=True)
@@ -99,9 +99,10 @@ class QCHamiltonian(Operator):
         v[1::2,::2,1::2,::2] = eri.copy()
         self.eri = v-v.transpose(0,1,3,2)
         self.eri /= 4
-    def eloc_terms(self,x):
+    def _eloc_terms(self,x):
         if x in self.links:
             return self.links[x]
+        t0 = time.time()
         self.terms = {}
         for i in (0,1):
             for (p,q) in itertools.product(range(self.nao),repeat=2):
@@ -120,7 +121,90 @@ class QCHamiltonian(Operator):
         coeffs = np.array(coeffs) 
         if self.save_link:
             self.links[x] = cfs,coeffs
+        print('eloc terms time=',time.time()-t0)
         return cfs,coeffs
+    def eloc_terms(self,x):
+        if x in self.links:
+            return self.links[x]
+        occ = np.array(get_occ_indices(x))
+        occ_a = occ[occ%2==0]//2 
+        occ_b = (occ[occ%2==1]-1)//2
+        vir = np.array(get_vir_indices(x,self.nao*2))
+        vir_a = vir[vir%2==0]//2
+        vir_b = (vir[vir%2==1]-1)//2
+        print(occ,occ_a,occ_b)
+        print(vir,vir_a,vir_b)
+        exit()
+
+
+        cfs = [x]
+        # diagonal E1
+        hcore_diag = np.diag(self.hcore)
+        E1 = sum(hcore_diag[occ_a]) + sum(hcore_diag[occ_b])
+        # diagonal E2
+        eri = self.eri_qc 
+        eri_xxoo = eri[:,:,:,occ_a][:,:,occ_a]
+        eri_oooo = eri_xxoo[occ_a][:,occ_a]
+        E2 = .5*np.einsum('iijj->',eri_oooo)
+        E2 -= .5*np.einsum('ijji->',eri_oooo)
+        eri_xxOO = eri[:,:,:,occ_b][:,:,occ_b]
+        eri_OOOO = eri_xxOO[occ_b][:,occ_b]
+        E2 += .5*np.einsum('iijj->',eri_OOOO)
+        E2 -= .5*np.einsum('ijji->',eri_OOOO)
+        eri_ooOO = eri_xxOO[occ_a][:,occ_a]
+        E2 += np.einsum('iijj->',eri_ooOO)
+        coeff = [E1+E2] 
+        eri_oooo = eri_OOOO = eri_ooOO = None
+
+        # singles alpha
+        F = self.hcore[vir_a][:,occ_a]
+        eri_vooo = eri_xxoo[vir_a][:,occ_a]
+        F += np.einsum('aijj->ai',eri_vooo)
+        F -= np.einsum('ajji->ai',eri_vooo)
+        eri_voOO = eri_xxOO[vir_a][:,occ_a]
+        F += np.einsum('aijj->ai',eri_voOO)
+        for ix_i,i in enumerate(occ_a):
+            for ix_a,a in enumerate(vir_a):
+                y,s = config_map_single(x,2*i,2*a)
+                cfs.append(y)
+                coeffs.append(s*F[ix_a,ix_i])
+        eri_vooo = eri_voOO = None
+        # singles beta 
+        F = self.hcore[vir_b][:,occ_b]
+        eri_VOOO = eri_xxOO[vir_b][:,occ_b]
+        F += np.einsum('aijj->ai',eri_VOOO)
+        F -= np.einsum('ajji->ai',eri_VOOO)
+        eri_VOoo = eri_xxoo[vir_b][:,occ_b]
+        F += np.einsum('aijj->ai',eri_VOoo)
+        for ix_i,i in enumerate(occ_b):
+            for ix_a,a in enumerate(vir_b):
+                y,s = config_map_single(x,2*i+1,2*a+1)
+                cfs.append(y)
+                coeffs.append(s*F[ix_a,ix_i])
+        eri_VOOO = eri_VOoo = None
+        eri_xxoo = eri_xxOO = None
+
+        # doubles aa
+        for i,j in itertools.combinations(occ_a,2):
+            for a,b in itertools.combinations(vir_a,2):
+                coeff = eri[a,i,b,j]-eri[a,j,b,i]
+                y,s = config_map_doubles(x,2*i,2*j,2*a,2*b)
+                cfs.append(y)
+                coeffs.append(s*coeff)
+        # doubles bb 
+        for i,j in itertools.combinations(occ_b,2):
+            for a,b in itertools.combinations(vir_b,2):
+                coeff = eri[a,i,b,j]-eri[a,j,b,i]
+                y,s = config_map_doubles(x,2*i+1,2*j+1,2*a+1,2*b+1)
+                cfs.append(y)
+                coeffs.append(s*coeff)
+        # doubles ab
+        for i,j in itertools.product(occ_a,occ_b):
+            for a,b in itertools.product(vir_a,vir_b):
+                coeff = eri[a,i,b,j]
+                y,s = config_map_doubles(x,2*i,2*j+1,2*a,2*b+1)
+                cfs.append(y)
+                coeffs.append(s*coeff)
 # TODO: make compatible with bitstring
 #class TotalSpin(Operator):
 #    def __init__(self,nao,weight=1):

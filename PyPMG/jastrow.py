@@ -1,23 +1,13 @@
 import numpy as np
 from PyPMG.fermion_state import * 
 class Jastrow:
-    def __init__(self,gps=None,nsite=None,Jmax=None):
-        if gps is None: 
-            self.gps = None
-            self.pairs = [(p,q) for p in range(nsite) for q in range(p+1,nsite)] 
-            self.nparam = len(self.pairs)
-        else:
-            self.pairs = None
-            self.gps = gps 
-            self.nparam = len(self.gps)
+    def __init__(self,nsite,Jmax=None):
+        self.ctr_ls = [(p,q) for p in range(nsite) for q in range(p+1,nsite)] 
+        self.ctr_ls = ctr_ls_to_masks(self.ctr_ls)
+        self.nparam = len(self.ctr_ls)
         self.Jmax = Jmax 
     def _amplitude_and_derivative(self,cf,derivative=True):
-        if self.gps is not None:
-            occ = np.zeros(len(self.gps))
-            for i,gp in enumerate(self.gps):
-                occ[i] = sum([cf[p]*cf[q] for (p,q) in gp])
-        if self.pairs is not None:
-            occ = np.array([cf[p]*cf[q] for (p,q) in self.pairs])
+        occ = np.array(ctr_ls_to_occ(cf,self.ctr_ls))
         psi_x = np.exp(np.dot(self.x,occ))
         return psi_x,psi_x*occ
     def _amplitude(self,cf):
