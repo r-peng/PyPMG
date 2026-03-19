@@ -10,8 +10,8 @@ Original file is located at
 from typing import Iterator, Iterable, Optional, Tuple, Sequence, List
 import numpy as np
 from dataclasses import dataclass
-
-def gosper_next(x: int) -> int:
+### bitstring utilities ###
+def _gosper_next(x: int) -> int:
     """
     Return next higher integer with same number of 1-bits.
     If overflow (no next within the same bit-length), result will exceed limit.
@@ -20,7 +20,7 @@ def gosper_next(x: int) -> int:
     r = x + c
     return (((r ^ x) >> 2) // c) | r
 
-def all_dets_bitwise(n_orb: int, n_e: int):
+def _all_dets_bitwise(n_orb: int, n_e: int):
     """
     Yield all determinants (bitstrings) with exactly n_e electrons
     in n_orb orbitals, as Python ints.
@@ -36,9 +36,9 @@ def all_dets_bitwise(n_orb: int, n_e: int):
 
     while x < limit:
         yield x
-        x = gosper_next(x)
+        x = _gosper_next(x)
 
-def interleave_up_bits(x: int) -> int:
+def _interleave_up_bits(x: int) -> int:
     """
     Map compact up bitstring x (bit i = site i) to global determinant bits (2*i).
     """
@@ -50,7 +50,7 @@ def interleave_up_bits(x: int) -> int:
         x ^= lsb
     return det
 
-def interleave_dn_bits(y: int) -> int:
+def _interleave_dn_bits(y: int) -> int:
     """
     Map compact down bitstring y (bit j = site j) to global determinant bits (2*j+1).
     """
@@ -62,7 +62,7 @@ def interleave_dn_bits(y: int) -> int:
         y ^= lsb
     return det
 
-def configs_interleaved_spin_fast(
+def _configs_interleaved_spin_fast(
     n_up_sites: int,
     n_dn_sites: int,
     n_up_e: int,
@@ -82,7 +82,7 @@ def configs_interleaved_spin_fast(
         up_list = []
         while x < limit:
             up_list.append(x)
-            x = gosper_next(x)
+            x = _gosper_next(x)
 
     if n_dn_e == 0:
         dn_list = [0]
@@ -92,15 +92,15 @@ def configs_interleaved_spin_fast(
         dn_list = []
         while y < limit:
             dn_list.append(y)
-            y = gosper_next(y)
+            y = _gosper_next(y)
 
     for x in up_list:
-        det_up = interleave_up_bits(x)
+        det_up = _interleave_up_bits(x)
         for y in dn_list:
-            det_dn = interleave_dn_bits(y)
+            det_dn = _interleave_dn_bits(y)
             yield det_up | det_dn
 
-def apply_creation(det: int, p: int) -> Tuple[Optional[int], int]:
+def _apply_creation(det: int, p: int) -> Tuple[Optional[int], int]:
     """
     Apply fermionic creation operator c_p^† to |det>.
     Returns (new_det, sign). If result is zero, returns (None, 0).
@@ -118,7 +118,7 @@ def apply_creation(det: int, p: int) -> Tuple[Optional[int], int]:
     return new_det, sign
 
 
-def apply_annihilation(det: int, p: int) -> Tuple[Optional[int], int]:
+def _apply_annihilation(det: int, p: int) -> Tuple[Optional[int], int]:
     """
     Apply fermionic annihilation operator c_p to |det>.
     Returns (new_det, sign). If result is zero, returns (None, 0).
@@ -134,7 +134,7 @@ def apply_annihilation(det: int, p: int) -> Tuple[Optional[int], int]:
     new_det = det & ~(1 << p)
     return new_det, sign
 
-def count_up_dn(det: int, n_sites: int) -> Tuple[int, int, int]:
+def _count_up_dn(det: int, n_sites: int) -> Tuple[int, int, int]:
     """
     Count electrons in an interleaved bitstring det with 2*n_sites bits:
       up  at bit 2*i
@@ -162,7 +162,7 @@ def masks_from_ctr_ls(ctr_ls: Sequence[Sequence[int]]) -> List[int]:
         masks.append(m)
     return masks
 #def compute_occ_bits_from_masks(det: int, masks: Sequence[int]) -> np.ndarray:
-def compute_occ_bits_from_masks(det: int, masks: Sequence[int]) -> Sequence[int]:
+def _compute_occ_bits_from_masks(det: int, masks: Sequence[int]) -> Sequence[int]:
     """
     Returns a NumPy array of 0/1 for each mask:
       out[i] = 1 iff (det & masks[i]) == masks[i]
@@ -172,7 +172,7 @@ def compute_occ_bits_from_masks(det: int, masks: Sequence[int]) -> Sequence[int]
     for i, m in enumerate(masks):
         out[i] = 1 if (det & m) == m else 0
     return tuple(out)
-def occupied_indices(det: int) -> List[int]:
+def _occupied_indices(det: int) -> List[int]:
     """Return list of occupied bit indices (ascending)."""
     occ = []
     x = det
@@ -182,21 +182,21 @@ def occupied_indices(det: int) -> List[int]:
         occ.append(p)
         x &= x-1                     # clear that bit
     return occ
-def virtual_indices(det: int, n_orb: int) -> List[int]:
+def _virtual_indices(det: int, n_orb: int) -> List[int]:
     mask = (1 << n_orb) - 1
     vir_bits = (~det) & mask
-    return occupied_indices(vir_bits)
-def single_dets(det: int, n_orb: int):
-    occs = occupied_indices(det)
-    virs = virtual_indices(det, n_orb)
+    return _occupied_indices(vir_bits)
+def _single_dets(det: int, n_orb: int):
+    occs = _occupied_indices(det)
+    virs = _virtual_indices(det, n_orb)
     for i in occs:
         bi = 1 << i
         for a in virs:
             yield det ^ bi ^ (1 << a)
 
-def double_dets(det: int, n_orb: int):
-    occs = occupied_indices(det)
-    virs = virtual_indices(det, n_orb)
+def _double_dets(det: int, n_orb: int):
+    occs = _occupied_indices(det)
+    virs = _virtual_indices(det, n_orb)
     occ_bits = [1 << i for i in occs]
     vir_bits = [1 << a for a in virs]
     for ii in range(len(occs)):
@@ -208,7 +208,7 @@ def double_dets(det: int, n_orb: int):
                 for bb in range(aa + 1, len(virs)):
                     yield det ^ bij ^ ba ^ vir_bits[bb]
 
-def iter_set_bits(x: int) -> Iterator[int]:
+def _iter_set_bits(x: int) -> Iterator[int]:
     while x:
         lsb = x & -x
         yield lsb.bit_length() - 1
@@ -255,7 +255,7 @@ def precompute_for_exc_ls(n_orb: int) -> SpinInterleavedPrecomp:
         odd_bit=odd_bit
     )
 
-def compact_lists_from_interleaved(det: int, pc: SpinInterleavedPrecomp):
+def _compact_lists_from_interleaved(det: int, pc: SpinInterleavedPrecomp):
     """
     From interleaved det -> lists of compact occupied/virtual indices for up and down.
     Compact index k corresponds to interleaved:
@@ -271,11 +271,11 @@ def compact_lists_from_interleaved(det: int, pc: SpinInterleavedPrecomp):
 
     # build compact occupation bitstrings by iterating occupied positions
     occ_up_comp = 0
-    for p in iter_set_bits(occ_even_pos):
+    for p in _iter_set_bits(occ_even_pos):
         occ_up_comp |= 1 << (p >> 1)
 
     occ_dn_comp = 0
-    for p in iter_set_bits(occ_odd_pos):
+    for p in _iter_set_bits(occ_odd_pos):
         occ_dn_comp |= 1 << (p >> 1)
 
     # compact virtual bitstrings
@@ -283,20 +283,20 @@ def compact_lists_from_interleaved(det: int, pc: SpinInterleavedPrecomp):
     vir_dn_comp = (~occ_dn_comp) & pc.dn_full
 
     # lists (compact indices)
-    occ_up = list(iter_set_bits(occ_up_comp))
-    vir_up = list(iter_set_bits(vir_up_comp))
-    occ_dn = list(iter_set_bits(occ_dn_comp))
-    vir_dn = list(iter_set_bits(vir_dn_comp))
+    occ_up = list(_iter_set_bits(occ_up_comp))
+    vir_up = list(_iter_set_bits(vir_up_comp))
+    occ_dn = list(_iter_set_bits(occ_dn_comp))
+    vir_dn = list(_iter_set_bits(vir_dn_comp))
 
     return occ_up, vir_up, occ_dn, vir_dn
 
-def singles_spin_conserving_fast(det: int, pc: SpinInterleavedPrecomp) -> List[int]:
+def _singles_spin_conserving_fast(det: int, pc: SpinInterleavedPrecomp) -> List[int]:
     """
     All spin-conserving singles from interleaved det, returned as interleaved dets.
     up: even->even ; dn: odd->odd
     """
     d = det & pc.mask_all
-    occ_up, vir_up, occ_dn, vir_dn = compact_lists_from_interleaved(d, pc)
+    occ_up, vir_up, occ_dn, vir_dn = _compact_lists_from_interleaved(d, pc)
 
     out: List[int] = []
     out_append = out.append
@@ -317,9 +317,9 @@ def singles_spin_conserving_fast(det: int, pc: SpinInterleavedPrecomp) -> List[i
 
     return out
 
-def doubles_spin_conserving_fast(det: int, pc: SpinInterleavedPrecomp) -> List[int]:
+def _doubles_spin_conserving_fast(det: int, pc: SpinInterleavedPrecomp) -> List[int]:
     d = det & pc.mask_all
-    occ_up, vir_up, occ_dn, vir_dn = compact_lists_from_interleaved(d, pc)
+    occ_up, vir_up, occ_dn, vir_dn = _compact_lists_from_interleaved(d, pc)
 
     out: List[int] = []
     out_append = out.append
@@ -359,7 +359,7 @@ def doubles_spin_conserving_fast(det: int, pc: SpinInterleavedPrecomp) -> List[i
 
     return out
 
-def bitstring_from_occupied(n_orb: int, occ_orbs: Iterable[int]) -> int:
+def _bitstring_from_occupied(n_orb: int, occ_orbs: Iterable[int]) -> int:
     """
     Build bitstring det for orbitals 0..n_orb-1 given occupied orbital indices.
     """
@@ -369,46 +369,81 @@ def bitstring_from_occupied(n_orb: int, occ_orbs: Iterable[int]) -> int:
             raise ValueError(f"orbital index {p} out of range [0,{n_orb-1}]")
         det |= 1 << p
     return det
+def _excite_single(x: int, i: int, a: int):
+    if ((x >> i) & 1) == 0 or ((x >> a) & 1) == 1:
+        return None
 
+    if i < a:
+        mask = ((1 << a) - 1) ^ ((1 << (i + 1)) - 1)
+    else:
+        mask = ((1 << i) - 1) ^ ((1 << (a + 1)) - 1)
+
+    sign = -1 if ((x & mask).bit_count() & 1) else 1
+    y = x ^ (1 << i) ^ (1 << a)
+    return y, sign
+def _excite_double(x: int, i: int, j: int, a: int, b: int):
+    if (i == j) or (a == b) or (i == a) or (i == b) or (j == a) or (j == b):
+        return None
+
+    if (((x >> i) & 1) == 0 or
+        ((x >> j) & 1) == 0 or
+        ((x >> a) & 1) == 1 or
+        ((x >> b) & 1) == 1):
+        return None
+
+    sign = 1
+    m = x
+
+    if (m & ((1 << j) - 1)).bit_count() & 1:
+        sign = -sign
+    m ^= (1 << j)
+
+    if (m & ((1 << i) - 1)).bit_count() & 1:
+        sign = -sign
+    m ^= (1 << i)
+
+    if (m & ((1 << b) - 1)).bit_count() & 1:
+        sign = -sign
+    m |= (1 << b)
+
+    if (m & ((1 << a) - 1)).bit_count() & 1:
+        sign = -sign
+    m |= (1 << a)
+
+    return m, sign
+
+### VMC fxns, force numpy ints into int type ###
 def get_exc_list_u1(x,nsite,nexs=2):
     if nexs>2:
         raise ValueError
+    nsite = int(nsite)
     ls = []
     if nexs>=1:
-        ls += list(single_dets(x,nsite))
+        ls += list(_single_dets(x,nsite))
     if nexs>=2:
-        ls += list(double_dets(x,nsite))
+        ls += list(_double_dets(x,nsite))
     return ls
 def get_exc_list_u11(x,pc,nexs=2):
     if nexs>2:
         raise ValueError
     ls = []
     if nexs>=1:
-        ls += singles_spin_conserving_fast(x,pc)
+        ls += _singles_spin_conserving_fast(x,pc)
     if nexs>=2:
-        ls += doubles_spin_conserving_fast(x,pc)
+        ls += _doubles_spin_conserving_fast(x,pc)
     return ls
-def get_random_config_u1(nsite,nelec,rng,occ=None):
-    if occ is None:
-        occ = rng.choice(nsite,size=nelec,replace=False)
+def get_config_from_occ(occ,nsite):
     occ = [int(p) for p in occ]
-    return bitstring_from_occupied(nsite,occ)
-def get_random_config_u11(nsites,nelecs,rng,occ=(None,None)):
-    if occ[0] is None:
-        occ[0] = rng.choice(nsites[0],size=nelecs[0],replace=False)
-    if occ[1] is None:
-        occ[1] = rng.choice(nsites[1],size=nelecs[1],replace=False)
-    occ = [2*int(p) for p in occ[0]]+[2*int(p)+1 for p in occ[1]]
-    return bitstring_from_occupied(sum(nsites),occ)
+    return _bitstring_from_occupied(int(nsite),occ)
 def get_all_configs_u1(nsites,nelecs):
-    return list(all_dets_bitwise(nsites,nelecs))
+    return list(_all_dets_bitwise(int(nsites),int(nelecs)))
 def get_all_configs_u11(nsites,nelecs):
-    return list(configs_interleaved_spin_fast(nsites[0],nsites[1],nelecs[0],nelecs[1]))
+    return list(_configs_interleaved_spin_fast(int(nsites[0]),int(nsites[1]),int(nelecs[0]),int(nelecs[1])))
 def fermion_act(x,oix,typ):
     if typ=='cre':
-        return apply_creation(x,oix)
+        return _apply_creation(x,int(oix))
     elif typ=='des':
-        return apply_annihilation(x,oix)
+        return _apply_annihilation(x,int(oix))
     else:
         raise ValueError
 def string_act(x,ops,order=-1):
@@ -417,13 +452,13 @@ def string_act(x,ops,order=-1):
     s = 1
     y = x
     for i,(oix,typ) in enumerate(ops):
-        y,si = fermion_act(y,oix,typ)
+        y,si = fermion_act(y,int(oix),typ)
         if y is None:
             return None,0
         s *= si
     return y,s
 def check_symmetry(x,symmetry,nsite,nelec):
-    N,Na,Nb = count_up_dn(x,nsite//2)
+    N,Na,Nb = _count_up_dn(x,int(nsite//2))
     if symmetry=='u1':
         if N!=sum(nelec):
              return False
@@ -438,8 +473,12 @@ def ctr_ls_to_masks(ctr_ls):
         return None
     return masks_from_ctr_ls(ctr_ls)
 def ctr_ls_to_occ(cf,masks):
-    return compute_occ_bits_from_masks(cf,masks)
+    return _compute_occ_bits_from_masks(cf,masks)
 def get_occ_indices(cf):
-    return occupied_indices(cf)
+    return _occupied_indices(cf)
 def get_vir_indices(cf,nsite):
-    return virtual_indices(cf,nsite)
+    return _virtual_indices(cf,int(nsite))
+def excite_single(x,i,a):
+    return _excite_single(x,int(i),int(a))
+def excite_double(x,i,j,a,b):
+    return _excite_double(x,int(i),int(j),int(a),int(b))

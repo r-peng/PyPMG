@@ -11,7 +11,7 @@ np.set_printoptions(precision=10,suppress=True)
 
 propose_by = 'uniform'
 rho_swap = 0
-run = 8 
+run = 9 
 U0 = True
 start,stop = 0,50
 optimizer = 'RGN'

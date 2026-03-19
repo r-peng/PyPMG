@@ -140,8 +140,6 @@ class SGD: # stochastic sampling
         sample_size = self.sample_size if sample_size is None else sample_size
         if RANK==0:
             configs = self._ctr(sample_size)
-            #if save_config:
-            #    np.save(self.tmpdir+f'config{self.step}.npy',np.array(configs[-SIZE:]))
         else:
             self._sample_stochastic(sample_size,compute_v,compute_h)
     def _ctr(self,sample_size):
@@ -155,6 +153,7 @@ class SGD: # stochastic sampling
                 raise ValueError(f'step={step},self.step={self.step}')
             recv += 1
             send += 1
+            #print(f'received={recv},time={time.time()-t0}')
             COMM.send(send,dest=rank)
         print('\tsample time=',time.time()-t0)
     def _accumulate(self,x,compute_v,compute_h):
@@ -183,6 +182,7 @@ class SGD: # stochastic sampling
                 hi = np.array([self.ham[key].hs[x] for x in self.cfs])
                 self.h += self.ham[key].weight*hi 
                 self.ham[key].hs = dict()
+        self.cfs = None
     def _sample_stochastic(self,sample_size,compute_v,compute_h):
         self.cfs = []
         ham = self.ham['energy']
@@ -650,7 +650,7 @@ class DenseSampler:
         omega = self.p[idx]
         return config,omega
 class MHSampler:
-    def __init__(self,burn_in=40,every=10,seed=None):
+    def __init__(self,burn_in=1,every=10,seed=None):
         self.burn_in = burn_in
         self.rng = np.random.default_rng(seed)
         self.every = every
@@ -671,8 +671,10 @@ class MHSampler:
             self.cf,_ = self.sample(psi,ham=ham)
         if RANK==SIZE-1:
             print('\tburn in time=',time.time()-t0)
-    def sample(self,psi,ham=None):
-        for _ in range(self.every):
+    def sample(self,psi,ham=None,iprint=0):
+        for i in range(self.every):
+            if iprint>0:
+                print(f'\t{i}/{self.every}')
             y,qx2y = psi.propose(self.cf,self.rng,ham=ham)
             qy2x = psi.propose_reverse(self.cf,y,ham=ham)
             py = psi.log_prob(y)

@@ -19,6 +19,14 @@ def get_occ_from_mo(mo,nelec):
             occ |= set(lsi)
             return list(occ)
         occ |= lsi
+def get_random_occ_u1(nsite,nelec,rng):
+    return rng.choice(nsite,size=nelec,replace=False)
+def get_random_occ_u11(nsites,nelecs,rng):
+    if occ[0] is None:
+        occ[0] = rng.choice(nsites[0],size=nelecs[0],replace=False)
+    if occ[1] is None:
+        occ[1] = rng.choice(nsites[1],size=nelecs[1],replace=False)
+    return [2*int(p) for p in occ[0]]+[2*int(p)+1 for p in occ[1]]
 class FermionState:
     def __init__(self,nsites,nelec,**sampling_kwargs):
         self.nsites = nsites
@@ -42,15 +50,6 @@ class FermionState:
             return get_all_configs_u11(self.nsites,self.nelec) 
         elif self.symmetry=='fock':
             return list(itertools.product((0,1),repeat=self.nsite))
-        else:
-            raise NotImplementedError
-    def get_random_config(self,rng,occ=None):
-        if self.symmetry=='u1':
-            return get_random_config_u1(self.nsite,sum(self.nelec),rng,occ=occ)
-        elif self.symmetry=='u11':
-            return get_random_config_u11(self.nsites,self.nelec,rng,occ=occ) 
-        #elif self.symmetry=='fock':
-        #    return list(itertools.product((0,1),repeat=self.nsite))
         else:
             raise NotImplementedError
     def _propose_uniform(self,x):
@@ -117,6 +116,5 @@ class FermionState:
             return 0,None 
         if x in self.ders:
             return self.amps[x],self.ders[x]
-        self.amps[x],vx = self._amplitude_and_derivative(x)
-        self.ders[x] = vx
+        self.amps[x],self.ders[x] = self._amplitude_and_derivative(x)
         return self.amps[x],self.ders[x]

@@ -97,6 +97,19 @@ def get_h8_minimum(HF_typ,pmg_typ,nlayer=1,manual_derivative=True,remove_redunda
         jac_by = 'frechet'
         #psi.add_pmg(HF_typ,None,remove_unphysical=remove_unphysical,jac_by=jac_by)
         psi.add_pmg(HF_typ,None,remove_redundant=remove_redundant,remove_unphysical=remove_unphysical,jac_by=jac_by)
+    elif pmg_typ==5:
+        decimated = [0,2,4,6,10,12,14]
+        hop_ls = complement(psi.nsite,decimated)
+        hop_ls = get_hop_ls(hop_ls,HF_typ)
+        jac_by = 'frechet'
+        order = 1 
+        psi.add_pmg(hop_ls,decimated,jac_by=jac_by,order=order)
+
+        remove_unphysical = decimated 
+        #remove_unphysical = None 
+        jac_by = 'frechet'
+        #psi.add_pmg(HF_typ,None,remove_unphysical=remove_unphysical,jac_by=jac_by)
+        psi.add_pmg(HF_typ,None,remove_redundant=remove_redundant,remove_unphysical=remove_unphysical,jac_by=jac_by)
     else:
         raise ValueError
     psi.get_nparam()
@@ -134,6 +147,20 @@ def get_h50_minimum(HF_typ,pmg_typ,manual_derivative=True,remove_redundant=False
         jac_by = 'frechet'
         order = 1 
         psi.add_pmg(hop_ls,decimated,remove_redundant=remove_redundant,jac_by=jac_by,order=order)
+
+        remove_unphysical = decimated 
+        jac_by = 'frechet'
+        #psi.add_pmg(HF_typ,None,remove_unphysical=remove_unphysical,jac_by=jac_by)
+        psi.add_pmg(HF_typ,None,remove_redundant=remove_redundant,remove_unphysical=remove_unphysical,jac_by=jac_by)
+    elif pmg_typ==2:
+        Sa = list(range(0,sum(nsites),2))
+        Sa.pop(25)
+        decimated = Sa
+        hop_ls = complement(psi.nsite,decimated)
+        hop_ls = get_hop_ls(hop_ls,HF_typ)
+        jac_by = 'frechet'
+        order = 1  
+        psi.add_pmg(hop_ls,decimated,jac_by=jac_by,order=order)
 
         remove_unphysical = decimated 
         jac_by = 'frechet'

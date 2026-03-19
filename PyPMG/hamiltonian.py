@@ -84,8 +84,8 @@ class Operator:
                 M[j,i] += coeff
         return M,basis
 class QCHamiltonian(Operator):
-    def __init__(self,hcore,eri,thresh=1e-6):
-        super().__init__(thresh=thresh)
+    def __init__(self,hcore,eri,**kwargs):
+        super().__init__(**kwargs)
         self.nao = hcore.shape[0]
         self.hcore = hcore # ao-integrals
         self.eri_qc = eri.copy()
@@ -123,7 +123,7 @@ class QCHamiltonian(Operator):
             self.links[x] = cfs,coeffs
         print('eloc terms time=',time.time()-t0)
         return cfs,coeffs
-    def eloc_terms(self,x):
+    def eloc_terms(self,x,check=False):
         if x in self.links:
             return self.links[x]
         occ = np.array(get_occ_indices(x))
@@ -132,12 +132,9 @@ class QCHamiltonian(Operator):
         vir = np.array(get_vir_indices(x,self.nao*2))
         vir_a = vir[vir%2==0]//2
         vir_b = (vir[vir%2==1]-1)//2
-        print(occ,occ_a,occ_b)
-        print(vir,vir_a,vir_b)
-        exit()
 
-
-        cfs = [x]
+        cfs = []
+        coeffs = []
         # diagonal E1
         hcore_diag = np.diag(self.hcore)
         E1 = sum(hcore_diag[occ_a]) + sum(hcore_diag[occ_b])
@@ -153,7 +150,10 @@ class QCHamiltonian(Operator):
         E2 -= .5*np.einsum('ijji->',eri_OOOO)
         eri_ooOO = eri_xxOO[occ_a][:,occ_a]
         E2 += np.einsum('iijj->',eri_ooOO)
-        coeff = [E1+E2] 
+        coeff = E1 + E2
+        if np.fabs(coeff)>self.thresh:
+            cfs.append(x)
+            coeffs.append(coeff)
         eri_oooo = eri_OOOO = eri_ooOO = None
 
         # singles alpha
@@ -165,9 +165,17 @@ class QCHamiltonian(Operator):
         F += np.einsum('aijj->ai',eri_voOO)
         for ix_i,i in enumerate(occ_a):
             for ix_a,a in enumerate(vir_a):
-                y,s = config_map_single(x,2*i,2*a)
+                coeff = F[ix_a,ix_i]
+                if np.fabs(coeff)<self.thresh:
+                    continue
+                y,s = excite_single(x,2*i,2*a)
+                if check:
+                    ops = (2*a,'cre'),(2*i,'des')
+                    y_,s_ = string_act(x,ops)
+                    assert y==y_
+                    assert s==s_
                 cfs.append(y)
-                coeffs.append(s*F[ix_a,ix_i])
+                coeffs.append(s*coeff)
         eri_vooo = eri_voOO = None
         # singles beta 
         F = self.hcore[vir_b][:,occ_b]
@@ -178,9 +186,17 @@ class QCHamiltonian(Operator):
         F += np.einsum('aijj->ai',eri_VOoo)
         for ix_i,i in enumerate(occ_b):
             for ix_a,a in enumerate(vir_b):
-                y,s = config_map_single(x,2*i+1,2*a+1)
+                coeff = F[ix_a,ix_i]
+                if np.fabs(coeff)<self.thresh:
+                    continue
+                y,s = excite_single(x,2*i+1,2*a+1)
+                if check:
+                    ops = (2*a+1,'cre'),(2*i+1,'des')
+                    y_,s_ = string_act(x,ops)
+                    assert y==y_
+                    assert s==s_
                 cfs.append(y)
-                coeffs.append(s*F[ix_a,ix_i])
+                coeffs.append(s*coeff)
         eri_VOOO = eri_VOoo = None
         eri_xxoo = eri_xxOO = None
 
@@ -188,23 +204,62 @@ class QCHamiltonian(Operator):
         for i,j in itertools.combinations(occ_a,2):
             for a,b in itertools.combinations(vir_a,2):
                 coeff = eri[a,i,b,j]-eri[a,j,b,i]
-                y,s = config_map_doubles(x,2*i,2*j,2*a,2*b)
+                if np.fabs(coeff)<self.thresh:
+                    continue
+                y,s = excite_double(x,2*j,2*i,2*a,2*b)
+                if check:
+                    ops = (2*a,'cre'),(2*b,'cre'),(2*j,'des'),(2*i,'des')
+                    y_,s_ = string_act(x,ops)
+                    assert y==y_
+                    assert s==s_
                 cfs.append(y)
                 coeffs.append(s*coeff)
         # doubles bb 
         for i,j in itertools.combinations(occ_b,2):
             for a,b in itertools.combinations(vir_b,2):
                 coeff = eri[a,i,b,j]-eri[a,j,b,i]
-                y,s = config_map_doubles(x,2*i+1,2*j+1,2*a+1,2*b+1)
+                if np.fabs(coeff)<self.thresh:
+                    continue
+                y,s = excite_double(x,2*j+1,2*i+1,2*a+1,2*b+1)
+                if check:
+                    ops = (2*a+1,'cre'),(2*b+1,'cre'),(2*j+1,'des'),(2*i+1,'des')
+                    y_,s_ = string_act(x,ops)
+                    assert y==y_
+                    assert s==s_
                 cfs.append(y)
                 coeffs.append(s*coeff)
         # doubles ab
         for i,j in itertools.product(occ_a,occ_b):
             for a,b in itertools.product(vir_a,vir_b):
                 coeff = eri[a,i,b,j]
-                y,s = config_map_doubles(x,2*i,2*j+1,2*a,2*b+1)
+                if np.fabs(coeff)<self.thresh:
+                    continue
+                y,s = excite_double(x,2*j+1,2*i,2*a,2*b+1)
+                if check:
+                    ops = (2*a,'cre'),(2*b+1,'cre'),(2*j+1,'des'),(2*i,'des')
+                    y_,s_ = string_act(x,ops)
+                    assert y==y_
+                    assert s==s_
                 cfs.append(y)
                 coeffs.append(s*coeff)
+
+        if not check:
+            coeffs = np.array(coeffs)
+            if self.save_link:
+                self.links[x] = cfs,coeffs
+            return cfs,coeffs
+
+        dict1 = {cf:coeff for cf,coeff in zip(cfs,coeffs)}
+        cfs_,coeffs_ = self._eloc_terms(x)
+        dict2 = {cf:coeff for cf,coeff in zip(cfs_,coeffs_)}
+        for cf,coeff in dict2.items():
+            if np.fabs(coeff-dict1[cf])>self.thresh:
+                print(f'{cf:16b}',coeff,dict1[cf],get_occ_indices(cf))
+            dict1.pop(cf)
+        print('items remaining in dict1')
+        for cf,coeff in dict1.items():
+            print(cf,coeff)
+        exit()
 # TODO: make compatible with bitstring
 #class TotalSpin(Operator):
 #    def __init__(self,nao,weight=1):

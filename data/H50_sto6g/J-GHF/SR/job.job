@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -J SR_0 
+#SBATCH -p joonholee 
+#SBATCH -n 200 
+#SBATCH --mem=200G # memory per node
+#SBATCH -t 0-23:00:00 # time limit
+#SBATCH -o out.out
+#SBATCH -e err.err
+
+eval "$(conda shell.bash hook)"
+
+conda activate /n/home12/rpeng/.conda/envs/mpi4py
+
+mpiexec -n 200 python -u pmg.py > run0.out 
